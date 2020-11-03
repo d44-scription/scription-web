@@ -1,29 +1,32 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import Index from './components/notebooks/index.component';
+import Notebook from './components/notebooks/notebook.component';
 
 function App() {
   return (
-    <Router>
-      <div className="container">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link to={'/'} className="navbar-brand">Scription</Link>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to={'/index'} className="nav-link">Notebooks</Link>
-              </li>
-            </ul>
-          </div>
-        </nav> <br/>
+    <div>
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <a href="/" className="navbar-brand">
+          Scription
+          </a>
+        <div className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link to={"/notebooks"} className="nav-link">
+              Notebooks
+            </Link>
+          </li>
+        </div>
+      </nav>
 
-        <h2>Welcome to Scription :)</h2><br/>
+      <div className="container mt-3">
         <Switch>
-          <Route path='/index' component={ Index } />
+          <Route exact path={["/", "/notebooks"]} component={Index} />
+          <Route path="/notebooks/:id" component={Notebook} />
         </Switch>
       </div>
-    </Router>
+    </div>
   );
 }
 
