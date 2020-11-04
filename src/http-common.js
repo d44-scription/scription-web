@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default axios.create({
   // TODO: Replace this with an environment variable once hosted
-  baseURL: "https://scription-api-staging.herokuapp.com/api/v1",
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "Content-type": "application/json"
   }
