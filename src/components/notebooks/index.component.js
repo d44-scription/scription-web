@@ -40,27 +40,29 @@ export default class Index extends Component {
   }
 
   render() {
-    const { notebooks, currentIndex } = this.state;
+    const { notebooks, currentIndex, currentId } = this.state;
 
     return (
-      <div>
-        <h1>Notebooks</h1>
-        <ul className="list-group col-md-6">
-          {notebooks &&
-            notebooks.map((notebook, index) => (
-              <li
-                key={index}
-                className={ `list-group-item ${(index === currentIndex ? "active" : "") }`}
-                onClick={() => this.setActiveNotebook(notebook.id, index)}
-              >
-                {notebook.name}
-              </li>
-            ))}
-        </ul>
+      <div className="list row">
+        <div className="col-md-6">
+          <h1>Notebooks</h1>
+          <ul className="list-group">
+            {notebooks &&
+              notebooks.map((notebook, index) => (
+                <li
+                  key={index}
+                  className={`list-group-item ${(index === currentIndex ? "active" : "")}`}
+                  onClick={() => this.setActiveNotebook(notebook.id, index)}
+                >
+                  {notebook.name}
+                </li>
+              ))}
+          </ul>
+        </div>
 
         <div className="col-md-6">
-          {this.state.currentId ? (
-            <Notebook id={this.state.currentId}></Notebook>
+          {currentId ? (
+            <Notebook id={currentId}></Notebook>
           ) : (
               <div>
                 <br />
