@@ -1,8 +1,8 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, Link } from 'react-router-dom';
-import Index from './components/notebooks/index.component';
-import Notebook from './components/notebooks/notebook.component';
+import Index from './components/legacy_notebooks/index.component';
+import Notebook from './components/legacy_notebooks/notebook.component';
 
 function App() {
   return (
