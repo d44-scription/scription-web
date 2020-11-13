@@ -14,7 +14,7 @@ class NotebookDataService {
   }
 
   update(id, data) {
-    return http.put(`/notebooks/${id}.json`, data);
+    return http.put(`/notebooks/${id}.json`, { notebook: data });
   }
 
   delete(id) {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NotebookDataService from "../../services/notebook.service";
+import Editable from "../editable.component";
 
 export default class Notebook extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ export default class Notebook extends Component {
 
     return (
       <div>
-        <h1>{name}</h1>
+        <Editable defaultValue={name} id={this.props.id}></Editable>
         <h2>{summary}</h2>
 
         {notes &&
