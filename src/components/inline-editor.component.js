@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import useKeypress from "../hooks/useKeypress"
 import NotebookDataService from "../services/notebook.service";
 import "../css/inline-editor.css"
 
@@ -17,11 +18,26 @@ function InlineEditor(props) {
     [setValue]
   );
 
+  // Callback for escape key - exit without saving (*only if the textbox is focused)
+  useKeypress('Escape', () => {
+    if (document.activeElement === inputRef.current) {
+      setAtRest(true)
+    }
+  }, [atRest, setAtRest]);
+
+  // Callback for enter key - save & exit (*only if the textbox is focused)
+  useKeypress('Enter', () => {
+    if (document.activeElement === inputRef.current) {
+      // Save
+      setAtRest(true)
+    }
+  }, [atRest, setAtRest]);
+
   // Callback for when text input is blurred
-  const onBlur = useCallback(
-    () => setAtRest(true), [
-    setAtRest
-  ]);
+  const onBlur = useCallback(() => {
+    // Save
+    setAtRest(true)
+  }, [setAtRest]);
 
   // Set focus to the text field when shown
   useEffect(() => {
