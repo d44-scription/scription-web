@@ -1,53 +1,46 @@
-import React, { Component } from "react";
+import React, { useState, useCallback } from "react";
 import NotebookDataService from "../services/notebook.service";
 import "../css/inline-editor.css"
 
-export default class InlineEditor extends Component {
-  constructor(props) {
-    super(props);
+function InlineEditor(props) {
+  const [atRest, setAtRest] = useState(true);
+  const [value, setValue] = useState(props.displayValue);
 
-    this.state = {
-      value: '',
-      atRest: true,
-     };
+  const onChange = useCallback(
+    event => {
+      setValue(event.target.value);
+    },
+    [setValue]
+  );
 
-    this.onChange = this.onChange.bind(this);
-    this.toggleRest = this.toggleRest.bind(this);
-  }
+  const onBlur = useCallback(
+    () => setAtRest(true), [
+    setAtRest
+  ]);
 
-  onChange(e) {
-    this.setState({
-      value: e.target.value,
-    });
-  }
+  const onSpanClick = useCallback(
+    () => setAtRest(false), [
+    setAtRest
+  ]);
 
-  toggleRest() {
-    this.setState({
-      atRest: !this.state.atRest
-    })
-  }
-
-  render() {
-    const { value, atRest } = this.state
-    const { displayValue } = this.props
-
-    return (
-      <span>
-        <h2
-          className={`inline-label ${atRest ? '' : 'hidden'}`}
-          onClick={this.toggleRest}
-        >
-          {value || displayValue}
-        </h2>
-
-        <input
-          type="text"
-          value={value}
-          onChange={this.onChange}
-          onBlur={this.toggleRest}
-          className={`inline-input ${atRest ? 'hidden' : ''}`}
-        />
+  return (
+    <span>
+      <span
+        className={`inline-label ${atRest ? '' : 'hidden'}`}
+        onClick={onSpanClick}
+      >
+        {value || props.displayValue}
       </span>
-    );
-  }
+
+      <input
+        type="text"
+        value={value || ''}
+        onChange={onChange}
+        onBlur={onBlur}
+        className={`inline-input ${atRest ? 'hidden' : ''}`}
+      />
+    </span>
+  );
 }
+
+export default InlineEditor;
