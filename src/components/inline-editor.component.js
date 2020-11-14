@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NotebookDataService from "../services/notebook.service";
+import "../css/inline-editor.css"
 
 export default class InlineEditor extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class InlineEditor extends Component {
      };
 
     this.onChange = this.onChange.bind(this);
+    this.toggleRest = this.toggleRest.bind(this);
   }
 
   onChange(e) {
@@ -19,21 +21,31 @@ export default class InlineEditor extends Component {
     });
   }
 
+  toggleRest() {
+    this.setState({
+      atRest: !this.state.atRest
+    })
+  }
+
   render() {
     const { value, atRest } = this.state
     const { displayValue } = this.props
 
     return (
       <span>
-       <p className={`inline-label ${atRest ? '' : 'hidden'}`}>
-         {displayValue}
-       </p>
+        <h2
+          className={`inline-label ${atRest ? '' : 'hidden'}`}
+          onClick={this.toggleRest}
+        >
+          {value || displayValue}
+        </h2>
 
         <input
           type="text"
           value={value}
           onChange={this.onChange}
-          className={`inline-label ${atRest ? 'hidden' : ''}`}
+          onBlur={this.toggleRest}
+          className={`inline-input ${atRest ? 'hidden' : ''}`}
         />
       </span>
     );
