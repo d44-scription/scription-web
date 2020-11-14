@@ -1,3 +1,5 @@
 .inline-label {
   border-bottom: 2px dashed #a0a0a0;
+  padding: .375rem 0;
+  height: calc(1.5em + .75rem + 2px);
 }

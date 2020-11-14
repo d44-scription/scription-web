@@ -4,9 +4,11 @@ import NotebookDataService from "../services/notebook.service";
 import "../css/inline-editor.css"
 
 function InlineEditor(props) {
-  // Define callbacks for GETting and SETting the text and rest state of the component
+  // Define callbacks for GETting and SETting the rest & busy states of the component
   const [atRest, setAtRest] = useState(true);
   const [isBusy, setIsBusy] = useState(false);
+
+  // Define callbacks for GETting and SETting the input value & error message
   const [value, setValue] = useState(props.value);
   const [error, setError] = useState('');
 
@@ -87,7 +89,7 @@ function InlineEditor(props) {
         value={value || ''}
         onChange={onChange}
         onBlur={onBlur}
-        className={`inline-input ${atRest ? 'hidden' : ''}`}
+        className={`inline-input form-control ${atRest ? 'hidden' : ''}`}
         disabled={isBusy ? true : false}
       />
 
