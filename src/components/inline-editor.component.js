@@ -34,8 +34,10 @@ function InlineEditor(props) {
 
   // Callback for when text input is blurred
   const onBlur = useCallback(() => {
-    saveAndExit()
-  }, [setAtRest, value]);
+    if(!atRest) {
+      saveAndExit()
+    }
+  }, [setAtRest, value, atRest]);
 
   const saveAndExit = useCallback(() => {
     const { id, model, param } = props
