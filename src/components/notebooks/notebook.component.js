@@ -44,7 +44,12 @@ export default class Notebook extends Component {
 
     return (
       <div>
-        <InlineEditor value={name}></InlineEditor>
+        <InlineEditor
+          value={name}
+          id={this.props.id}
+          model='notebook'
+          param='name'>
+        </InlineEditor>
         <h2>{summary}</h2>
 
         {notes &&

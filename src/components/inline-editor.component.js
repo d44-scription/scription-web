@@ -28,16 +28,21 @@ function InlineEditor(props) {
   // Callback for enter key - save & exit (*only if the textbox is focused)
   useKeypress('Enter', () => {
     if (document.activeElement === inputRef.current) {
-      // Save
-      setAtRest(true)
+      saveAndExit()
     }
-  }, [atRest, setAtRest]);
+  }, [atRest, setAtRest, value]);
 
   // Callback for when text input is blurred
   const onBlur = useCallback(() => {
-    // Save
+    saveAndExit()
+  }, [setAtRest, value]);
+
+  const saveAndExit = useCallback(() => {
+    const { id, model, param } = props
     setAtRest(true)
-  }, [setAtRest]);
+
+    NotebookDataService.update(id, model, param, value)
+  }, [value, props]);
 
   // Set focus to the text field when shown
   useEffect(() => {

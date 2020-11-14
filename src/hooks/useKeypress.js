@@ -14,5 +14,5 @@ export default function useKeypress(key, action) {
 
     window.addEventListener("keyup", onKeyUp)
     return () => window.removeEventListener('keyup', onKeyUp);
-  }, []);
+  }, [key, action]);
 }
