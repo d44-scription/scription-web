@@ -6,7 +6,7 @@ import "../css/inline-editor.css"
 function InlineEditor(props) {
   // Define callbacks for GETting and SETting the text and rest state of the component
   const [atRest, setAtRest] = useState(true);
-  const [value, setValue] = useState(props.displayValue);
+  const [value, setValue] = useState(props.value);
 
   const inputRef = useRef(null);
 
@@ -58,13 +58,13 @@ function InlineEditor(props) {
         className={`inline-label ${atRest ? '' : 'hidden'}`}
         onClick={onSpanClick}
       >
-        {value || props.displayValue}
+        {value || props.value}
       </span>
 
       <input
         ref={inputRef}
         type="text"
-        value={value || props.displayValue || ''}
+        value={value || props.value || ''}
         onChange={onChange}
         onBlur={onBlur}
         className={`inline-input ${atRest ? 'hidden' : ''}`}

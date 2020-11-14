@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import Editable from "../editable.component";
 import InlineEditor from "../inline-editor.component";
 
 export default class Notebook extends Component {
@@ -45,8 +44,7 @@ export default class Notebook extends Component {
 
     return (
       <div>
-        <Editable defaultValue={name} id={this.props.id}></Editable>
-        <InlineEditor displayValue={name}></InlineEditor>
+        <InlineEditor value={name}></InlineEditor>
         <h2>{summary}</h2>
 
         {notes &&
