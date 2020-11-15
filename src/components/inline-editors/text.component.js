@@ -69,6 +69,11 @@ function Text(props) {
     }
   }, [atRest, value, props]);
 
+  // Update value when the given prop changes
+  useEffect(() => {
+    setValue(props.value)
+  }, [props.value])
+
   // Callback to update the rest state when the text span is clicked
   const onSpanClick = useCallback(
     () => setAtRest(false), [

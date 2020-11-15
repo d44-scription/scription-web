@@ -31,7 +31,7 @@ export default class Notebook extends Component {
 
         this.setState({
           name: notebook.name,
-          summary: "MOCK SUMMARY",
+          summary: "MOCK SUMMARY\nOn multiple lines\n\nFin",
           notes: notebook.notes
         });
       })
