@@ -65,8 +65,9 @@ function Text(props) {
   useEffect(() => {
     if (!atRest) {
       inputRef.current.focus();
+      inputRef.current.value = value || props.value;
     }
-  }, [atRest]);
+  }, [atRest, value, props]);
 
   // Callback to update the rest state when the text span is clicked
   const onSpanClick = useCallback(
