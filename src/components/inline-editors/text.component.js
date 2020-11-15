@@ -77,6 +77,7 @@ function Text(props) {
   return (
     <span>
       <span
+        style={{fontSize: props.fontSize || '1rem'}}
         className={`inline-text-label inline-label ${atRest ? '' : 'hidden'}`}
         onClick={onSpanClick}
       >
@@ -84,6 +85,7 @@ function Text(props) {
       </span>
 
       <input
+        style={{ fontSize: props.fontSize || '1rem' }}
         ref={inputRef}
         type={"text"}
         value={value || ''}

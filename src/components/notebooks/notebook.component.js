@@ -49,7 +49,8 @@ export default class Notebook extends Component {
           value={name}
           id={this.props.id}
           model="notebook"
-          param="name">
+          param="name"
+          fontSize="2rem">
         </Text>
 
         <TextArea

@@ -76,16 +76,19 @@ function TextArea(props) {
 
   return (
     <span>
-      <div className={`inline-label ${atRest ? '' : 'hidden'}`}>
+      <div
+        className={`inline-label ${atRest ? '' : 'hidden'}`}
+        onClick={onSpanClick}>
         <span
           className={"inline-textarea-label"}
-          onClick={onSpanClick}
+          style={{ fontSize: props.fontSize || '1rem' }}
         >
           {value || props.value}
         </span>
       </div>
 
       <textarea
+        style={{ fontSize: props.fontSize || '1rem' }}
         ref={inputRef}
         type={"text"}
         value={value || ''}
