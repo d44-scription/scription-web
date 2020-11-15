@@ -76,34 +76,38 @@ function Text(props) {
 
   return (
     <span>
-      <span
-        style={{fontSize: props.fontSize || '1rem'}}
-        className={`inline-text-label inline-label ${atRest ? '' : 'hidden'}`}
-        onClick={onSpanClick}
-      >
-        {value || props.value}
-      </span>
+      <div
+        className="d-inline-flex justify-content-start align-items-center w-100">
+        <span
+          style={{fontSize: props.fontSize || '1rem'}}
+          className={`inline-text-label inline-label ${atRest ? '' : 'hidden'}`}
+          onClick={onSpanClick}
+        >
+          {value || props.value}
+        </span>
 
-      <input
-        style={{ fontSize: props.fontSize || '1rem' }}
-        ref={inputRef}
-        type={"text"}
-        value={value || ''}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={`inline-input form-control ${atRest ? 'hidden' : ''}`}
-        disabled={isBusy ? true : false}
-      />
+        <input
+          style={{ fontSize: props.fontSize || '1rem' }}
+          ref={inputRef}
+          type={"text"}
+          value={value || ''}
+          onChange={onChange}
+          onBlur={onBlur}
+          className={`inline-input form-control ${atRest ? 'hidden' : ''}`}
+          disabled={isBusy ? true : false}
+        />
 
-      <svg
-        width="1em"
-        height="1em"
-        viewBox="0 0 16 16"
-        className={`bi bi-hourglass-split ${isBusy ? '' : 'hidden'}`}
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg">
-        <path fillRule="evenodd" d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0c0 .701.478 1.236 1.011 1.492A3.5 3.5 0 0 1 11.5 13s-.866-1.299-3-1.48V8.35z" />
-      </svg>
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          className={`bi bi-arrow-repeat busy-svg ${isBusy ? '' : 'hidden'}`}
+          fill="#a0a0a0"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+          <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+        </svg>
+      </div>
 
       <p className="error">
         {error}

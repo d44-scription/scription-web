@@ -13,3 +13,29 @@
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+.error {
+  color: #850101;
+  padding: 0.3rem 0;
+  font-size: 0.85rem;
+}
+
+.busy-svg {
+  pointer-events: none;
+  margin: 0 1rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .busy-svg {
+    animation: busy-svg-spin infinite 5s linear;
+  }
+}
+
+@keyframes busy-svg-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
