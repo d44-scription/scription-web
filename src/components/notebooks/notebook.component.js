@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import InlineEditor from "../inline-editor.component";
+import InlineEditor from "../inline-editors/inline-editor.component";
+import TextArea from "../inline-editors/textarea.component";
 
 export default class Notebook extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class Notebook extends Component {
 
         this.setState({
           name: notebook.name,
-          summary: 'MOCK SUMMARY',
+          summary: "MOCK SUMMARY",
           notes: notebook.notes
         });
       })
@@ -47,10 +48,16 @@ export default class Notebook extends Component {
         <InlineEditor
           value={name}
           id={this.props.id}
-          model='notebook'
-          param='name'>
+          model="notebook"
+          param="name">
         </InlineEditor>
-        <h2>{summary}</h2>
+
+        <TextArea
+          value={name}
+          id={this.props.id}
+          model="notebook"
+          param="summary">
+        </TextArea>
 
         {notes &&
           notes.map((note, index) => (

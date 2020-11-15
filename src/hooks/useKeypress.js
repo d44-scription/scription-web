@@ -1,4 +1,4 @@
-// Code taken from [Michael Ashton's](https://www.caktusgroup.com/about/michael-ashton/) tutorial found [here](https://www.caktusgroup.com/blog/2020/07/01/usekeypress-hook-react/)
+// Code adapted from [Michael Ashton's](https://www.caktusgroup.com/about/michael-ashton/) tutorial found [here](https://www.caktusgroup.com/blog/2020/07/01/usekeypress-hook-react/)
 import { useEffect } from "react"
 
 /**
@@ -9,7 +9,7 @@ import { useEffect } from "react"
 export default function useKeypress(key, action) {
   useEffect(() => {
     function onKeyUp(e) {
-      if (e.key === key) action()
+      if ((e.key === key) && !e.shiftKey) action()
     }
 
     window.addEventListener("keyup", onKeyUp)

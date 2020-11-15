@@ -1,5 +1,13 @@
 .inline-label {
   border-bottom: 2px dashed #a0a0a0;
   padding: .375rem 0;
+}
+
+.inline-text-label {
   height: calc(1.5em + .75rem + 2px);
+}
+
+.inline-textarea-label {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

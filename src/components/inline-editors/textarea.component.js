@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import useKeypress from "../hooks/useKeypress"
-import NotebookDataService from "../services/notebook.service";
-import "../css/inline-editor.css"
+import useKeypress from "../../hooks/useKeypress"
+import NotebookDataService from "../../services/notebook.service";
+import "../../css/inline-editor.css"
 
 function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -50,15 +50,15 @@ function InlineEditor(props) {
     setAtRest(true)
     setIsBusy(true)
 
-    NotebookDataService.update(id, model, param, value)
-      .then(() => {
+    // NotebookDataService.update(id, model, param, value)
+    //   .then(() => {
         setIsBusy(false)
         setError('')
-      })
-      .catch(e => {
-        setIsBusy(false)
-        setError(e.response.data.join(', '))
-      });
+      // })
+      // .catch(e => {
+      //   setIsBusy(false)
+      //   setError(e.response.data.join(', '))
+      // });
   }, [value, props, setIsBusy, setError]);
 
   // Set focus to the text field when shown
@@ -76,16 +76,18 @@ function InlineEditor(props) {
 
   return (
     <span>
-      <span
-        className={`inline-label ${atRest ? '' : 'hidden'}`}
-        onClick={onSpanClick}
-      >
-        {value || props.value}
-      </span>
+      <div className={`inline-label ${atRest ? '' : 'hidden'}`}>
+        <span
+          className={"inline-textarea-label"}
+          onClick={onSpanClick}
+        >
+          {value || props.value}
+        </span>
+      </div>
 
-      <input
+      <textarea
         ref={inputRef}
-        type="text"
+        type={"text"}
         value={value || ''}
         onChange={onChange}
         onBlur={onBlur}
