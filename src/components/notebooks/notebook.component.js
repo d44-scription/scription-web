@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import InlineEditor from "../inline-editors/inline-editor.component";
+import Text from "../inline-editors/text.component";
 import TextArea from "../inline-editors/textarea.component";
 
 export default class Notebook extends Component {
@@ -45,15 +45,15 @@ export default class Notebook extends Component {
 
     return (
       <div>
-        <InlineEditor
+        <Text
           value={name}
           id={this.props.id}
           model="notebook"
           param="name">
-        </InlineEditor>
+        </Text>
 
         <TextArea
-          value={name}
+          value={summary}
           id={this.props.id}
           model="notebook"
           param="summary">

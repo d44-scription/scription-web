@@ -3,7 +3,7 @@ import useKeypress from "../../hooks/useKeypress"
 import NotebookDataService from "../../services/notebook.service";
 import "../../css/inline-editor.css"
 
-function InlineEditor(props) {
+function TextArea(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
   const [atRest, setAtRest] = useState(true);
   const [isBusy, setIsBusy] = useState(false);
@@ -13,6 +13,23 @@ function InlineEditor(props) {
   const [error, setError] = useState('');
 
   const inputRef = useRef(null);
+
+  // Function to submit data & return to rest state
+  const saveAndExit = useCallback(() => {
+    const { id, model, param } = props
+    setAtRest(true)
+    setIsBusy(true)
+
+    // NotebookDataService.update(id, model, param, value)
+    //   .then(() => {
+    setIsBusy(false)
+    setError('')
+    // })
+    // .catch(e => {
+    //   setIsBusy(false)
+    //   setError(e.response.data.join(', '))
+    // });
+  }, [value, props, setIsBusy, setError]);
 
   // Callback(/event handler) for when text is changed
   const onChange = useCallback(
@@ -42,24 +59,7 @@ function InlineEditor(props) {
     if(!atRest) {
       saveAndExit()
     }
-  }, [setAtRest, value, atRest]);
-
-  // Function to submit data & return to rest state
-  const saveAndExit = useCallback(() => {
-    const { id, model, param } = props
-    setAtRest(true)
-    setIsBusy(true)
-
-    // NotebookDataService.update(id, model, param, value)
-    //   .then(() => {
-        setIsBusy(false)
-        setError('')
-      // })
-      // .catch(e => {
-      //   setIsBusy(false)
-      //   setError(e.response.data.join(', '))
-      // });
-  }, [value, props, setIsBusy, setError]);
+  }, [atRest, saveAndExit]);
 
   // Set focus to the text field when shown
   useEffect(() => {
@@ -112,4 +112,4 @@ function InlineEditor(props) {
   );
 }
 
-export default InlineEditor;
+export default TextArea;
