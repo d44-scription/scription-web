@@ -15,7 +15,7 @@ function ConfirmModal(props) {
 
       <Modal.Footer>
         <Button variant="secondary" onClick={props.closeAction}>
-          Close
+          Cancel
         </Button>
 
         <Button variant="primary" onClick={props.confirmAction}>
