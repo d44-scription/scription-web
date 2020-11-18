@@ -2,7 +2,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, Link } from 'react-router-dom';
 import Index from './components/notebooks/index.component';
-import Notebook from './components/notebooks/notebook.component';
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
       <div className="container mt-3">
         <Switch>
           <Route exact path={["/", "/notebooks"]} component={Index} />
-          <Route path="/notebooks/:id" component={Notebook} />
         </Switch>
       </div>
     </div>

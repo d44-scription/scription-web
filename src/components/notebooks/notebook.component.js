@@ -1,122 +1,61 @@
-import React, { Component } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
+import Text from "../inline-editors/text.component";
+import TextArea from "../inline-editors/textarea.component";
 
-export default class Notebook extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeName = this.onChangeName.bind(this);
-    this.getNotebook = this.getNotebook.bind(this);
-    this.updateNotebook = this.updateNotebook.bind(this);
-    this.deleteNotebook = this.deleteNotebook.bind(this);
+function Notebook(props) {
+  // Define callbacks for GETting and SETting the rest & busy states of the component
+  const [name, setName] = useState(null);
+  const [summary, setSummary] = useState(null);
+  const [notes, setNotes] = useState([]);
 
-    this.state = {
-      currentNotebook: {
-        id: null,
-        name: ""
-      },
-      message: ""
-    };
-  }
-
-  componentDidMount() {
-    this.getNotebook(this.props.match.params.id);
-  }
-
-  onChangeName(e) {
-    const name = e.target.value;
-
-    this.setState(function (prevState) {
-      return {
-        currentNotebook: {
-          ...prevState.currentNotebook,
-          name: name
-        }
-      };
-    });
-  }
-
-  getNotebook(id) {
+  // Callback to update the displayed notebook
+  const retrieveNotebook = useCallback((id) => {
     NotebookDataService.get(id)
       .then(response => {
-        this.setState({
-          currentNotebook: response.data
-        });
+        const notebook = response.data
+
+        setName(notebook.name)
+        setSummary("MOCK SUMMARY\nOn multiple lines\n\nFin")
+        setNotes(notebook.notes)
       })
       .catch(e => {
         console.log(e);
       });
-  }
+  }, [setName, setSummary, setNotes]);
 
-  updateNotebook() {
-    NotebookDataService.update(
-      this.state.currentNotebook.id,
-      this.state.currentNotebook
-    )
-      .then(() => {
-        this.setState({
-          message: "The notebook was updated successfully!"
-        });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
+  // Update notebook when the given id prop changes
+  useEffect(() => {
+    retrieveNotebook(props.id)
+  }, [props.id, retrieveNotebook])
 
-  deleteNotebook() {
-    NotebookDataService.delete(this.state.currentNotebook.id)
-      .then(() => {
-        this.props.history.push('/notebooks')
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
+  return (
+    <div>
+      <Text
+        value={name}
+        id={props.id}
+        model="notebook"
+        param="name"
+        fontSize="2rem">
+      </Text>
 
-  render() {
-    const { currentNotebook } = this.state;
+      <TextArea
+        value={summary}
+        id={props.id}
+        model="notebook"
+        param="summary">
+      </TextArea>
 
-    return (
-      <div>
-        {currentNotebook ? (
-          <div className="edit-form">
-            <h4>Notebook</h4>
-            <form>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  value={currentNotebook.name}
-                  onChange={this.onChangeName}
-                />
-              </div>
-            </form>
-
-            <button
-              className="badge badge-danger mr-2"
-              onClick={this.deleteNotebook}
-            >
-              Delete
-            </button>
-
-            <button
-              type="submit"
-              className="badge badge-success"
-              onClick={this.updateNotebook}
-            >
-              Update
-            </button>
-
-            <p>{this.state.message}</p>
-          </div>
-        ) : (
-            <div>
-              <br />
-              <p>Please click on a Notebook...</p>
-            </div>
-          )}
-      </div>
-    );
-  }
+      {notes &&
+        notes.map((note, index) => (
+          <li
+            key={index}
+          >
+            {note.content}
+          </li>
+        ))}
+    </div>
+  );
 }
+
+export default Notebook;
