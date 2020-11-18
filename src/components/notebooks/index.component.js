@@ -1,12 +1,16 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
 import Notebook from "./notebook.component";
+import Modal from "../modal.component";
 
 function Index(props) {
   // Define callbacks for GETting and SETting the component state
   const [notebooks, setNotebooks] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [currentId, setCurrentId] = useState(null);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   // Callback to update the displayed notebooks
   const retrieveNotebooks = useCallback(() => {
@@ -23,6 +27,11 @@ function Index(props) {
   useEffect(() => {
     retrieveNotebooks();
   }, [retrieveNotebooks])
+
+  const showModal = useCallback((id, name) => {
+    setIsModalVisible(true);
+    setModalText(`This will delete ${name}. Are you sure you wish to continue?`);
+  }, [])
 
   // Callback used when the delete icon is clicked
   const deleteNotebook = useCallback((id) => {
@@ -64,7 +73,7 @@ function Index(props) {
 
                 <p>
                   <svg
-                    onClick={() => deleteNotebook(notebook.id)}
+                    onClick={() => showModal(notebook.id, notebook.name)}
                     width="1em"
                     height="1em"
                     viewBox="0 0 16 16"
@@ -90,6 +99,12 @@ function Index(props) {
             </div>
           )}
       </div>
+
+      <Modal
+        visible={isModalVisible}
+        title='Delete notebook?'
+        text={modalText}
+      ></Modal>
     </div>
   );
 }

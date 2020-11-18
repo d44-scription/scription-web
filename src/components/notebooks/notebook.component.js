@@ -9,11 +9,6 @@ function Notebook(props) {
   const [summary, setSummary] = useState(null);
   const [notes, setNotes] = useState([]);
 
-  // Update notebook when the given id prop changes
-  useEffect(() => {
-    retrieveNotebook(props.id)
-  }, [props.id])
-
   // Callback to update the displayed notebook
   const retrieveNotebook = useCallback((id) => {
     NotebookDataService.get(id)
@@ -28,6 +23,11 @@ function Notebook(props) {
         console.log(e);
       });
   }, [setName, setSummary, setNotes]);
+
+  // Update notebook when the given id prop changes
+  useEffect(() => {
+    retrieveNotebook(props.id)
+  }, [props.id, retrieveNotebook])
 
   return (
     <div>
