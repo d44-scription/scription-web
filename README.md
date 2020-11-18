@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Pipeline
+
+This application uses a simplified version of Git-Flow to prevent environment variables being baked into the production environment. All new development should be branched off `develop`, which will automatically deploy to the staging server once merged. When changes have been tested, they should be merged into `main` which will deploy to production.
+
 ## Running locally
 
 This app is dockerised, so setup should be standardised. Running:
