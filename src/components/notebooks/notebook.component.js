@@ -9,7 +9,7 @@ function Notebook(props) {
   const [summary, setSummary] = useState(null);
   const [notes, setNotes] = useState([]);
 
-  // Update notebook when the given prop changes
+  // Update notebook when the given id prop changes
   useEffect(() => {
     retrieveNotebook(props.id)
   }, [props.id])
@@ -27,7 +27,6 @@ function Notebook(props) {
       .catch(e => {
         console.log(e);
       });
-
   }, [setName, setSummary, setNotes]);
 
   return (
