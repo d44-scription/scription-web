@@ -1,74 +1,62 @@
-import React, { Component } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
 import Text from "../inline-editors/text.component";
 import TextArea from "../inline-editors/textarea.component";
 
-export default class Notebook extends Component {
-  constructor(props) {
-    super(props);
+function Notebook(props) {
+  // Define callbacks for GETting and SETting the rest & busy states of the component
+  const [name, setName] = useState(null);
+  const [summary, setSummary] = useState(null);
+  const [notes, setNotes] = useState([]);
 
-    this.state = {
-      name: null,
-      summary: null,
-      notes: [],
-    }
-  }
+  // Update notebook when the given prop changes
+  useEffect(() => {
+    retrieveNotebook(props.id)
+  }, [props.id])
 
-  componentDidMount() {
-    this.retrieveNotebook();
-  }
-
-  componentDidUpdate(previousProps) {
-    if (previousProps.id !== this.props.id) {
-      this.retrieveNotebook();
-    }
-  }
-
-  retrieveNotebook() {
-    NotebookDataService.get(this.props.id)
+  // Callback to update the displayed notebook
+  const retrieveNotebook = useCallback((id) => {
+    NotebookDataService.get(id)
       .then(response => {
         const notebook = response.data
 
-        this.setState({
-          name: notebook.name,
-          summary: "MOCK SUMMARY\nOn multiple lines\n\nFin",
-          notes: notebook.notes
-        });
+        setName(notebook.name)
+        setSummary("MOCK SUMMARY\nOn multiple lines\n\nFin")
+        setNotes(notebook.notes)
       })
       .catch(e => {
         console.log(e);
       });
-  }
 
-  render() {
-    const { name, summary, notes } = this.state;
+  }, [setName, setSummary, setNotes]);
 
-    return (
-      <div>
-        <Text
-          value={name}
-          id={this.props.id}
-          model="notebook"
-          param="name"
-          fontSize="2rem">
-        </Text>
+  return (
+    <div>
+      <Text
+        value={name}
+        id={props.id}
+        model="notebook"
+        param="name"
+        fontSize="2rem">
+      </Text>
 
-        <TextArea
-          value={summary}
-          id={this.props.id}
-          model="notebook"
-          param="summary">
-        </TextArea>
+      <TextArea
+        value={summary}
+        id={props.id}
+        model="notebook"
+        param="summary">
+      </TextArea>
 
-        {notes &&
-          notes.map((note, index) => (
-            <li
-              key={index}
-            >
-              {note.content}
-            </li>
-          ))}
-      </div>
-    );
-  }
+      {notes &&
+        notes.map((note, index) => (
+          <li
+            key={index}
+          >
+            {note.content}
+          </li>
+        ))}
+    </div>
+  );
 }
+
+export default Notebook;
