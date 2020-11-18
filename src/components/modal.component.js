@@ -19,7 +19,7 @@ function ConfirmModal(props) {
         </Button>
 
         <Button variant="primary" onClick={props.confirmAction}>
-          Save Changes
+          OK
         </Button>
       </Modal.Footer>
     </Modal>
