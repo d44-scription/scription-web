@@ -2,18 +2,13 @@ import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
 import Notebook from "./notebook.component";
 
-function Notebooks(props) {
-  // Define callbacks for GETting and SETting the rest & busy states of the component
+function Index(props) {
+  // Define callbacks for GETting and SETting the component state
   const [notebooks, setNotebooks] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [currentId, setCurrentId] = useState(null);
 
-  // Update notebook when the given id prop changes
-  useEffect(() => {
-    retrieveNotebooks();
-  }, [])
-
-  // Callback to update the displayed notebook
+  // Callback to update the displayed notebooks
   const retrieveNotebooks = useCallback(() => {
     NotebookDataService.index()
       .then(response => {
@@ -24,6 +19,12 @@ function Notebooks(props) {
       });
   }, [setNotebooks]);
 
+  // Fetch list of notebooks on load
+  useEffect(() => {
+    retrieveNotebooks();
+  }, [retrieveNotebooks])
+
+  // Callback used when the delete icon is clicked
   const deleteNotebook = useCallback((id) => {
     let sliced_notebooks = notebooks.slice();
     let remainingNotebooks = sliced_notebooks.filter(nb => (nb.id !== id));
@@ -37,8 +38,9 @@ function Notebooks(props) {
       .catch((e) => {
         console.log(e)
       });
-  }, [notebooks, setNotebooks, setCurrentIndex, setCurrentIndex])
+  }, [notebooks, setNotebooks, setCurrentIndex, setCurrentId])
 
+  // Callback triggered when list items are clicked
   const setActiveNotebook = useCallback((id, index) => {
     setCurrentId(id);
     setCurrentIndex(index);
@@ -92,4 +94,4 @@ function Notebooks(props) {
   );
 }
 
-export default Notebooks;
+export default Index;
