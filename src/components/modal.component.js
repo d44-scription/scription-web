@@ -1,44 +1,29 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
+import { Button, Modal } from "react-bootstrap";
 
-function Modal(props) {
-  // Define callbacks for GETting and SETting the visibility of component
-  const [visible, setVisible] = useState(false);
-
-  // Set focus to the text field when shown
-  useEffect(() => {
-    setVisible(props.visible)
-    console.log(props.visible)
-  }, [setVisible, props.visible]);
-
+function ConfirmModal(props) {
   return (
-    <div
-      className="modal fade show"
-      style={visible ? { display: 'block' } : {}}
-      tabIndex="-1"
-      role="dialog">
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">
-              {props.title || 'Are you sure?'}
-            </h5>
-            <button type="button" className="close" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+    <Modal
+      show={props.visible}
+      onHide={props.closeAction}
+    >
+      <Modal.Header>
+        <Modal.Title>{props.title || 'Are you sure?'}</Modal.Title>
+      </Modal.Header>
 
-          <div className="modal-body">
-            <p>{ props.text }</p>
-          </div>
+      <Modal.Body>{props.text}</Modal.Body>
 
-          <div className="modal-footer">
-            <button type="button" className="btn btn-primary">OK</button>
-            <button type="button" className="btn btn-secondary">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={props.closeAction}>
+          Close
+        </Button>
+
+        <Button variant="primary" onClick={props.confirmAction}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 
-export default Modal;
+export default ConfirmModal;
