@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
 import Notebook from "./notebook.component";
-import Modal from "../modal.component";
+import ConfirmModal from "../modal.component";
+import ListGroup from "react-bootstrap/ListGroup";
 
 function Index(props) {
   // Define callbacks for GETting and SETting the component state
@@ -30,8 +31,9 @@ function Index(props) {
 
   const showModal = useCallback((id, name) => {
     setIsModalVisible(true);
-    setModalText(`This will delete ${name}. Are you sure you wish to continue?`);
-  }, [])
+    setCurrentId(id);
+    setModalText(`This will delete ${name} and all it's associated notes. Are you sure you wish to continue?`);
+  }, [setIsModalVisible, setCurrentId, setModalText])
 
   // Callback used when the delete icon is clicked
   const deleteNotebook = useCallback((id) => {
@@ -43,6 +45,8 @@ function Index(props) {
         setNotebooks(remainingNotebooks);
         setCurrentIndex(-1);
         setCurrentId(null);
+
+        setIsModalVisible(false)
       })
       .catch((e) => {
         console.log(e)
@@ -59,19 +63,20 @@ function Index(props) {
     <div className="list row">
       <div className="col-md-6">
         <h1>Notebooks</h1>
-        <ul className="list-group">
+
+        <ListGroup as="ul">
           {notebooks &&
             notebooks.map((notebook, index) => (
-              <li
-                key={index}
-                className={`list-group-item d-inline-flex justify-content-between ${(index === currentIndex ? "active" : "")}`}
+              <ListGroup.Item
+                eventKey={index}
+                active={index === currentIndex}
                 onClick={() => setActiveNotebook(notebook.id, index)}
               >
-                <p>
-                  {notebook.name}
-                </p>
+                <section className="d-inline-flex justify-content-between w-100 align-items-center">
+                  <p style={{margin: '0.75rem'}}>
+                    {notebook.name}
+                  </p>
 
-                <p>
                   <svg
                     onClick={() => showModal(notebook.id, notebook.name)}
                     width="1em"
@@ -83,10 +88,10 @@ function Index(props) {
                   >
                     <path fillRule="evenodd" d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
                   </svg>
-                </p>
-              </li>
+                </section>
+              </ListGroup.Item>
             ))}
-        </ul>
+        </ListGroup>
       </div>
 
       <div className="col-md-6">
@@ -100,11 +105,13 @@ function Index(props) {
           )}
       </div>
 
-      <Modal
+      <ConfirmModal
         visible={isModalVisible}
         title='Delete notebook?'
         text={modalText}
-      ></Modal>
+        confirmAction={() => { deleteNotebook(currentId) }}
+        closeAction={() => setIsModalVisible(false)}
+      ></ConfirmModal>
     </div>
   );
 }
