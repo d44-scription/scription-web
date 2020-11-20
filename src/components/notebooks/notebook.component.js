@@ -16,7 +16,7 @@ function Notebook(props) {
         const notebook = response.data
 
         setName(notebook.name)
-        setSummary("MOCK SUMMARY\nOn multiple lines\n\nFin")
+        setSummary(notebook.summary)
         setNotes(notebook.notes)
       })
       .catch(e => {

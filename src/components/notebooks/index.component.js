@@ -68,7 +68,7 @@ function Index(props) {
           {notebooks &&
             notebooks.map((notebook, index) => (
               <ListGroup.Item
-                eventKey={index}
+                key={index}
                 active={index === currentIndex}
                 onClick={() => setActiveNotebook(notebook.id, index)}
               >
