@@ -20,15 +20,15 @@ function TextArea(props) {
     setAtRest(true)
     setIsBusy(true)
 
-    // NotebookDataService.update(id, model, param, value)
-    //   .then(() => {
-    setIsBusy(false)
-    setError('')
-    // })
-    // .catch(e => {
-    //   setIsBusy(false)
-    //   setError(e.response.data.join(', '))
-    // });
+    NotebookDataService.update(id, model, param, value)
+    .then(() => {
+      setIsBusy(false)
+      setError('')
+    })
+    .catch(e => {
+      setIsBusy(false)
+      setError(e.response.data.join(', '))
+    });
   }, [value, props, setIsBusy, setError]);
 
   // Callback(/event handler) for when text is changed
@@ -85,13 +85,13 @@ function TextArea(props) {
       <div
         className="d-inline-flex justify-content-start align-items-center w-100">
         <section
-          className={`inline-label ${atRest ? '' : 'hidden'}`}
+          className={`inline-label ${atRest ? '' : 'hidden'} ${props.value === null && value === null ? 'placeholder' : '' }`}
           onClick={onSpanClick}>
           <span
             className={"inline-textarea-label"}
             style={{ fontSize: props.fontSize || '1rem' }}
           >
-            {value || props.value}
+            {value || props.value || `No ${props.param} saved.`}
           </span>
         </section>
 
