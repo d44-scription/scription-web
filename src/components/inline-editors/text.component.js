@@ -86,7 +86,7 @@ function Text(props) {
         className="d-inline-flex justify-content-start align-items-center w-100">
         <span
           style={{fontSize: props.fontSize || '1rem'}}
-          className={`inline-text-label inline-label ${atRest ? '' : 'hidden'} ${props.value === null && value === null ? 'placeholder' : '' }`}
+          className={`inline-text-label inline-label ${atRest ? '' : 'hidden'} ${props.value && value ? '' : 'placeholder' }`}
           onClick={onSpanClick}
         >
           {value || props.value || `No ${props.param} saved.`}
