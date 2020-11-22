@@ -85,7 +85,7 @@ function TextArea(props) {
       <div
         className="d-inline-flex justify-content-start align-items-center w-100">
         <section
-          className={`inline-label ${atRest ? '' : 'hidden'} ${props.value === null && value === null ? 'placeholder' : '' }`}
+          className={`inline-label ${atRest ? '' : 'hidden'} ${props.value && value ? '' : 'placeholder' }`}
           onClick={onSpanClick}>
           <span
             className={"inline-textarea-label"}

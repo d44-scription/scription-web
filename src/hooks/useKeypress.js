@@ -8,11 +8,14 @@ import { useEffect } from "react"
  */
 export default function useKeypress(key, action) {
   useEffect(() => {
-    function onKeyUp(e) {
-      if ((e.key === key) && !e.shiftKey) action()
+    function onKeyDown(e) {
+      if ((e.key === key) && !e.shiftKey) {
+        e.preventDefault();
+        action();
+      }
     }
 
-    window.addEventListener("keyup", onKeyUp)
-    return () => window.removeEventListener('keyup', onKeyUp);
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, [key, action]);
 }
