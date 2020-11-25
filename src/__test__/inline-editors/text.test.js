@@ -5,7 +5,7 @@ import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 import userEvent from '@testing-library/user-event';
 
-it('correctly enters and leaves busy state', async () => {
+it('correctly enters and leaves rest state', async () => {
   let value = 'Test Text'
   const successfulResponse = {
     code: 200
@@ -56,8 +56,39 @@ it('correctly enters and leaves busy state', async () => {
   expect(screen.getByTitle('Saving changes')).not.toBeVisible();
 });
 
-it('renders errors', async () => {
-})
-
 it('renders with a given font size', async () => {
+  let value = 'Test Text'
+  let fontSize = '2rem'
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(<Text value={value} fontSize={fontSize}/>);
+  });
+
+  // Confirm span has correct font size
+  expect(screen.getByText(value).style.cssText.includes('font-size: 2rem')).toBe(true)
+
+  // Click span
+  userEvent.click(screen.getByText(value));
+
+  // Confirm text field has correct font size
+  expect(screen.getByRole('textbox').style.cssText.includes('font-size: 2rem')).toBe(true)
+});
+
+it('renders with a default font size', async () => {
+  let value = 'Test Text'
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(<Text value={value}/>);
+  });
+
+  // Confirm span has correct font size
+  expect(screen.getByText(value).style.cssText.includes('font-size: 1rem')).toBe(true)
+
+  // Click span
+  userEvent.click(screen.getByText(value));
+
+  // Confirm text field has correct font size
+  expect(screen.getByRole('textbox').style.cssText.includes('font-size: 1rem')).toBe(true)
 });
