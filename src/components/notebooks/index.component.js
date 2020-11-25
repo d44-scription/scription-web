@@ -79,7 +79,7 @@ function Index(props) {
 
                   <svg
                     onClick={() => showModal(notebook.id, notebook.name)}
-                    alt={`Delete ${notebook.name}`}
+                    title={`Delete ${notebook.name}`}
                     width="1em"
                     height="1em"
                     viewBox="0 0 16 16"

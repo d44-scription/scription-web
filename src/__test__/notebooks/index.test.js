@@ -1,44 +1,34 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
+import Index from '../../components/notebooks/index.component';
+import { act } from "react-dom/test-utils";
 import http from "../../http-common";
-import Index from "../../components/notebooks/index.component";
 
-jest.mock('http');
-
-test('renders component', () => {
-  const getSpy = jest.spyOn(http, 'get')
-  let resp = {
-    0: {
-      id: 1,
-      name: 'Mocked Notebook 1',
-      summary: 'Mocked notebook summary',
-      order_index: 0
+it('renders list of notebooks', async () => {
+  const fakeNotebook = [
+    {
+      name: "Notebook 1",
+      id: 1
     },
-    1: {
-      id: 2,
-      name: 'Mocked Notebook 2',
-      summary: 'Mocked notebook summary',
-      order_index: 1
-    }
-  }
+    {
+      name: "Notebook 2",
+      id: 2
+    },
+  ];
 
-    http.get.mockResolvedValue(resp)
+  jest.spyOn(http, "get").mockImplementation(() => Promise.resolve({
+    data: fakeNotebook
+  }));
 
-    render(
-      <Index
-      ></Index>
-    )
-
-  waitFor(() => {
-    console.log(screen.debug())
-    expect(getSpy).toHaveBeenCalledWith('/notebooks.json');
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(<Index />);
   });
 
-  expect(screen.getByText('Mocked Notebook 1')).toBeInTheDocument();
-  expect(screen.getByAltText('Delete Mocked Notebook 1')).toBeInTheDocument();
+  expect(screen.getByText('Notebook 1')).toBeInTheDocument();
+  expect(screen.getByTitle('Delete Notebook 1')).toBeInTheDocument();
 
-  expect(screen.getByText('Mocked Notebook 2')).toBeInTheDocument();
-  expect(screen.getByAltText('Delete Mocked Notebook gyvbhjnkhbgvyuhi2')).toBeInTheDocument();
+  expect(screen.getByText('Notebook 2')).toBeInTheDocument();
+  expect(screen.getByTitle('Delete Notebook 2')).toBeInTheDocument();
 
-  userEvent.click($('.list-group-item')[0])
+  http.get.mockRestore();
 });
