@@ -67,7 +67,7 @@ function Index(props) {
         <ListGroup as="ul">
           {notebooks &&
             notebooks.map((notebook, index) => (
-              <ListGroup.Item
+              <ListGroup.Item as="li"
                 key={index}
                 active={index === currentIndex}
                 onClick={() => setActiveNotebook(notebook.id, index)}
