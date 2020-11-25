@@ -87,8 +87,10 @@ function TextArea(props) {
         <section
           className={`inline-label ${props.value && value ? '' : 'placeholder' }`}
           onClick={onSpanClick}
-          hidden={!atRest}>
+          hidden={!atRest}
+          role='text'>
           <span
+            role='label'
             className="inline-textarea-label"
             style={{ fontSize: props.fontSize || '1rem' }}
           >
