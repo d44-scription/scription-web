@@ -1,4 +1,3 @@
-// value, id, model, param, fontsize
 import { render, screen } from '@testing-library/react';
 import TextArea from '../../components/inline-editors/textarea.component';
 import { act } from "react-dom/test-utils";

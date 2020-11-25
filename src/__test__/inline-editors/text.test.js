@@ -1,4 +1,3 @@
-// value, id, model, param, fontsize
 import { render, screen } from '@testing-library/react';
 import Text from '../../components/inline-editors/text.component';
 import { act } from "react-dom/test-utils";
