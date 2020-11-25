@@ -1,7 +1,7 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Switch, Route, Link } from 'react-router-dom';
-import Index from './components/notebooks/index.component';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Switch, Route, Link } from "react-router-dom";
+import Index from "./components/notebooks/index.component";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a href="/" className="navbar-brand">
           Scription
-          </a>
+        </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/notebooks"} className="nav-link">
