@@ -85,10 +85,11 @@ function TextArea(props) {
       <div
         className="d-inline-flex justify-content-start align-items-center w-100">
         <section
-          className={`inline-label ${atRest ? '' : 'hidden'} ${props.value && value ? '' : 'placeholder' }`}
-          onClick={onSpanClick}>
+          className={`inline-label ${props.value && value ? '' : 'placeholder' }`}
+          onClick={onSpanClick}
+          hidden={!atRest}>
           <span
-            className={"inline-textarea-label"}
+            className="inline-textarea-label"
             style={{ fontSize: props.fontSize || '1rem' }}
           >
             {value || props.value || `No ${props.param} saved.`}
@@ -102,15 +103,17 @@ function TextArea(props) {
           value={value || ''}
           onChange={onChange}
           onBlur={onBlur}
-          className={`inline-input form-control ${atRest ? 'hidden' : ''}`}
-          disabled={isBusy ? true : false}
+          className='inline-input form-control'
+          hidden={atRest}
+          disabled={isBusy}
         />
 
         <svg
           width="1em"
           height="1em"
           viewBox="0 0 16 16"
-          className={`bi bi-arrow-repeat busy-svg ${isBusy ? '' : 'hidden'}`}
+          className='bi bi-arrow-repeat busy-svg'
+          hidden={!isBusy}
           fill="#a0a0a0"
           xmlns="http://www.w3.org/2000/svg">
           <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
