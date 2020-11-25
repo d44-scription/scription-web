@@ -67,7 +67,7 @@ function Index(props) {
         <ListGroup as="ul">
           {notebooks &&
             notebooks.map((notebook, index) => (
-              <ListGroup.Item
+              <ListGroup.Item as="li"
                 key={index}
                 active={index === currentIndex}
                 onClick={() => setActiveNotebook(notebook.id, index)}
@@ -79,6 +79,7 @@ function Index(props) {
 
                   <svg
                     onClick={() => showModal(notebook.id, notebook.name)}
+                    title={`Delete ${notebook.name}`}
                     width="1em"
                     height="1em"
                     viewBox="0 0 16 16"
