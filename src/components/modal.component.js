@@ -3,12 +3,9 @@ import { Button, Modal } from "react-bootstrap";
 
 function ConfirmModal(props) {
   return (
-    <Modal
-      show={props.visible}
-      onHide={props.closeAction}
-    >
+    <Modal show={props.visible} onHide={props.closeAction}>
       <Modal.Header>
-        <Modal.Title>{props.title || 'Are you sure?'}</Modal.Title>
+        <Modal.Title>{props.title || "Are you sure?"}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>{props.text}</Modal.Body>
