@@ -1,33 +1,25 @@
-import { render, screen } from '@testing-library/react';
-import ConfirmModal from '../components/modal.component'
-import userEvent from '@testing-library/user-event'
+import { render, screen } from "@testing-library/react";
+import ConfirmModal from "../components/modal.component";
+import userEvent from "@testing-library/user-event";
 
-test('shows and hides modal when prop changes', () => {
-  const { rerender } = render(
-    <ConfirmModal
-      visible={false}
-    ></ConfirmModal>
-  );
+test("shows and hides modal when prop changes", () => {
+  const { rerender } = render(<ConfirmModal visible={false}></ConfirmModal>);
 
   let titleText = screen.queryByText(/Are you sure\?/i);
   expect(titleText).not.toBeInTheDocument();
 
-  rerender(
-    <ConfirmModal
-      visible={true}
-    ></ConfirmModal>
-  );
+  rerender(<ConfirmModal visible={true}></ConfirmModal>);
 
   titleText = screen.queryByText(/Are you sure\?/i);
   expect(titleText).toBeInTheDocument();
 });
 
-test('renders custom modal text', () => {
+test("renders custom modal text", () => {
   render(
     <ConfirmModal
       visible={true}
-      title='Test Modal Title'
-      text='Test Modal Text'
+      title="Test Modal Title"
+      text="Test Modal Text"
     ></ConfirmModal>
   );
 
@@ -38,38 +30,38 @@ test('renders custom modal text', () => {
   expect(bodyText).toBeInTheDocument();
 });
 
-test('successfully runs prop on close', () => {
-  let testVal = false
+test("successfully runs prop on close", () => {
+  let testVal = false;
 
   render(
     <ConfirmModal
       visible={true}
-      closeAction={() => testVal = true}
+      closeAction={() => (testVal = true)}
     ></ConfirmModal>
   );
 
   // Sanity check
-  expect(testVal).toBeFalsy()
+  expect(testVal).toBeFalsy();
 
-  userEvent.click(screen.getByText('Cancel'))
+  userEvent.click(screen.getByText("Cancel"));
 
-  expect(testVal).toBeTruthy()
+  expect(testVal).toBeTruthy();
 });
 
-test('successfully runs prop on confirm', () => {
-  let testVal = false
+test("successfully runs prop on confirm", () => {
+  let testVal = false;
 
   render(
     <ConfirmModal
       visible={true}
-      confirmAction={() => testVal = true}
+      confirmAction={() => (testVal = true)}
     ></ConfirmModal>
   );
 
   // Sanity check
-  expect(testVal).toBeFalsy()
+  expect(testVal).toBeFalsy();
 
-  userEvent.click(screen.getByText('OK'))
+  userEvent.click(screen.getByText("OK"));
 
-  expect(testVal).toBeTruthy()
+  expect(testVal).toBeTruthy();
 });

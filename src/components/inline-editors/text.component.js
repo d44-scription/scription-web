@@ -106,6 +106,7 @@ function Text(props) {
         />
 
         <svg
+          title="Saving changes"
           width="1em"
           height="1em"
           viewBox="0 0 16 16"

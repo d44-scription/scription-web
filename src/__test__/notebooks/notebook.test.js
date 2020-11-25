@@ -3,7 +3,7 @@ import Notebook from '../../components/notebooks/notebook.component';
 import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 
-it('renders list of notebooks', async () => {
+it('renders information for a given notebook', async () => {
   const fakeNotebook = {
     name: "Notebook 1",
     id: 1,
