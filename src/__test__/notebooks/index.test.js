@@ -5,7 +5,7 @@ import http from "../../http-common";
 import userEvent from '@testing-library/user-event'
 
 it('renders list of notebooks', async () => {
-  const fakeNotebook = [
+  const fakeNotebooks = [
     {
       name: "Notebook 1",
       id: 1
@@ -17,7 +17,7 @@ it('renders list of notebooks', async () => {
   ];
 
   jest.spyOn(http, "get").mockImplementation(() => Promise.resolve({
-    data: fakeNotebook
+    data: fakeNotebooks
   }));
 
   // Use the asynchronous version of act to apply resolved promises
