@@ -5,11 +5,11 @@ import userEvent from "@testing-library/user-event";
 test("shows and hides modal when prop changes", () => {
   const { rerender } = render(<ConfirmModal visible={false}></ConfirmModal>);
 
-  expect(screen.queryByText('Are you sure?')).not.toBeInTheDocument();
+  expect(screen.queryByText("Are you sure?")).not.toBeInTheDocument();
 
   rerender(<ConfirmModal visible={true}></ConfirmModal>);
 
-  expect(screen.getByText('Are you sure?')).toBeInTheDocument();
+  expect(screen.getByText("Are you sure?")).toBeInTheDocument();
 });
 
 test("renders custom modal text", () => {
@@ -21,8 +21,8 @@ test("renders custom modal text", () => {
     ></ConfirmModal>
   );
 
-  expect(screen.getByText('Test Modal Title')).toBeInTheDocument();
-  expect(screen.getByText('Test Modal Text')).toBeInTheDocument();
+  expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
+  expect(screen.getByText("Test Modal Text")).toBeInTheDocument();
 });
 
 test("successfully runs prop on close", () => {

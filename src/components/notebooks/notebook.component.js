@@ -10,24 +10,27 @@ function Notebook(props) {
   const [notes, setNotes] = useState([]);
 
   // Callback to update the displayed notebook
-  const retrieveNotebook = useCallback((id) => {
-    NotebookDataService.get(id)
-      .then(response => {
-        const notebook = response.data
+  const retrieveNotebook = useCallback(
+    (id) => {
+      NotebookDataService.get(id)
+        .then((response) => {
+          const notebook = response.data;
 
-        setName(notebook.name)
-        setSummary(notebook.summary)
-        setNotes(notebook.notes)
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }, [setName, setSummary, setNotes]);
+          setName(notebook.name);
+          setSummary(notebook.summary);
+          setNotes(notebook.notes);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    [setName, setSummary, setNotes]
+  );
 
   // Update notebook when the given id prop changes
   useEffect(() => {
-    retrieveNotebook(props.id)
-  }, [props.id, retrieveNotebook])
+    retrieveNotebook(props.id);
+  }, [props.id, retrieveNotebook]);
 
   return (
     <div>
@@ -36,24 +39,17 @@ function Notebook(props) {
         id={props.id}
         model="notebook"
         param="name"
-        fontSize="2rem">
-      </Text>
+        fontSize="2rem"
+      ></Text>
 
       <TextArea
         value={summary}
         id={props.id}
         model="notebook"
-        param="summary">
-      </TextArea>
+        param="summary"
+      ></TextArea>
 
-      {notes &&
-        notes.map((note, index) => (
-          <li
-            key={index}
-          >
-            {note.content}
-          </li>
-        ))}
+      {notes && notes.map((note, index) => <li key={index}>{note.content}</li>)}
     </div>
   );
 }
