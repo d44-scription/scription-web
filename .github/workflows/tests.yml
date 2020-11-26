@@ -16,7 +16,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Run Tests
-        uses: stefanoeb/jest-action@1.0.3
-        env:
-          CI: true
+      - name: Run tests using docker-compose
+      - run: docker-compose run --rm web yarn test
