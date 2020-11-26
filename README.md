@@ -8,7 +8,7 @@ This application uses a simplified version of Git-Flow to prevent environment va
 
 ## Running locally
 
-This app is dockerised, so setup should be standardised. Running:
+This app is dockerised, so setup should be standard. Running:
 
 ```docker
 $ docker-compose-build
