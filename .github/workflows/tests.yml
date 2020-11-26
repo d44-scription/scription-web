@@ -16,6 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests using docker-compose
-        run: |
-          docker-compose run --rm web npm test
+      - name: Run Tests
+        uses: stefanoeb/jest-action@1.0.3
+        env:
+          CI: true
