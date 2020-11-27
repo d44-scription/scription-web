@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This application uses a simplified version of Git-Flow to prevent environment variables being baked into the production environment. All new development should be branched off `develop`, which will automatically deploy to the staging server once merged. When changes have been tested, they should be merged into `main` which will deploy to production.
 
+All tests are run on PR to develop or main branches using GitHub actions. Any failures will be flagged & should not be merged.
+
 ## Running locally
 
 This app is dockerised, so setup should be standardised. Running:

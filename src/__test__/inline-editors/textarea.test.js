@@ -108,6 +108,6 @@ it("renders with a default font size", async () => {
 
   // Confirm text field has correct font size
   expect(
-    screen.getByRole("textbox").style.cssText.includes("BREAKING TEST")
+    screen.getByRole("textbox").style.cssText.includes("font-size: 1rem")
   ).toBe(true);
 });
