@@ -1,0 +1,20 @@
+name: Run tests using Docker
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests using docker-compose
+        run: docker-compose run --rm -e CI=true web yarn test
