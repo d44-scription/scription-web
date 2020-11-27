@@ -1,4 +1,4 @@
-name: Run specs on PR
+name: Run tests using Docker
 
 on:
   pull_request:
