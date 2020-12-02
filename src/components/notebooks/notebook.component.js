@@ -48,8 +48,6 @@ function Notebook(props) {
         model="notebook"
         param="summary"
       ></TextArea>
-
-      {notes && notes.map((note, index) => <li key={index}>{note.content}</li>)}
     </div>
   );
 }
