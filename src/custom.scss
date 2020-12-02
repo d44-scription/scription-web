@@ -2,5 +2,12 @@ $primary: #f5b342;
 $body-bg: #424242;
 $body-color: #f5b342;
 
+$table-bg-scale: -85%;
+
 // Import Bootstrap
 @import '~bootstrap/scss/bootstrap.scss';
+
+.form-control:focus {
+  background-color: scale-color($primary, $table-bg-scale);
+  color: $body-bg;
+}

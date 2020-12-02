@@ -1,4 +1,5 @@
 $subtle: #c4c4c4;
+$error: #f76767;
 
 .inline-label {
   border-bottom: 2px dashed $subtle;
@@ -22,7 +23,7 @@ $subtle: #c4c4c4;
 }
 
 .error {
-  color: #850101;
+  color: $error;
   padding: 0.3rem 0;
   font-size: 0.85rem;
 }
