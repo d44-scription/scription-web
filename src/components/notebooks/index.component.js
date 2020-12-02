@@ -64,10 +64,15 @@ function Index(props) {
   // Callback triggered when list items are clicked
   const setActiveNotebook = useCallback(
     (id, index) => {
-      setCurrentId(id);
-      setCurrentIndex(index);
+      if (currentId === id) {
+        setCurrentId(null);
+        setCurrentIndex(-1);
+      } else {
+          setCurrentId(id);
+          setCurrentIndex(index);
+      }
     },
-    [setCurrentId, setCurrentIndex]
+    [setCurrentId, setCurrentIndex, currentId]
   );
 
   return (
@@ -80,6 +85,7 @@ function Index(props) {
             notebooks.map((notebook, index) => (
               <ListGroup.Item
                 as="li"
+                variant="primary"
                 key={index}
                 active={index === currentIndex}
                 onClick={() => setActiveNotebook(notebook.id, index)}

@@ -1,23 +1,14 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Switch, Route, Link } from "react-router-dom";
+import "./App.scss";
+import { Switch, Route } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
 import Index from "./components/notebooks/index.component";
 
 function App() {
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/" className="navbar-brand">
-          Scription
-        </a>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/notebooks"} className="nav-link">
-              Notebooks
-            </Link>
-          </li>
-        </div>
-      </nav>
+      <Navbar bg="primary" variant="light">
+        <Navbar.Brand href="/">Scription</Navbar.Brand>
+      </Navbar>
 
       <div className="container mt-3">
         <Switch>

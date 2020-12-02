@@ -1,0 +1,20 @@
+$primary: #f5b342;
+$dark: #424242;
+
+$body-bg: $dark;
+$body-color: $primary;
+$navbar-light-brand-color: $dark;
+
+$table-bg-scale: -85%;
+
+// Import Bootstrap
+@import '~bootstrap/scss/bootstrap.scss';
+
+.form-control:focus {
+  background-color: scale-color($primary, $table-bg-scale);
+  color: $body-bg;
+}
+
+.navbar-brand {
+  margin-left: 0.3125rem;
+}

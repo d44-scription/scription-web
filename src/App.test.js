@@ -9,8 +9,6 @@ test("renders navigation bar", () => {
     </BrowserRouter>
   );
   const homeLink = screen.queryByText(/Scription/i);
-  const notebooksLink = screen.getAllByText(/Notebooks/i)[0];
 
   expect(homeLink).toBeInTheDocument();
-  expect(notebooksLink).toBeInTheDocument();
 });
