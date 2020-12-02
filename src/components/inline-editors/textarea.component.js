@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import useKeypress from "../../hooks/useKeypress";
 import NotebookDataService from "../../services/notebook.service";
-import "../../css/inline-editor.css";
+import "../../scss/inline-editor.scss";
 
 function TextArea(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component

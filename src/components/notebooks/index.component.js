@@ -80,6 +80,7 @@ function Index(props) {
             notebooks.map((notebook, index) => (
               <ListGroup.Item
                 as="li"
+                variant="primary"
                 key={index}
                 active={index === currentIndex}
                 onClick={() => setActiveNotebook(notebook.id, index)}

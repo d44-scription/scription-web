@@ -1,5 +1,7 @@
+$subtle: #c4c4c4;
+
 .inline-label {
-  border-bottom: 2px dashed #a0a0a0;
+  border-bottom: 2px dashed $subtle;
   padding: 0.375rem 0;
   font-weight: 500;
   cursor: pointer;
@@ -15,7 +17,7 @@
 }
 
 .placeholder {
-  color: #a0a0a0;
+  color: $subtle;
   font-style: italic;
 }
 
