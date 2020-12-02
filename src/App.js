@@ -6,7 +6,7 @@ import Index from "./components/notebooks/index.component";
 function App() {
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="primary" variant="light">
         <Navbar.Brand href="/">React Bootstrap</Navbar.Brand>
       </Navbar>
 

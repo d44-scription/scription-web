@@ -1,6 +1,9 @@
 $primary: #f5b342;
-$body-bg: #424242;
-$body-color: #f5b342;
+$dark: #424242;
+
+$body-bg: $dark;
+$body-color: $primary;
+$navbar-light-brand-color: $dark;
 
 $table-bg-scale: -85%;
 
@@ -10,4 +13,8 @@ $table-bg-scale: -85%;
 .form-control:focus {
   background-color: scale-color($primary, $table-bg-scale);
   color: $body-bg;
+}
+
+.navbar-brand {
+  margin-left: 0.3125rem;
 }
