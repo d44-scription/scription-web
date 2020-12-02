@@ -64,10 +64,15 @@ function Index(props) {
   // Callback triggered when list items are clicked
   const setActiveNotebook = useCallback(
     (id, index) => {
-      setCurrentId(id);
-      setCurrentIndex(index);
+      if (currentId === id) {
+        setCurrentId(null);
+        setCurrentIndex(-1);
+      } else {
+          setCurrentId(id);
+          setCurrentIndex(index);
+      }
     },
-    [setCurrentId, setCurrentIndex]
+    [setCurrentId, setCurrentIndex, currentId]
   );
 
   return (
