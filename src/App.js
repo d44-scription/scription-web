@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Navbar bg="primary" variant="light">
-        <Navbar.Brand href="/">React Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="/">Scription</Navbar.Brand>
       </Navbar>
 
       <div className="container mt-3">
