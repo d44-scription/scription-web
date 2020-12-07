@@ -1,11 +1,20 @@
 $subtle: #c4c4c4;
 $error: #f76767;
+$highlight: #fad9a1;
+$highlight-shadow: #f5b34240;
 
 .inline-label {
   border-bottom: 2px dashed $subtle;
   padding: 0.375rem 0;
   font-weight: 500;
   cursor: pointer;
+}
+
+.inline-label:focus {
+  border-color: $highlight;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem $highlight-shadow;
+  border-radius: 0.25rem;
 }
 
 .inline-text-label {
