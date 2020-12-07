@@ -13,6 +13,7 @@ function TextArea(props) {
   const [error, setError] = useState("");
 
   const inputRef = useRef(null);
+  const spanRef = useRef(null);
 
   // Function to submit data & return to rest state
   const saveAndExit = useCallback(() => {
@@ -55,8 +56,16 @@ function TextArea(props) {
   useKeypress(
     "Enter",
     () => {
-      if (document.activeElement === inputRef.current) {
-        saveAndExit();
+      if (atRest) {
+        if (document.activeElement === spanRef.current) {
+          // If component is at rest and span has focus, enter should simulate clicking the span
+          onSpanClick();
+        }
+      } else {
+        if (document.activeElement === inputRef.current) {
+          // If component is not at rest and text field has focus, enter should save and exit
+          saveAndExit();
+        }
       }
     },
     [atRest, setAtRest, value]
@@ -91,11 +100,13 @@ function TextArea(props) {
       <div className="d-inline-flex justify-content-start align-items-center w-100">
         <section
           className={`inline-label ${
-            props.value && value ? "" : "placeholder"
+            props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}
           hidden={!atRest}
           role="text"
+          tabIndex="0"
+          ref={spanRef}
         >
           <span
             role="label"
