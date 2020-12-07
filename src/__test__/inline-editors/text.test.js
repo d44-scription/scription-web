@@ -112,10 +112,13 @@ it("responds to tab correctly", async () => {
 
   userEvent.tab();
 
-  // Confirm that span has focus
+  // Confirm that we are in rest state
   const span = screen.getByText(value);
-  expect(document.activeElement).toEqual(span);
 
+  expect(span).toBeVisible();
+  expect(screen.queryByRole("textbox")).toBeNull();
+
+  // Press enter on focused element
   userEvent.type(span, "{enter}", { skipClick: true });
 
   // Confirm that we have left rest state

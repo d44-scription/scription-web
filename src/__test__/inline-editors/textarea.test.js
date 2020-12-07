@@ -126,6 +126,10 @@ it("responds to tab correctly", async () => {
   const span = screen.getByRole("text");
   expect(document.activeElement).toEqual(span);
 
+  // Confirm we are still in rest state
+  expect(span).toBeVisible();
+  expect(screen.queryByRole("textbox")).toBeNull();
+
   userEvent.type(span, "{enter}", { skipClick: true });
 
   // Confirm that we have left rest state
