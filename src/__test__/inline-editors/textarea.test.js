@@ -111,3 +111,24 @@ it("renders with a default font size", async () => {
     screen.getByRole("textbox").style.cssText.includes("font-size: 1rem")
   ).toBe(true);
 });
+
+it("responds to tab correctly", async () => {
+  let value = "Test Text";
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(<TextArea value={value} />);
+  });
+
+  userEvent.tab();
+
+  // Confirm that span has focus
+  const span = screen.getByRole("text");
+  expect(document.activeElement).toEqual(span);
+
+  userEvent.type(span, "{enter}", { skipClick: true });
+
+  // Confirm that we have left rest state
+  expect(screen.queryByRole("text")).toBeNull();
+  expect(screen.getByRole("textbox")).toBeVisible();
+});
