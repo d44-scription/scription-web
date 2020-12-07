@@ -13,7 +13,6 @@ function Text(props) {
   const [error, setError] = useState("");
 
   const inputRef = useRef(null);
-  const spanRef = useRef(null);
 
   // Function to submit data & return to rest state
   const saveAndExit = useCallback(() => {
@@ -52,20 +51,12 @@ function Text(props) {
     [atRest, setAtRest, setValue]
   );
 
-  // Callback for enter key
+  // Callback for enter key - save & exit (*only if the textbox is focused)
   useKeypress(
     "Enter",
     () => {
-      if (atRest) {
-        if (document.activeElement === spanRef.current) {
-          // If component is at rest and span has focus, enter should simulate clicking the span
-          onSpanClick();
-        }
-      } else {
-        if (document.activeElement === inputRef.current) {
-          // If component is not at rest and text field has focus, enter should save and exit
-          saveAndExit();
-        }
+      if (document.activeElement === inputRef.current) {
+        saveAndExit();
       }
     },
     [atRest, setAtRest, value]
@@ -105,8 +96,6 @@ function Text(props) {
           }`}
           onClick={onSpanClick}
           hidden={!atRest}
-          tabIndex="0"
-          ref={spanRef}
         >
           {value || props.value || `No ${props.param} saved.`}
         </span>
