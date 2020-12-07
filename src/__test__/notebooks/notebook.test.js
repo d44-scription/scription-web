@@ -25,4 +25,6 @@ it("renders information for a given notebook", async () => {
   // Confirm data is retrieved and displayed correctly
   expect(screen.getByText("Notebook 1")).toBeInTheDocument();
   expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
+
+  http.get.mockRestore();
 });

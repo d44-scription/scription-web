@@ -89,7 +89,7 @@ function Index(props) {
         setActiveNotebook(id, index)
       }
     },
-    []
+    [setActiveNotebook]
   );
 
   return (
