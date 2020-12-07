@@ -112,9 +112,11 @@ it("responds to tab correctly", async () => {
 
   userEvent.tab();
 
-  // Confirm that we are in rest state
+  // Confirm that span has focus
   const span = screen.getByText(value);
+  expect(document.activeElement).toEqual(span);
 
+  // Confirm we are in rest state
   expect(span).toBeVisible();
   expect(screen.queryByRole("textbox")).toBeNull();
 
