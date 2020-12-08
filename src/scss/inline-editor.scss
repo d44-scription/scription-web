@@ -1,11 +1,14 @@
-$subtle: #c4c4c4;
-$error: #f76767;
+@import "../variables.scss";
 
 .inline-label {
   border-bottom: 2px dashed $subtle;
   padding: 0.375rem 0;
   font-weight: 500;
   cursor: pointer;
+}
+
+.inline-label:focus {
+  @include tabbable;
 }
 
 .inline-text-label {

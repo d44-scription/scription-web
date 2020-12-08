@@ -92,7 +92,7 @@ function Text(props) {
         <span
           style={{ fontSize: props.fontSize || "1rem" }}
           className={`inline-text-label inline-label ${
-            props.value && value ? "" : "placeholder"
+            props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}
           hidden={!atRest}
