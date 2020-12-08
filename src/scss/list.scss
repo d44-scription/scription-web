@@ -1,0 +1,9 @@
+@import '../variables.scss';
+
+li:focus {
+  @include tabbable;
+
+  section {
+    text-decoration: underline;
+  }
+}

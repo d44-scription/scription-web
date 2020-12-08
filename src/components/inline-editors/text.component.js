@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import useKeypress from "../../hooks/useKeypress";
 import NotebookDataService from "../../services/notebook.service";
-import "../../css/inline-editor.css";
+import "../../scss/inline-editor.scss";
 
 function Text(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -13,6 +13,7 @@ function Text(props) {
   const [error, setError] = useState("");
 
   const inputRef = useRef(null);
+  const spanRef = useRef(null);
 
   // Function to submit data & return to rest state
   const saveAndExit = useCallback(() => {
@@ -51,12 +52,20 @@ function Text(props) {
     [atRest, setAtRest, setValue]
   );
 
-  // Callback for enter key - save & exit (*only if the textbox is focused)
+  // Callback for enter key
   useKeypress(
     "Enter",
     () => {
-      if (document.activeElement === inputRef.current) {
-        saveAndExit();
+      if (atRest) {
+        if (document.activeElement === spanRef.current) {
+          // If component is at rest and span has focus, enter should simulate clicking the span
+          onSpanClick();
+        }
+      } else {
+        if (document.activeElement === inputRef.current) {
+          // If component is not at rest and text field has focus, enter should save and exit
+          saveAndExit();
+        }
       }
     },
     [atRest, setAtRest, value]
@@ -80,7 +89,8 @@ function Text(props) {
   // Update value when the given prop changes
   useEffect(() => {
     setValue(props.value);
-  }, [props.value]);
+    setError("");
+  }, [props.value, setError]);
 
   // Callback to update the rest state when the text span is clicked
   const onSpanClick = useCallback(() => setAtRest(false), [setAtRest]);
@@ -91,10 +101,12 @@ function Text(props) {
         <span
           style={{ fontSize: props.fontSize || "1rem" }}
           className={`inline-text-label inline-label ${
-            props.value && value ? "" : "placeholder"
+            props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}
           hidden={!atRest}
+          tabIndex="0"
+          ref={spanRef}
         >
           {value || props.value || `No ${props.param} saved.`}
         </span>
