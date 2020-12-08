@@ -106,32 +106,27 @@ describe("Text component", () => {
     ).toBe(true);
   });
 
-  // FIXME: This is a hacky workaround, but the input automatically gains focus in CI tests.
-  // In CI tests, this test is essentially useless as it just focuses the element and confirms
-  // it leaves rest state, as tested above. But the tests pass locally
-  if (!process.env.CI) {
-    test("responding to tab", async () => {
-      // Use the asynchronous version of act to apply resolved promises
-      await act(async () => {
-        render(<Text value={value} />);
-      });
-
-      userEvent.tab();
-
-      // Confirm that span has focus
-      const span = screen.getByText(value);
-      expect(document.activeElement).toEqual(span);
-
-      // Confirm we are in rest state
-      expect(span).toBeVisible();
-      expect(screen.queryByRole("textbox")).toBeNull();
-
-      // Press enter on focused element
-      userEvent.type(span, "{enter}", { skipClick: true });
-
-      // Confirm that we have left rest state
-      expect(screen.queryByText(value)).not.toBeVisible();
-      expect(screen.getByRole("textbox")).toBeVisible();
+  test("responding to tab", async () => {
+    // Use the asynchronous version of act to apply resolved promises
+    await act(async () => {
+      render(<Text value={value} />);
     });
-  }
+
+    userEvent.tab();
+
+    // Confirm that span has focus
+    const span = screen.getByText(value);
+    expect(document.activeElement).toEqual(span);
+
+    // Confirm we are in rest state
+    expect(span).toBeVisible();
+    expect(screen.queryByRole("textbox")).toBeNull();
+
+    // Press enter on focused element
+    userEvent.type(span, "{enter}", { skipClick: true });
+
+    // Confirm that we have left rest state
+    expect(screen.queryByText(value)).not.toBeVisible();
+    expect(screen.getByRole("textbox")).toBeVisible();
+  });
 });

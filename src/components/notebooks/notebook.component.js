@@ -7,7 +7,6 @@ function Notebook(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
   const [name, setName] = useState(null);
   const [summary, setSummary] = useState(null);
-  const [notes, setNotes] = useState([]);
 
   // Callback to update the displayed notebook
   const retrieveNotebook = useCallback(
@@ -18,13 +17,12 @@ function Notebook(props) {
 
           setName(notebook.name);
           setSummary(notebook.summary);
-          setNotes(notebook.notes);
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    [setName, setSummary, setNotes]
+    [setName, setSummary]
   );
 
   // Update notebook when the given id prop changes
