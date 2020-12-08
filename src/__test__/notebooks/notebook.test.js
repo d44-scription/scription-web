@@ -23,7 +23,7 @@ describe("Notebook component", () => {
     http.get.mockRestore();
   });
 
-  it("renders information for a given notebook", async () => {
+  test("rendering information for a given notebook", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
       render(<Notebook id="1" />);
