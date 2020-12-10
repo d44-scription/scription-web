@@ -156,4 +156,50 @@ describe("Text area component", () => {
     // Confirm that we have left rest state
     confirmActiveState();
   });
+
+  test("saving via help text", async () => {
+    await act(async () => {
+      render(<TextArea value={value} />);
+    });
+
+    // By default, should be in rest state
+    confirmRestState();
+
+    // Click span
+    userEvent.click(screen.getByRole("text"));
+
+    // When text clicked, exit rest state
+    confirmActiveState();
+
+    // Press `enter`
+    await act(async () => {
+      userEvent.click(screen.getByRole("button", { name: "enter" }));
+    });
+
+    // Confirm that we have returned to rest state
+    confirmRestState();
+  });
+
+  test("cancelling via help text", async () => {
+    await act(async () => {
+      render(<TextArea value={value} />);
+    });
+
+    // By default, should be in rest state
+    confirmRestState();
+
+    // Click span
+    userEvent.click(screen.getByRole("text"));
+
+    // When text clicked, exit rest state
+    confirmActiveState();
+
+    // Press `enter`
+    await act(async () => {
+      userEvent.click(screen.getByRole("button", { name: "escape" }));
+    });
+
+    // Confirm that we have returned to rest state
+    confirmRestState();
+  });
 });

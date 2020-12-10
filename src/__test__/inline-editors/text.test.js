@@ -40,8 +40,8 @@ describe("Text component", () => {
     expect(screen.queryByText(value)).not.toBeVisible();
 
     // Confirm help text shows
-    expect(screen.getByRole("button", { name: "enter" })).toBeVisible()
-    expect(screen.getByRole("button", { name: "escape" })).toBeVisible()
+    expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "escape" })).toBeVisible();
 
     // Confirm input field shows
     expect(screen.getByRole("textbox")).toBeVisible();
@@ -146,5 +146,51 @@ describe("Text component", () => {
 
     // Confirm that we have left rest state
     confirmActiveState();
+  });
+
+  test("saving via help text", async () => {
+    await act(async () => {
+      render(<Text value={value} />);
+    });
+
+    // By default, should be in rest state
+    confirmRestState();
+
+    // Click span
+    userEvent.click(screen.getByText(value));
+
+    // When text clicked, exit rest state
+    confirmActiveState();
+
+    // Press `enter`
+    await act(async () => {
+      userEvent.click(screen.getByRole("button", { name: "enter" }));
+    });
+
+    // Confirm that we have returned to rest state
+    confirmRestState();
+  });
+
+  test("cancelling via help text", async () => {
+    await act(async () => {
+      render(<Text value={value} />);
+    });
+
+    // By default, should be in rest state
+    confirmRestState();
+
+    // Click span
+    userEvent.click(screen.getByText(value));
+
+    // When text clicked, exit rest state
+    confirmActiveState();
+
+    // Press `enter`
+    await act(async () => {
+      userEvent.click(screen.getByRole("button", { name: "escape" }));
+    });
+
+    // Confirm that we have returned to rest state
+    confirmRestState();
   });
 });
