@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import useKeypress from "../../hooks/useKeypress";
 import NotebookDataService from "../../services/notebook.service";
 import "../../scss/inline-editor.scss";
-import { Link } from "react-router-dom";
 
 function Text(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -128,12 +128,19 @@ function Text(props) {
           title="Saving changes"
           hidden={!isBusy}
           size="sm"
-        ></Spinner>
+        />
       </div>
 
       <p className="help-text" hidden={atRest}>
-        Press <Link onClick={saveAndExit}>enter</Link> to save &middot; Press{" "}
-        <Link onClick={exitWithoutSaving}>escape</Link> to cancel
+        Press{" "}
+        <Button variant="link" onClick={saveAndExit}>
+          enter
+        </Button>{" "}
+        to save &middot; Press{" "}
+        <Button variant="link" onClick={exitWithoutSaving}>
+          escape
+        </Button>{" "}
+        to cancel
       </p>
       <p className="error">{error}</p>
     </span>
