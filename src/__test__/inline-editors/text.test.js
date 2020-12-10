@@ -56,13 +56,13 @@ describe("Text component", () => {
       render(<Text value={value} />);
     });
 
-    // Confirm that, at rest state, text is visible, text box & spinner are hidden
+    // By default, should be in rest state
     confirmRestState();
 
     // Click span
     userEvent.click(screen.getByText(value));
 
-    // Confirm that when not at rest state, text box is visible, text & spinner are hidden
+    // When text clicked, exit rest state
     confirmActiveState();
 
     // Press `enter`

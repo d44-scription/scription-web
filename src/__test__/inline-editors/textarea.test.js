@@ -22,24 +22,50 @@ describe("Text area component", () => {
     http.put.mockRestore();
   });
 
+  const confirmRestState = () => {
+    // Text span should be visible
+    expect(screen.getByRole("text")).toBeVisible();
+
+    // Confirm help text does not show
+    expect(screen.queryByRole("button", { name: "enter" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "escape" })).toBeNull();
+
+    // Input field should not be visible
+    expect(screen.queryByRole("textbox")).toBeNull();
+
+    // Loading icon should not be visible
+    expect(screen.getByTitle("Saving changes")).not.toBeVisible();
+  };
+
+  const confirmActiveState = () => {
+    // Confirm text span is hidden
+    expect(screen.queryByRole("text")).toBeNull();
+
+    // Confirm help text shows
+    expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "escape" })).toBeVisible();
+
+    // Confirm text input is shown
+    expect(screen.getByRole("textbox")).toBeVisible();
+
+    // Confirm loading gif is hidden
+    expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
+  };
+
   test("entering and leaving rest state", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
       render(<TextArea value={value} />);
     });
 
-    // Confirm that, at rest state, text is visible, text box & spinner are hidden
-    expect(screen.getByRole("text")).toBeVisible();
-    expect(screen.queryByRole("textbox")).toBeNull();
-    expect(screen.getByTitle("Saving changes")).not.toBeVisible();
+    // Should be at rest by default
+    confirmRestState();
 
     // Click span
     userEvent.click(screen.getByRole("text"));
 
-    // Confirm that when not at rest state, text box is visible, text & spinner are hidden
-    expect(screen.queryByRole("text")).toBeNull();
-    expect(screen.getByRole("textbox")).toBeVisible();
-    expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
+    // Clicking text should leave rest state
+    confirmActiveState();
 
     // Press shift + enter
     await act(async () => {
@@ -47,9 +73,7 @@ describe("Text area component", () => {
     });
 
     // Confirm that we are still not at rest
-    expect(screen.queryByRole("text")).toBeNull();
-    expect(screen.getByRole("textbox")).toBeVisible();
-    expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
+    confirmActiveState();
 
     // Press `enter`
     await act(async () => {
@@ -57,9 +81,7 @@ describe("Text area component", () => {
     });
 
     // Confirm that we have returned to rest state
-    expect(screen.getByRole("text")).toBeVisible();
-    expect(screen.queryByRole("textbox")).toBeNull();
-    expect(screen.getByTitle("Saving changes")).not.toBeVisible();
+    confirmRestState();
 
     // Click span, press escape
     userEvent.click(screen.getByRole("text"));
@@ -69,9 +91,7 @@ describe("Text area component", () => {
     });
 
     // Confirm that we have returned to rest state
-    expect(screen.getByRole("text")).toBeVisible();
-    expect(screen.queryByRole("textbox")).toBeNull();
-    expect(screen.getByTitle("Saving changes")).not.toBeVisible();
+    confirmRestState();
   });
 
   test("rendering with a given font size", async () => {
@@ -129,13 +149,11 @@ describe("Text area component", () => {
     expect(document.activeElement).toEqual(span);
 
     // Confirm we are still in rest state
-    expect(span).toBeVisible();
-    expect(screen.queryByRole("textbox")).toBeNull();
+    confirmRestState();
 
     userEvent.type(span, "{enter}", { skipClick: true });
 
     // Confirm that we have left rest state
-    expect(screen.queryByRole("text")).toBeNull();
-    expect(screen.getByRole("textbox")).toBeVisible();
+    confirmActiveState();
   });
 });
