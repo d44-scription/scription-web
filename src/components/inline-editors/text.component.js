@@ -36,10 +36,8 @@ function Text(props) {
   }, [value, props, setIsBusy, setError]);
 
   const exitWithoutSaving = useCallback(() => {
-    if (document.activeElement === inputRef.current) {
-      setAtRest(true);
-      setValue(props.value);
-    }
+    setAtRest(true);
+    setValue(props.value);
   }, [props.value, setAtRest, setValue]);
 
   // Callback(/event handler) for when text is changed
@@ -54,7 +52,9 @@ function Text(props) {
   useKeypress(
     "Escape",
     () => {
-      exitWithoutSaving();
+      if (document.activeElement === inputRef.current) {
+        exitWithoutSaving();
+      }
     },
     [atRest, setAtRest, setValue]
   );
@@ -77,13 +77,6 @@ function Text(props) {
     },
     [atRest, setAtRest, value]
   );
-
-  // Callback for when text input is blurred
-  const onBlur = useCallback(() => {
-    if (!atRest) {
-      saveAndExit();
-    }
-  }, [atRest, saveAndExit]);
 
   // Set focus to the text field when shown
   useEffect(() => {
@@ -123,7 +116,6 @@ function Text(props) {
           ref={inputRef}
           value={value || ""}
           onChange={onChange}
-          onBlur={onBlur}
           className={`inline-input`}
           disabled={isBusy}
           hidden={atRest}
@@ -140,8 +132,8 @@ function Text(props) {
       </div>
 
       <p className="help-text" hidden={atRest}>
-        Press <Link onClick={onBlur}>enter</Link> to save &middot; Press{" "}
-        <Link>escape</Link> to cancel
+        Press <Link onClick={saveAndExit}>enter</Link> to save &middot; Press{" "}
+        <Link onClick={exitWithoutSaving}>escape</Link> to cancel
       </p>
       <p className="error">{error}</p>
     </span>
