@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import Notebook from "../../components/notebooks/notebook.component";
+import Edit from "../../components/notebooks/edit.component";
 import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 
-describe("Notebook component", () => {
+describe("Edit component", () => {
   const fakeNotebook = {
     name: "Notebook 1",
     id: 1,
@@ -26,7 +26,7 @@ describe("Notebook component", () => {
   test("rendering information for a given notebook", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
-      render(<Notebook id="1" />);
+      render(<Edit id="1" />);
     });
 
     // Confirm data is retrieved and displayed correctly

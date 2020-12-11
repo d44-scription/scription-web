@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import Notebook from "./notebook.component";
+import Edit from "./edit.component";
 import ConfirmModal from "../modal.component";
 import ListGroup from "react-bootstrap/ListGroup";
 import useKeypress from "../../hooks/useKeypress";
@@ -150,7 +150,7 @@ function Index(props) {
 
       <div className="col-md-6">
         {currentId ? (
-          <Notebook id={currentId}></Notebook>
+          <Edit id={currentId} />
         ) : (
           <div>
             <br />

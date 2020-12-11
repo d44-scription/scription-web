@@ -3,7 +3,7 @@ import NotebookDataService from "../../services/notebook.service";
 import Text from "../inline-editors/text.component";
 import TextArea from "../inline-editors/textarea.component";
 
-function Notebook(props) {
+function Edit(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
   const [name, setName] = useState(null);
   const [summary, setSummary] = useState(null);
@@ -50,4 +50,4 @@ function Notebook(props) {
   );
 }
 
-export default Notebook;
+export default Edit;
