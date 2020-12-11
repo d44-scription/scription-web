@@ -20,11 +20,12 @@ function Index(props) {
     NotebookDataService.index()
       .then((response) => {
         setNotebooks(response.data);
+        setCurrentId(null);
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [setNotebooks]);
+  }, [setNotebooks, setCurrentId]);
 
   // Fetch list of notebooks on load
   useEffect(() => {
@@ -150,7 +151,7 @@ function Index(props) {
 
       <div className="col-md-6">
         {currentId ? (
-          <Edit id={currentId} />
+          <Edit id={currentId} retrieveNotebooks={retrieveNotebooks} />
         ) : (
           <div>
             <br />
