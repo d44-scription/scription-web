@@ -39,7 +39,7 @@ function Edit(props) {
       .catch((e) => {
         console.log(e);
       });
-  }, [props, props.id, props.retrieveNotebooks, setIsModalVisible]);
+  }, [props, setIsModalVisible]);
 
   // Update notebook when the given id prop changes
   useEffect(() => {
