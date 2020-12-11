@@ -78,13 +78,6 @@ function TextArea(props) {
     [atRest, setAtRest, value]
   );
 
-  // Callback for when text input is blurred
-  const onBlur = useCallback(() => {
-    if (!atRest) {
-      saveAndExit();
-    }
-  }, [atRest, saveAndExit]);
-
   // Set focus to the text field when shown
   useEffect(() => {
     if (!atRest) {
@@ -111,12 +104,13 @@ function TextArea(props) {
           }`}
           onClick={onSpanClick}
           hidden={!atRest}
-          role="text"
+          role="switch"
+          aria-checked={!atRest}
           tabIndex="0"
           ref={spanRef}
         >
           <span
-            role="label"
+            role="complementary"
             className="inline-textarea-label"
             style={{ fontSize: props.fontSize || "1rem" }}
           >
