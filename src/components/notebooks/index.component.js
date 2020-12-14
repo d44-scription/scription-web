@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import Edit from "./edit.component";
+import Details from "./details.component";
 import ListGroup from "react-bootstrap/ListGroup";
 import useKeypress from "../../hooks/useKeypress";
 import "../../scss/list.scss";
@@ -94,16 +94,7 @@ function Index(props) {
         </ListGroup>
       </div>
 
-      <div className="col-md-6">
-        {currentId ? (
-          <Edit id={currentId} retrieveNotebooks={retrieveNotebooks} />
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Notebook...</p>
-          </div>
-        )}
-      </div>
+      <Details id={currentId} retrieveNotebooks={retrieveNotebooks} />
     </div>
   );
 }
