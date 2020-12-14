@@ -12,11 +12,11 @@ function Index(props) {
   const [currentId, setCurrentId] = useState(null);
 
   // Callback to update the displayed notebooks
-  const retrieveNotebooks = useCallback(() => {
+  const retrieveNotebooks = useCallback((id) => {
     NotebookDataService.index()
       .then((response) => {
         setNotebooks(response.data);
-        setCurrentId(null);
+        setCurrentId(id || null);
       })
       .catch((e) => {
         console.log(e);

@@ -9,6 +9,7 @@ function New(props) {
   const saveNotebook = (id) => {
     props.setNewRecord(false);
     props.setId(id);
+    props.retrieveNotebooks(id);
   };
 
   return (
