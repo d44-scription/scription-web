@@ -83,7 +83,7 @@ describe("Index component", () => {
     ).toBeInTheDocument();
   });
 
-  test("responding to tab", async () => {
+  test("responding to tab with enter", async () => {
     await act(async () => {
       render(<Index />);
     });
@@ -103,6 +103,34 @@ describe("Index component", () => {
 
     await act(async () => {
       userEvent.type(span, "{enter}", { skipClick: true });
+    });
+
+    // Confirm we have returned to rest state
+    expect(
+      screen.getByText("Please click on a Notebook...")
+    ).toBeInTheDocument();
+  });
+
+  test("responding to tab with space", async () => {
+    await act(async () => {
+      render(<Index />);
+    });
+
+    userEvent.tab();
+
+    // Retrieve first list item
+    const span = screen.getByText("Notebook 1");
+
+    await act(async () => {
+      userEvent.type(span, " ", { skipClick: true });
+    });
+
+    // Confirm that we have left rest state
+    expect(screen.getByText("No name saved.")).toBeInTheDocument();
+    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.type(span, " ", { skipClick: true });
     });
 
     // Confirm we have returned to rest state

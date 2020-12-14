@@ -77,17 +77,30 @@ function Index(props) {
     [setCurrentId, setCurrentIndex, currentId]
   );
 
+  const setActiveNotebookFromFocus = useCallback(() => {
+    const el = document.activeElement;
+    const id = el.getAttribute("listid");
+    const index = el.getAttribute("listindex");
+
+    if (id && index) {
+      setActiveNotebook(id, index);
+    }
+  });
+
   // Callback for enter key
   useKeypress(
     "Enter",
     () => {
-      const el = document.activeElement
-      const id = el.getAttribute("listid");
-      const index = el.getAttribute("listindex");
+      setActiveNotebookFromFocus();
+    },
+    [setActiveNotebook]
+  );
 
-      if (id && index) {
-        setActiveNotebook(id, index)
-      }
+  // Callback for space key
+  useKeypress(
+    " ",
+    () => {
+      setActiveNotebookFromFocus();
     },
     [setActiveNotebook]
   );
