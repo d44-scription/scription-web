@@ -35,7 +35,17 @@ function Text(props) {
           setError(e.response.data.join(", "));
         });
     } else {
-      // TODO: Post to API
+      NotebookDataService.create(model, param, value)
+        .then(() => {
+          setIsBusy(false);
+          setError("");
+
+          // Set id in parent components
+        })
+        .catch((e) => {
+          setIsBusy(false);
+          setError(e.response.data.join(", "));
+        });
     }
   }, [value, props, setIsBusy, setError]);
 
