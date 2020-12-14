@@ -24,7 +24,7 @@ describe("Text area component", () => {
 
   const confirmRestState = () => {
     // Text span should be visible
-    expect(screen.getByRole("text")).toBeVisible();
+    expect(screen.getByRole("switch")).toBeVisible();
 
     // Confirm help text does not show
     expect(screen.queryByRole("button", { name: "enter" })).toBeNull();
@@ -39,7 +39,7 @@ describe("Text area component", () => {
 
   const confirmActiveState = () => {
     // Confirm text span is hidden
-    expect(screen.queryByRole("text")).toBeNull();
+    expect(screen.queryByRole("switch")).toBeNull();
 
     // Confirm help text shows
     expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
@@ -62,7 +62,7 @@ describe("Text area component", () => {
     confirmRestState();
 
     // Click span
-    userEvent.click(screen.getByRole("text"));
+    userEvent.click(screen.getByRole("switch"));
 
     // Clicking text should leave rest state
     confirmActiveState();
@@ -84,7 +84,7 @@ describe("Text area component", () => {
     confirmRestState();
 
     // Click span, press escape
-    userEvent.click(screen.getByRole("text"));
+    userEvent.click(screen.getByRole("switch"));
 
     await act(async () => {
       userEvent.type(screen.getByRole("textbox"), "{esc}");
@@ -104,11 +104,11 @@ describe("Text area component", () => {
 
     // Confirm span has correct font size
     expect(
-      screen.getByRole("label").style.cssText.includes("font-size: 2rem")
+      screen.getByRole("complementary").style.cssText.includes("font-size: 2rem")
     ).toBe(true);
 
     // Click span
-    userEvent.click(screen.getByRole("text"));
+    userEvent.click(screen.getByRole("switch"));
 
     // Confirm text field has correct font size
     expect(
@@ -124,11 +124,11 @@ describe("Text area component", () => {
 
     // Confirm span has correct font size
     expect(
-      screen.getByRole("label").style.cssText.includes("font-size: 1rem")
+      screen.getByRole("complementary").style.cssText.includes("font-size: 1rem")
     ).toBe(true);
 
     // Click span
-    userEvent.click(screen.getByRole("text"));
+    userEvent.click(screen.getByRole("switch"));
 
     // Confirm text field has correct font size
     expect(
@@ -145,7 +145,7 @@ describe("Text area component", () => {
     userEvent.tab();
 
     // Confirm that span has focus
-    const span = screen.getByRole("text");
+    const span = screen.getByRole("switch");
     expect(document.activeElement).toEqual(span);
 
     // Confirm we are still in rest state
@@ -166,7 +166,7 @@ describe("Text area component", () => {
     confirmRestState();
 
     // Click span
-    userEvent.click(screen.getByRole("text"));
+    userEvent.click(screen.getByRole("switch"));
 
     // When text clicked, exit rest state
     confirmActiveState();
@@ -189,7 +189,7 @@ describe("Text area component", () => {
     confirmRestState();
 
     // Click span
-    userEvent.click(screen.getByRole("text"));
+    userEvent.click(screen.getByRole("switch"));
 
     // When text clicked, exit rest state
     confirmActiveState();
