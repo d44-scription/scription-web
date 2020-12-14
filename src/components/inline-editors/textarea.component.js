@@ -78,6 +78,18 @@ function TextArea(props) {
     [atRest, setAtRest, value]
   );
 
+  // Callback for space key
+  useKeypress(
+    " ",
+    () => {
+      if (atRest && document.activeElement === spanRef.current) {
+        // If component is at rest and span has focus, space should simulate clicking the span
+        onSpanClick();
+      }
+    },
+    [atRest]
+  );
+
   // Set focus to the text field when shown
   useEffect(() => {
     if (!atRest) {

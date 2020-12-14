@@ -136,7 +136,7 @@ describe("Text area component", () => {
     ).toBe(true);
   });
 
-  test("responding to tab", async () => {
+  test("responding to tab with enter", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
       render(<TextArea value={value} />);
@@ -152,6 +152,27 @@ describe("Text area component", () => {
     confirmRestState();
 
     userEvent.type(span, "{enter}", { skipClick: true });
+
+    // Confirm that we have left rest state
+    confirmActiveState();
+  });
+
+  test("responding to tab with space", async () => {
+    // Use the asynchronous version of act to apply resolved promises
+    await act(async () => {
+      render(<TextArea value={value} />);
+    });
+
+    userEvent.tab();
+
+    // Confirm that span has focus
+    const span = screen.getByRole("text");
+    expect(span).toHaveFocus();
+
+    // Confirm we are still in rest state
+    confirmRestState();
+
+    userEvent.type(span, " ", { skipClick: true });
 
     // Confirm that we have left rest state
     confirmActiveState();
