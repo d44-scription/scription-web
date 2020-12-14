@@ -136,7 +136,7 @@ describe("Text component", () => {
 
     // Confirm that span has focus
     const span = screen.getByText(value);
-    expect(document.activeElement).toEqual(span);
+    expect(span).toHaveFocus();
 
     // Confirm we are in rest state
     confirmRestState();
@@ -164,7 +164,7 @@ describe("Text component", () => {
     confirmRestState();
 
     // Press space on focused element
-    userEvent.type(span, " ", { skipClick: true });
+    userEvent.type(span, "{space}", { skipClick: true });
 
     // Confirm that we have left rest state
     confirmActiveState();
