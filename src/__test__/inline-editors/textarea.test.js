@@ -146,7 +146,7 @@ describe("Text area component", () => {
 
     // Confirm that span has focus
     const span = screen.getByRole("switch");
-    expect(document.activeElement).toEqual(span);
+    expect(span).toHaveFocus();
 
     // Confirm we are still in rest state
     confirmRestState();
@@ -166,7 +166,7 @@ describe("Text area component", () => {
     userEvent.tab();
 
     // Confirm that span has focus
-    const span = screen.getByRole("text");
+    const span = screen.getByRole("switch");
     expect(span).toHaveFocus();
 
     // Confirm we are still in rest state
