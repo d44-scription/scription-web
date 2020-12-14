@@ -112,7 +112,7 @@ function Text(props) {
       <div className="d-inline-flex justify-content-start align-items-center w-100">
         <span
           style={{ fontSize: props.fontSize || "1rem" }}
-          className={`inline-text-label inline-label ${
+          className={`inline-text-label inline-label w-100 ${
             props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}
