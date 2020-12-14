@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import Text from "../inline-editors/text.component";
-import TextArea from "../inline-editors/textarea.component";
 import Button from "react-bootstrap/Button";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component
-  const [name, setName] = useState(null);
-  const [summary, setSummary] = useState(null);
+  const [name] = useState(null);
+
+  const saveNotebook = (id) => {
+    props.setNewRecord(false);
+    props.setId(id);
+  };
 
   return (
     <div>
@@ -16,14 +19,8 @@ function New(props) {
         model="notebook"
         param="name"
         fontSize="2rem"
+        onCreateAction={saveNotebook}
       ></Text>
-
-      <TextArea
-        value={summary}
-        id={props.id}
-        model="notebook"
-        param="summary"
-      ></TextArea>
 
       <Button
         variant="secondary"

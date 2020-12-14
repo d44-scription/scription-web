@@ -94,7 +94,11 @@ function Index(props) {
         </ListGroup>
       </div>
 
-      <Details id={currentId} retrieveNotebooks={retrieveNotebooks} />
+      <Details
+        id={currentId}
+        retrieveNotebooks={retrieveNotebooks}
+        setId={setCurrentId}
+      />
     </div>
   );
 }

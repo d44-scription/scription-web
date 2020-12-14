@@ -36,11 +36,12 @@ function Text(props) {
         });
     } else {
       NotebookDataService.create(model, param, value)
-        .then(() => {
+        .then((response) => {
           setIsBusy(false);
           setError("");
 
           // Set id in parent components
+          props.onCreateAction(response.data.id);
         })
         .catch((e) => {
           setIsBusy(false);
