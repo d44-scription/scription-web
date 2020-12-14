@@ -24,15 +24,19 @@ function Text(props) {
     setAtRest(true);
     setIsBusy(true);
 
-    NotebookDataService.update(id, model, param, value)
-      .then(() => {
-        setIsBusy(false);
-        setError("");
-      })
-      .catch((e) => {
-        setIsBusy(false);
-        setError(e.response.data.join(", "));
-      });
+    if (id) {
+      NotebookDataService.update(id, model, param, value)
+        .then(() => {
+          setIsBusy(false);
+          setError("");
+        })
+        .catch((e) => {
+          setIsBusy(false);
+          setError(e.response.data.join(", "));
+        });
+    } else {
+      // TODO: Post to API
+    }
   }, [value, props, setIsBusy, setError]);
 
   const exitWithoutSaving = useCallback(() => {
