@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Edit from "./edit.component";
 import New from "./new.component";
 import Button from "react-bootstrap/Button";
 
 function Details(props) {
   const [newRecord, setNewRecord] = useState(false);
+
+  useEffect(() => {
+    setNewRecord(false);
+  }, [props.id]);
 
   // Middle-man component that asses state of index page and decides which sub-component to show
   if (props.id) {
