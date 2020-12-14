@@ -136,7 +136,7 @@ describe("Text component", () => {
 
     // Confirm that span has focus
     const span = screen.getByText(value);
-    expect(document.activeElement).toEqual(span);
+    expect(span).toHaveFocus();
 
     // Confirm we are in rest state
     confirmRestState();
