@@ -172,7 +172,7 @@ describe("Text area component", () => {
     // Confirm we are still in rest state
     confirmRestState();
 
-    userEvent.type(span, " ", { skipClick: true });
+    userEvent.type(span, "{space}", { skipClick: true });
 
     // Confirm that we have left rest state
     confirmActiveState();

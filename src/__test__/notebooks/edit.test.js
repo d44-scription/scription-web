@@ -4,7 +4,7 @@ import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
 
-describe("Notebook component", () => {
+describe("Edit component", () => {
   const fakeNotebook = {
     name: "Notebook 1",
     id: 1,
@@ -63,7 +63,7 @@ describe("Notebook component", () => {
     expect(deleteButton).toHaveFocus();
 
     // Press space to trigger button
-    userEvent.type(deleteButton, " ", { skipClick: true });
+    userEvent.type(deleteButton, "{space}");
 
     // Confirm modal is shown
     expect(screen.getByText("Delete notebook?")).toBeInTheDocument();

@@ -50,7 +50,7 @@ function Index(props) {
     if (id && index) {
       setActiveNotebook(id, index);
     }
-  });
+  }, [setActiveNotebook]);
 
   // Callback for enter key
   useKeypress(

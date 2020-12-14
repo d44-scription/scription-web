@@ -105,7 +105,7 @@ describe("Index component", () => {
     const span = screen.getByText("Notebook 1");
 
     await act(async () => {
-      userEvent.type(span, " ", { skipClick: true });
+      userEvent.type(span, "{space}", { skipClick: true });
     });
 
     // Confirm that we have left rest state
@@ -113,7 +113,7 @@ describe("Index component", () => {
     expect(screen.getByText("No summary saved.")).toBeInTheDocument();
 
     await act(async () => {
-      userEvent.type(span, " ", { skipClick: true });
+      userEvent.type(span, "{space}", { skipClick: true });
     });
 
     // Confirm we have returned to rest state

@@ -164,7 +164,7 @@ describe("Text component", () => {
     confirmRestState();
 
     // Press space on focused element
-    userEvent.type(span, " ", { skipClick: true });
+    userEvent.type(span, "{space}", { skipClick: true });
 
     // Confirm that we have left rest state
     confirmActiveState();
