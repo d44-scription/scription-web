@@ -36,10 +36,7 @@ describe("Index component", () => {
 
     // Confirm all list elements are rendered
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
-    expect(screen.getByTitle("Delete Notebook 1")).toBeInTheDocument();
-
     expect(screen.getByText("Notebook 2")).toBeInTheDocument();
-    expect(screen.getByTitle("Delete Notebook 2")).toBeInTheDocument();
 
     // Confirm that, by default, no list items are selected
     expect(
@@ -67,20 +64,6 @@ describe("Index component", () => {
     // Confirm notebook component is shown
     expect(screen.getByText("No name saved.")).toBeInTheDocument();
     expect(screen.getByText("No summary saved.")).toBeInTheDocument();
-
-    // Click delete icon for first item
-    await act(async () => {
-      userEvent.click(screen.getByTitle("Delete Notebook 1"));
-    });
-
-    // Confirm modal is shown
-    expect(screen.getByText("Delete notebook?")).toBeInTheDocument();
-
-    expect(
-      screen.getByText(
-        "This will delete Notebook 1 and all it's associated notes. Are you sure you wish to continue?"
-      )
-    ).toBeInTheDocument();
   });
 
   test("responding to tab with enter", async () => {
