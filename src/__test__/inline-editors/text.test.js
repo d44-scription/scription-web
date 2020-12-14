@@ -126,7 +126,7 @@ describe("Text component", () => {
     ).toBe(true);
   });
 
-  test("responding to tab", async () => {
+  test("responding to tab using enter", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
       render(<Text value={value} />);
@@ -143,6 +143,28 @@ describe("Text component", () => {
 
     // Press enter on focused element
     userEvent.type(span, "{enter}", { skipClick: true });
+
+    // Confirm that we have left rest state
+    confirmActiveState();
+  });
+
+  test("responding to tab using space", async () => {
+    // Use the asynchronous version of act to apply resolved promises
+    await act(async () => {
+      render(<Text value={value} />);
+    });
+
+    userEvent.tab();
+
+    // Confirm that span has focus
+    const span = screen.getByText(value);
+    expect(span).toHaveFocus();
+
+    // Confirm we are in rest state
+    confirmRestState();
+
+    // Press space on focused element
+    userEvent.type(span, " ", { skipClick: true });
 
     // Confirm that we have left rest state
     confirmActiveState();
