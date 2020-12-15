@@ -85,9 +85,11 @@ function TextArea(props) {
       if (atRest && document.activeElement === spanRef.current) {
         // If component is at rest and span has focus, space should simulate clicking the span
         onSpanClick();
+      } else if (!atRest && document.activeElement === inputRef.current) {
+        setValue(`${value || ""} `);
       }
     },
-    [atRest]
+    [atRest, setValue]
   );
 
   // Set focus to the text field when shown
