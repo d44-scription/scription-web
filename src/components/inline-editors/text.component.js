@@ -1,4 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
 import useKeypress from "../../hooks/useKeypress";
 import NotebookDataService from "../../services/notebook.service";
 import "../../scss/inline-editor.scss";
@@ -21,16 +24,36 @@ function Text(props) {
     setAtRest(true);
     setIsBusy(true);
 
-    NotebookDataService.update(id, model, param, value)
-      .then(() => {
-        setIsBusy(false);
-        setError("");
-      })
-      .catch((e) => {
-        setIsBusy(false);
-        setError(e.response.data.join(", "));
-      });
+    if (id) {
+      NotebookDataService.update(id, model, param, value)
+        .then(() => {
+          setIsBusy(false);
+          setError("");
+        })
+        .catch((e) => {
+          setIsBusy(false);
+          setError(e.response.data.join(", "));
+        });
+    } else {
+      NotebookDataService.create(model, param, value)
+        .then((response) => {
+          setIsBusy(false);
+          setError("");
+
+          // Set id in parent components
+          props.onCreateAction(response.data.id);
+        })
+        .catch((e) => {
+          setIsBusy(false);
+          setError(e.response.data.join(", "));
+        });
+    }
   }, [value, props, setIsBusy, setError]);
+
+  const exitWithoutSaving = useCallback(() => {
+    setAtRest(true);
+    setValue(props.value);
+  }, [props.value, setAtRest, setValue]);
 
   // Callback(/event handler) for when text is changed
   const onChange = useCallback(
@@ -45,8 +68,7 @@ function Text(props) {
     "Escape",
     () => {
       if (document.activeElement === inputRef.current) {
-        setAtRest(true);
-        setValue(props.value);
+        exitWithoutSaving();
       }
     },
     [atRest, setAtRest, setValue]
@@ -71,12 +93,19 @@ function Text(props) {
     [atRest, setAtRest, value]
   );
 
-  // Callback for when text input is blurred
-  const onBlur = useCallback(() => {
-    if (!atRest) {
-      saveAndExit();
-    }
-  }, [atRest, saveAndExit]);
+  // Callback for space key
+  useKeypress(
+    " ",
+    () => {
+      if (atRest && document.activeElement === spanRef.current) {
+        // If component is at rest and span has focus, space should simulate clicking the span
+        onSpanClick();
+      } else if (!atRest && document.activeElement === inputRef.current) {
+        setValue(`${value || ''} `)
+      }
+    },
+    [atRest, setValue]
+  );
 
   // Set focus to the text field when shown
   useEffect(() => {
@@ -100,7 +129,7 @@ function Text(props) {
       <div className="d-inline-flex justify-content-start align-items-center w-100">
         <span
           style={{ fontSize: props.fontSize || "1rem" }}
-          className={`inline-text-label inline-label ${
+          className={`inline-text-label inline-label w-100 ${
             props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}
@@ -111,36 +140,37 @@ function Text(props) {
           {value || props.value || `No ${props.param} saved.`}
         </span>
 
-        <input
+        <Form.Control
           style={{ fontSize: props.fontSize || "1rem" }}
           ref={inputRef}
-          type={"text"}
           value={value || ""}
           onChange={onChange}
-          onBlur={onBlur}
-          className={`inline-input form-control`}
+          className={`inline-input`}
           disabled={isBusy}
           hidden={atRest}
         />
 
-        <svg
+        <Spinner
+          animation="border"
+          role="status"
+          className="ml-3"
           title="Saving changes"
-          width="1em"
-          height="1em"
-          viewBox="0 0 16 16"
-          className="bi bi-arrow-repeat busy-svg"
           hidden={!isBusy}
-          fill="#a0a0a0"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-          <path
-            fillRule="evenodd"
-            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-          />
-        </svg>
+          size="sm"
+        />
       </div>
 
+      <p className="help-text" hidden={atRest}>
+        Press{" "}
+        <Button variant="link" onClick={saveAndExit}>
+          enter
+        </Button>{" "}
+        to save &middot; Press{" "}
+        <Button variant="link" onClick={exitWithoutSaving}>
+          escape
+        </Button>{" "}
+        to cancel
+      </p>
       <p className="error">{error}</p>
     </span>
   );

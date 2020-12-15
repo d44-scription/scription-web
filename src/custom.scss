@@ -4,7 +4,13 @@ $body-bg: $dark;
 $body-color: $primary;
 $navbar-light-brand-color: $dark;
 
+$input-bg: $light;
+$input-color: $dark;
+
 $table-bg-scale: -85%;
+
+$modal-content-color: $dark;
+$modal-content-bg: $light;
 
 // Import Bootstrap
 @import '~bootstrap/scss/bootstrap.scss';

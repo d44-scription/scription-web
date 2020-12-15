@@ -36,10 +36,7 @@ describe("Index component", () => {
 
     // Confirm all list elements are rendered
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
-    expect(screen.getByTitle("Delete Notebook 1")).toBeInTheDocument();
-
     expect(screen.getByText("Notebook 2")).toBeInTheDocument();
-    expect(screen.getByTitle("Delete Notebook 2")).toBeInTheDocument();
 
     // Confirm that, by default, no list items are selected
     expect(
@@ -67,23 +64,9 @@ describe("Index component", () => {
     // Confirm notebook component is shown
     expect(screen.getByText("No name saved.")).toBeInTheDocument();
     expect(screen.getByText("No summary saved.")).toBeInTheDocument();
-
-    // Click delete icon for first item
-    await act(async () => {
-      userEvent.click(screen.getByTitle("Delete Notebook 1"));
-    });
-
-    // Confirm modal is shown
-    expect(screen.getByText("Delete notebook?")).toBeInTheDocument();
-
-    expect(
-      screen.getByText(
-        "This will delete Notebook 1 and all it's associated notes. Are you sure you wish to continue?"
-      )
-    ).toBeInTheDocument();
   });
 
-  test("responding to tab", async () => {
+  test("responding to tab with enter", async () => {
     await act(async () => {
       render(<Index />);
     });
@@ -106,8 +89,32 @@ describe("Index component", () => {
     });
 
     // Confirm we have returned to rest state
-    expect(
-      screen.getByText("Please click on a Notebook...")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
+  });
+
+  test("responding to tab with space", async () => {
+    await act(async () => {
+      render(<Index />);
+    });
+
+    userEvent.tab();
+
+    // Retrieve first list item
+    const span = screen.getByText("Notebook 1");
+
+    await act(async () => {
+      userEvent.type(span, "{space}", { skipClick: true });
+    });
+
+    // Confirm that we have left rest state
+    expect(screen.getByText("No name saved.")).toBeInTheDocument();
+    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.type(span, "{space}", { skipClick: true });
+    });
+
+    // Confirm we have returned to rest state
+    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
   });
 });

@@ -2,11 +2,15 @@ import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
 import Text from "../inline-editors/text.component";
 import TextArea from "../inline-editors/textarea.component";
+import Button from "react-bootstrap/Button";
+import ConfirmModal from "../modal.component";
 
-function Notebook(props) {
+function Edit(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
   const [name, setName] = useState(null);
   const [summary, setSummary] = useState(null);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Callback to update the displayed notebook
   const retrieveNotebook = useCallback(
@@ -24,6 +28,18 @@ function Notebook(props) {
     },
     [setName, setSummary]
   );
+
+  // Callback used when the delete icon is clicked
+  const deleteNotebook = useCallback(() => {
+    NotebookDataService.delete(props.id)
+      .then(() => {
+        setIsModalVisible(false);
+        props.retrieveNotebooks();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [props, setIsModalVisible]);
 
   // Update notebook when the given id prop changes
   useEffect(() => {
@@ -46,8 +62,26 @@ function Notebook(props) {
         model="notebook"
         param="summary"
       ></TextArea>
+
+      <Button
+        variant="danger"
+        className="mt-5"
+        onClick={() => {
+          setIsModalVisible(true);
+        }}
+      >
+        Delete notebook
+      </Button>
+
+      <ConfirmModal
+        visible={isModalVisible}
+        title="Delete notebook?"
+        text={`This will delete ${name} and all associated notes. Are you sure you wish to continue?`}
+        confirmAction={deleteNotebook}
+        closeAction={() => setIsModalVisible(false)}
+      ></ConfirmModal>
     </div>
   );
 }
 
-export default Notebook;
+export default Edit;
