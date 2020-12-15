@@ -11,16 +11,19 @@ function Index(props) {
   const [currentId, setCurrentId] = useState(null);
 
   // Callback to update the displayed notebooks
-  const retrieveNotebooks = useCallback((id) => {
-    NotebookDataService.index()
-      .then((response) => {
-        setNotebooks(response.data);
-        setCurrentId(id || null);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [setNotebooks, setCurrentId]);
+  const retrieveNotebooks = useCallback(
+    (id) => {
+      NotebookDataService.index()
+        .then((response) => {
+          setNotebooks(response.data);
+          setCurrentId(id || null);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    [setNotebooks, setCurrentId]
+  );
 
   // Fetch list of notebooks on load
   useEffect(() => {
@@ -53,7 +56,7 @@ function Index(props) {
     () => {
       setActiveNotebookFromFocus();
     },
-    [setActiveNotebook]
+    [setActiveNotebookFromFocus]
   );
 
   // Callback for space key
@@ -62,7 +65,7 @@ function Index(props) {
     () => {
       setActiveNotebookFromFocus();
     },
-    [setActiveNotebook]
+    [setActiveNotebookFromFocus]
   );
 
   return (
@@ -90,8 +93,8 @@ function Index(props) {
 
       <Details
         id={currentId}
-        retrieveNotebooks={retrieveNotebooks}
         setId={setCurrentId}
+        retrieveNotebooks={retrieveNotebooks}
       />
     </div>
   );
