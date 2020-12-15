@@ -23,7 +23,7 @@ function Details(props) {
     return (
       // Otherwise, if the user has clicked the "Add new notebook" button, render the new notebook form
       <div className="col-md-6">
-        <h1>Add new notebook</h1>
+        <h1>Name notebook</h1>
         <New
           id={0}
           setNewRecord={setNewRecord}
