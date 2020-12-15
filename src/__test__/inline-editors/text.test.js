@@ -26,6 +26,7 @@ describe("Text component", () => {
 
   afterEach(() => {
     http.put.mockRestore();
+    http.post.mockRestore();
   });
 
   const confirmRestState = () => {
