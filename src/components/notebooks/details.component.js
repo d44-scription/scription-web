@@ -3,14 +3,18 @@ import Edit from "./edit.component";
 import New from "./new.component";
 import Button from "react-bootstrap/Button";
 
+// Middle-man component that asses state of index page and decides which sub-component to show
 function Details(props) {
   const [newRecord, setNewRecord] = useState(false);
 
+  // When selected ID is changed, default to regular view
+  // If a user starts creating a new notebook, then selects & deselects an existing one,
+  // this stops them from returning to an empty form
   useEffect(() => {
     setNewRecord(false);
   }, [props.id]);
 
-  // Middle-man component that asses state of index page and decides which sub-component to show
+  // Decide which panel to show
   if (props.id) {
     return (
       // If a notebook has been selected, show the notebook

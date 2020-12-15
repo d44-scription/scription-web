@@ -6,6 +6,7 @@ function New(props) {
   // Define callbacks for GETting and SETting the values used by component
   const [name] = useState(null);
 
+  // OnCreateAction - Set state in parent props to reflect new addition
   const saveNotebook = (id) => {
     props.setNewRecord(false);
     props.setId(id);
