@@ -16,6 +16,12 @@ describe("Text component", () => {
         data: successfulResponse,
       })
     );
+
+    jest.spyOn(http, "post").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
   });
 
   afterEach(() => {
@@ -195,6 +201,51 @@ describe("Text component", () => {
       // Press `enter`
       await act(async () => {
         userEvent.click(screen.getByRole("button", { name: "escape" }));
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+    });
+  });
+
+  describe("When not given an ID", () => {
+    beforeEach(async () => {
+      // Use the asynchronous version of act to apply resolved promises
+      await act(async () => {
+        render(
+          <Text
+            value={value}
+            onCreateAction={() => {
+              return;
+            }}
+          />
+        );
+      });
+    });
+
+    test("entering and leaving rest state", async () => {
+      // By default, should be in rest state
+      confirmRestState();
+
+      // Click span
+      userEvent.click(screen.getByText(value));
+
+      // When text clicked, exit rest state
+      confirmActiveState();
+
+      // Press `enter`
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{enter}");
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+
+      // Click span, press escape
+      userEvent.click(screen.getByText(value));
+
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{esc}");
       });
 
       // Confirm that we have returned to rest state
