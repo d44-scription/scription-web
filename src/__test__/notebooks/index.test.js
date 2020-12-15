@@ -90,7 +90,7 @@ describe("Index component", () => {
 
     // Confirm we have returned to rest state
     expect(
-      screen.getByText("Please click on a Notebook...")
+      screen.getByText("Add new notebook")
     ).toBeInTheDocument();
   });
 
@@ -118,7 +118,7 @@ describe("Index component", () => {
 
     // Confirm we have returned to rest state
     expect(
-      screen.getByText("Please click on a Notebook...")
+      screen.getByText("Add new notebook")
     ).toBeInTheDocument();
   });
 });
