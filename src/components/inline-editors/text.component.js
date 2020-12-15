@@ -24,15 +24,30 @@ function Text(props) {
     setAtRest(true);
     setIsBusy(true);
 
-    NotebookDataService.update(id, model, param, value)
-      .then(() => {
-        setIsBusy(false);
-        setError("");
-      })
-      .catch((e) => {
-        setIsBusy(false);
-        setError(e.response.data.join(", "));
-      });
+    if (id) {
+      NotebookDataService.update(id, model, param, value)
+        .then(() => {
+          setIsBusy(false);
+          setError("");
+        })
+        .catch((e) => {
+          setIsBusy(false);
+          setError(e.response.data.join(", "));
+        });
+    } else {
+      NotebookDataService.create(model, param, value)
+        .then((response) => {
+          setIsBusy(false);
+          setError("");
+
+          // Set id in parent components
+          props.onCreateAction(response.data.id);
+        })
+        .catch((e) => {
+          setIsBusy(false);
+          setError(e.response.data.join(", "));
+        });
+    }
   }, [value, props, setIsBusy, setError]);
 
   const exitWithoutSaving = useCallback(() => {
@@ -112,7 +127,7 @@ function Text(props) {
       <div className="d-inline-flex justify-content-start align-items-center w-100">
         <span
           style={{ fontSize: props.fontSize || "1rem" }}
-          className={`inline-text-label inline-label ${
+          className={`inline-text-label inline-label w-100 ${
             props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}

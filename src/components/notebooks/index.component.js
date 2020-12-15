@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import Edit from "./edit.component";
+import Details from "./details.component";
 import ListGroup from "react-bootstrap/ListGroup";
 import useKeypress from "../../hooks/useKeypress";
 import "../../scss/list.scss";
@@ -8,20 +8,22 @@ import "../../scss/list.scss";
 function Index(props) {
   // Define callbacks for GETting and SETting the component state
   const [notebooks, setNotebooks] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(-1);
   const [currentId, setCurrentId] = useState(null);
 
   // Callback to update the displayed notebooks
-  const retrieveNotebooks = useCallback(() => {
-    NotebookDataService.index()
-      .then((response) => {
-        setNotebooks(response.data);
-        setCurrentId(null);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [setNotebooks, setCurrentId]);
+  const retrieveNotebooks = useCallback(
+    (id) => {
+      NotebookDataService.index()
+        .then((response) => {
+          setNotebooks(response.data);
+          setCurrentId(id || null);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    [setNotebooks, setCurrentId]
+  );
 
   // Fetch list of notebooks on load
   useEffect(() => {
@@ -30,25 +32,21 @@ function Index(props) {
 
   // Callback triggered when list items are clicked
   const setActiveNotebook = useCallback(
-    (id, index) => {
+    (id) => {
       if (currentId === id) {
         setCurrentId(null);
-        setCurrentIndex(-1);
       } else {
         setCurrentId(id);
-        setCurrentIndex(index);
       }
     },
-    [setCurrentId, setCurrentIndex, currentId]
+    [setCurrentId, currentId]
   );
 
   const setActiveNotebookFromFocus = useCallback(() => {
-    const el = document.activeElement;
-    const id = el.getAttribute("listid");
-    const index = el.getAttribute("listindex");
+    const id = document.activeElement.getAttribute("listid");
 
-    if (id && index) {
-      setActiveNotebook(id, index);
+    if (id) {
+      setActiveNotebook(id);
     }
   }, [setActiveNotebook]);
 
@@ -58,7 +56,7 @@ function Index(props) {
     () => {
       setActiveNotebookFromFocus();
     },
-    [setActiveNotebook]
+    [setActiveNotebookFromFocus]
   );
 
   // Callback for space key
@@ -67,7 +65,7 @@ function Index(props) {
     () => {
       setActiveNotebookFromFocus();
     },
-    [setActiveNotebook]
+    [setActiveNotebookFromFocus]
   );
 
   return (
@@ -77,16 +75,15 @@ function Index(props) {
 
         <ListGroup as="ul">
           {notebooks &&
-            notebooks.map((notebook, index) => (
+            notebooks.map((notebook) => (
               <ListGroup.Item
                 as="li"
                 variant="primary"
-                key={index}
-                active={index === currentIndex}
-                onClick={() => setActiveNotebook(notebook.id, index)}
+                key={notebook.id}
+                active={notebook.id === currentId}
+                onClick={() => setActiveNotebook(notebook.id)}
                 tabIndex="0"
                 listid={notebook.id}
-                listindex={index}
               >
                 <p style={{ margin: "0.75rem" }}>{notebook.name}</p>
               </ListGroup.Item>
@@ -94,16 +91,11 @@ function Index(props) {
         </ListGroup>
       </div>
 
-      <div className="col-md-6">
-        {currentId ? (
-          <Edit id={currentId} retrieveNotebooks={retrieveNotebooks} />
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Notebook...</p>
-          </div>
-        )}
-      </div>
+      <Details
+        id={currentId}
+        setId={setCurrentId}
+        retrieveNotebooks={retrieveNotebooks}
+      />
     </div>
   );
 }

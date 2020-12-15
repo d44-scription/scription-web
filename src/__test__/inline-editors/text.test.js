@@ -16,10 +16,17 @@ describe("Text component", () => {
         data: successfulResponse,
       })
     );
+
+    jest.spyOn(http, "post").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
   });
 
   afterEach(() => {
     http.put.mockRestore();
+    http.post.mockRestore();
   });
 
   const confirmRestState = () => {
@@ -50,46 +57,12 @@ describe("Text component", () => {
     expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
   };
 
-  test("entering and leaving rest state", async () => {
-    // Use the asynchronous version of act to apply resolved promises
-    await act(async () => {
-      render(<Text value={value} />);
-    });
-
-    // By default, should be in rest state
-    confirmRestState();
-
-    // Click span
-    userEvent.click(screen.getByText(value));
-
-    // When text clicked, exit rest state
-    confirmActiveState();
-
-    // Press `enter`
-    await act(async () => {
-      userEvent.type(screen.getByRole("textbox"), "{enter}");
-    });
-
-    // Confirm that we have returned to rest state
-    confirmRestState();
-
-    // Click span, press escape
-    userEvent.click(screen.getByText(value));
-
-    await act(async () => {
-      userEvent.type(screen.getByRole("textbox"), "{esc}");
-    });
-
-    // Confirm that we have returned to rest state
-    confirmRestState();
-  });
-
   test("rendering with a given font size", async () => {
     let fontSize = "2rem";
 
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
-      render(<Text value={value} fontSize={fontSize} />);
+      render(<Text value={value} fontSize={fontSize} id={1} />);
     });
 
     // Confirm span has correct font size
@@ -109,7 +82,7 @@ describe("Text component", () => {
   test("rendering with a default font size", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
-      render(<Text value={value} />);
+      render(<Text value={value} id={1} />);
     });
 
     // Confirm span has correct font size
@@ -126,93 +99,249 @@ describe("Text component", () => {
     ).toBe(true);
   });
 
-  test("responding to tab using enter", async () => {
-    // Use the asynchronous version of act to apply resolved promises
-    await act(async () => {
-      render(<Text value={value} />);
+  describe("When given an ID", () => {
+    beforeEach(async () => {
+      // Use the asynchronous version of act to apply resolved promises
+      await act(async () => {
+        render(<Text value={value} id={1} />);
+      });
     });
 
-    userEvent.tab();
+    test("entering and leaving rest state", async () => {
+      // By default, should be in rest state
+      confirmRestState();
 
-    // Confirm that span has focus
-    const span = screen.getByText(value);
-    expect(span).toHaveFocus();
+      // Click span
+      userEvent.click(screen.getByText(value));
 
-    // Confirm we are in rest state
-    confirmRestState();
+      // When text clicked, exit rest state
+      confirmActiveState();
 
-    // Press enter on focused element
-    userEvent.type(span, "{enter}", { skipClick: true });
+      // Press `enter`
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{enter}");
+      });
 
-    // Confirm that we have left rest state
-    confirmActiveState();
+      // Confirm that we have returned to rest state
+      confirmRestState();
+
+      // Click span, press escape
+      userEvent.click(screen.getByText(value));
+
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{esc}");
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+    });
+
+    test("responding to tab using enter", async () => {
+      userEvent.tab();
+
+      // Confirm that span has focus
+      const span = screen.getByText(value);
+      expect(span).toHaveFocus();
+
+      // Confirm we are in rest state
+      confirmRestState();
+
+      // Press enter on focused element
+      userEvent.type(span, "{enter}", { skipClick: true });
+
+      // Confirm that we have left rest state
+      confirmActiveState();
+    });
+
+    test("responding to tab using space", async () => {
+      userEvent.tab();
+
+      // Confirm that span has focus
+      const span = screen.getByText(value);
+      expect(span).toHaveFocus();
+
+      // Confirm we are in rest state
+      confirmRestState();
+
+      // Press space on focused element
+      userEvent.type(span, "{space}", { skipClick: true });
+
+      // Confirm that we have left rest state
+      confirmActiveState();
+    });
+
+    test("saving via help text", async () => {
+      // By default, should be in rest state
+      confirmRestState();
+
+      // Click span
+      userEvent.click(screen.getByText(value));
+
+      // When text clicked, exit rest state
+      confirmActiveState();
+
+      // Press `enter`
+      await act(async () => {
+        userEvent.click(screen.getByRole("button", { name: "enter" }));
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+    });
+
+    test("cancelling via help text", async () => {
+      // By default, should be in rest state
+      confirmRestState();
+
+      // Click span
+      userEvent.click(screen.getByText(value));
+
+      // When text clicked, exit rest state
+      confirmActiveState();
+
+      // Press `enter`
+      await act(async () => {
+        userEvent.click(screen.getByRole("button", { name: "escape" }));
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+    });
   });
 
-  test("responding to tab using space", async () => {
-    // Use the asynchronous version of act to apply resolved promises
-    await act(async () => {
-      render(<Text value={value} />);
+  describe("When not given an ID", () => {
+    let testVal = false;
+
+    beforeEach(async () => {
+      // Use the asynchronous version of act to apply resolved promises
+      await act(async () => {
+        render(
+          <Text
+            value={value}
+            onCreateAction={() => {
+              testVal = true;
+            }}
+          />
+        );
+      });
+
+      // Reset testVal
+      testVal = false;
     });
 
-    userEvent.tab();
+    test("entering and leaving rest state", async () => {
+      // By default, should be in rest state
+      confirmRestState();
+      expect(testVal).toBe(false);
 
-    // Confirm that span has focus
-    const span = screen.getByText(value);
-    expect(span).toHaveFocus();
+      // Click span
+      userEvent.click(screen.getByText(value));
 
-    // Confirm we are in rest state
-    confirmRestState();
+      // When text clicked, exit rest state
+      confirmActiveState();
+      expect(testVal).toBe(false);
 
-    // Press space on focused element
-    userEvent.type(span, "{space}", { skipClick: true });
+      // Press `enter`
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{enter}");
+      });
 
-    // Confirm that we have left rest state
-    confirmActiveState();
-  });
+      // Confirm that we have returned to rest state
+      confirmRestState();
+      expect(testVal).toBe(true);
 
-  test("saving via help text", async () => {
-    await act(async () => {
-      render(<Text value={value} />);
+      // Click span, press escape
+      userEvent.click(screen.getByText(value));
+
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{esc}");
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+      expect(testVal).toBe(true);
     });
 
-    // By default, should be in rest state
-    confirmRestState();
+    test("responding to tab using enter", async () => {
+      userEvent.tab();
 
-    // Click span
-    userEvent.click(screen.getByText(value));
+      // Confirm that span has focus
+      const span = screen.getByText(value);
+      expect(span).toHaveFocus();
 
-    // When text clicked, exit rest state
-    confirmActiveState();
+      // Confirm we are in rest state
+      confirmRestState();
+      expect(testVal).toBe(false);
 
-    // Press `enter`
-    await act(async () => {
-      userEvent.click(screen.getByRole("button", { name: "enter" }));
+      // Press enter on focused element
+      userEvent.type(span, "{enter}", { skipClick: true });
+
+      // Confirm that we have left rest state
+      confirmActiveState();
+      expect(testVal).toBe(false);
     });
 
-    // Confirm that we have returned to rest state
-    confirmRestState();
-  });
+    test("responding to tab using space", async () => {
+      userEvent.tab();
 
-  test("cancelling via help text", async () => {
-    await act(async () => {
-      render(<Text value={value} />);
+      // Confirm that span has focus
+      const span = screen.getByText(value);
+      expect(span).toHaveFocus();
+
+      // Confirm we are in rest state
+      confirmRestState();
+      expect(testVal).toBe(false);
+
+      // Press space on focused element
+      userEvent.type(span, "{space}", { skipClick: true });
+
+      // Confirm that we have left rest state
+      confirmActiveState();
+      expect(testVal).toBe(false);
     });
 
-    // By default, should be in rest state
-    confirmRestState();
+    test("saving via help text", async () => {
+      // By default, should be in rest state
+      confirmRestState();
+      expect(testVal).toBe(false);
 
-    // Click span
-    userEvent.click(screen.getByText(value));
+      // Click span
+      userEvent.click(screen.getByText(value));
 
-    // When text clicked, exit rest state
-    confirmActiveState();
+      // When text clicked, exit rest state
+      confirmActiveState();
+      expect(testVal).toBe(false);
 
-    // Press `enter`
-    await act(async () => {
-      userEvent.click(screen.getByRole("button", { name: "escape" }));
+      // Press `enter`
+      await act(async () => {
+        userEvent.click(screen.getByRole("button", { name: "enter" }));
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+      expect(testVal).toBe(true);
     });
 
-    // Confirm that we have returned to rest state
-    confirmRestState();
+    test("cancelling via help text", async () => {
+      // By default, should be in rest state
+      confirmRestState();
+      expect(testVal).toBe(false);
+
+      // Click span
+      userEvent.click(screen.getByText(value));
+
+      // When text clicked, exit rest state
+      confirmActiveState();
+      expect(testVal).toBe(false);
+
+      // Press `enter`
+      await act(async () => {
+        userEvent.click(screen.getByRole("button", { name: "escape" }));
+      });
+
+      // Confirm that we have returned to rest state
+      confirmRestState();
+      expect(testVal).toBe(false);
+    });
   });
 });

@@ -111,7 +111,7 @@ function TextArea(props) {
     <span>
       <div className="d-inline-flex justify-content-start align-items-center w-100">
         <section
-          className={`inline-label ${
+          className={`inline-label w-100 ${
             props.value || value ? "" : "placeholder"
           }`}
           onClick={onSpanClick}

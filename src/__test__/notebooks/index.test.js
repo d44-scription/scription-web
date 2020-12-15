@@ -89,9 +89,7 @@ describe("Index component", () => {
     });
 
     // Confirm we have returned to rest state
-    expect(
-      screen.getByText("Please click on a Notebook...")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
   });
 
   test("responding to tab with space", async () => {
@@ -117,8 +115,6 @@ describe("Index component", () => {
     });
 
     // Confirm we have returned to rest state
-    expect(
-      screen.getByText("Please click on a Notebook...")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
   });
 });
