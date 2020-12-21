@@ -29,7 +29,6 @@ function Details(props) {
       <div className="col-md-6">
         <h1>Name notebook</h1>
         <New
-          id={0}
           setNewRecord={setNewRecord}
           setId={props.setId}
           retrieveNotebooks={props.retrieveNotebooks}
