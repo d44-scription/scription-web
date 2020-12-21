@@ -1,33 +1,16 @@
 import { render, screen } from "@testing-library/react";
-import Text from "../../components/inline-editors/text.component";
+import InlineEditor from "../components/inline_editor.component";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Text component", () => {
-  const value = "Test Text";
-  const successfulResponse = {
-    code: 200,
+  let value = "Test Text";
+  const setValue = (v) => {
+    value = v;
   };
-
-  beforeEach(() => {
-    jest.spyOn(http, "put").mockImplementation(() =>
-      Promise.resolve({
-        data: successfulResponse,
-      })
-    );
-
-    jest.spyOn(http, "post").mockImplementation(() =>
-      Promise.resolve({
-        data: successfulResponse,
-      })
-    );
-  });
-
-  afterEach(() => {
-    http.put.mockRestore();
-    http.post.mockRestore();
-  });
+  const onSubmitAction = () => {
+    return Promise.resolve();
+  };
 
   const confirmRestState = () => {
     // Confirm text span shows
@@ -62,7 +45,7 @@ describe("Text component", () => {
 
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
-      render(<Text value={value} fontSize={fontSize} id={1} />);
+      render(<InlineEditor value={value} fontSize={fontSize}></InlineEditor>);
     });
 
     // Confirm span has correct font size
@@ -82,9 +65,8 @@ describe("Text component", () => {
   test("rendering with a default font size", async () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
-      render(<Text value={value} id={1} />);
+      render(<InlineEditor value={value}></InlineEditor>);
     });
-
     // Confirm span has correct font size
     expect(
       screen.getByText(value).style.cssText.includes("font-size: 1rem")
@@ -99,11 +81,11 @@ describe("Text component", () => {
     ).toBe(true);
   });
 
-  describe("When given an ID", () => {
+  describe("When a text input", () => {
     beforeEach(async () => {
       // Use the asynchronous version of act to apply resolved promises
       await act(async () => {
-        render(<Text value={value} id={1} />);
+        render(<InlineEditor value={value} action={onSubmitAction} />);
       });
     });
 
@@ -209,37 +191,68 @@ describe("Text component", () => {
     });
   });
 
-  describe("When not given an ID", () => {
-    let testVal = false;
+  describe("When a textarea input", () => {
+    const confirmAreaRestState = () => {
+      // Text span should be visible
+      expect(screen.getByRole("switch")).toBeVisible();
+
+      // Confirm help text does not show
+      expect(screen.queryByRole("button", { name: "enter" })).toBeNull();
+      expect(screen.queryByRole("button", { name: "escape" })).toBeNull();
+
+      // Input field should not be visible
+      expect(screen.queryByRole("textbox")).toBeNull();
+
+      // Loading icon should not be visible
+      expect(screen.getByTitle("Saving changes")).not.toBeVisible();
+    };
+
+    const confirmAreaActiveState = () => {
+      // Confirm text span is hidden
+      expect(screen.queryByRole("switch")).toBeNull();
+
+      // Confirm help text shows
+      expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
+      expect(screen.getByRole("button", { name: "escape" })).toBeVisible();
+
+      // Confirm text input is shown
+      expect(screen.getByRole("textbox")).toBeVisible();
+
+      // Confirm loading gif is hidden
+      expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
+    };
 
     beforeEach(async () => {
       // Use the asynchronous version of act to apply resolved promises
       await act(async () => {
         render(
-          <Text
+          <InlineEditor
             value={value}
-            onCreateAction={() => {
-              testVal = true;
-            }}
+            action={onSubmitAction}
+            type="textarea"
+            setValue={setValue}
           />
         );
       });
-
-      // Reset testVal
-      testVal = false;
     });
 
     test("entering and leaving rest state", async () => {
       // By default, should be in rest state
-      confirmRestState();
-      expect(testVal).toBe(false);
+      confirmAreaRestState();
 
       // Click span
-      userEvent.click(screen.getByText(value));
+      userEvent.click(screen.getByRole("switch"));
 
-      // When text clicked, exit rest state
-      confirmActiveState();
-      expect(testVal).toBe(false);
+      // Clicking text should leave rest state
+      confirmAreaActiveState();
+
+      // Press shift + enter
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{shift}{enter}{/shift}");
+      });
+
+      // Confirm that we are still not at rest
+      confirmAreaActiveState();
 
       // Press `enter`
       await act(async () => {
@@ -247,70 +260,60 @@ describe("Text component", () => {
       });
 
       // Confirm that we have returned to rest state
-      confirmRestState();
-      expect(testVal).toBe(true);
+      confirmAreaRestState();
 
       // Click span, press escape
-      userEvent.click(screen.getByText(value));
+      userEvent.click(screen.getByRole("switch"));
 
       await act(async () => {
         userEvent.type(screen.getByRole("textbox"), "{esc}");
       });
 
       // Confirm that we have returned to rest state
-      confirmRestState();
-      expect(testVal).toBe(true);
+      confirmAreaRestState();
     });
 
     test("responding to tab using enter", async () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
-      // Confirm we are in rest state
-      confirmRestState();
-      expect(testVal).toBe(false);
+      // Confirm we are still in rest state
+      confirmAreaRestState();
 
-      // Press enter on focused element
       userEvent.type(span, "{enter}", { skipClick: true });
 
       // Confirm that we have left rest state
-      confirmActiveState();
-      expect(testVal).toBe(false);
+      confirmAreaActiveState();
     });
 
     test("responding to tab using space", async () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
-      // Confirm we are in rest state
-      confirmRestState();
-      expect(testVal).toBe(false);
+      // Confirm we are still in rest state
+      confirmAreaRestState();
 
-      // Press space on focused element
       userEvent.type(span, "{space}", { skipClick: true });
 
       // Confirm that we have left rest state
-      confirmActiveState();
-      expect(testVal).toBe(false);
+      confirmAreaActiveState();
     });
 
     test("saving via help text", async () => {
       // By default, should be in rest state
-      confirmRestState();
-      expect(testVal).toBe(false);
+      confirmAreaRestState();
 
       // Click span
-      userEvent.click(screen.getByText(value));
+      userEvent.click(screen.getByRole("switch"));
 
       // When text clicked, exit rest state
-      confirmActiveState();
-      expect(testVal).toBe(false);
+      confirmAreaActiveState();
 
       // Press `enter`
       await act(async () => {
@@ -318,21 +321,18 @@ describe("Text component", () => {
       });
 
       // Confirm that we have returned to rest state
-      confirmRestState();
-      expect(testVal).toBe(true);
+      confirmAreaRestState();
     });
 
     test("cancelling via help text", async () => {
       // By default, should be in rest state
-      confirmRestState();
-      expect(testVal).toBe(false);
+      confirmAreaRestState();
 
       // Click span
-      userEvent.click(screen.getByText(value));
+      userEvent.click(screen.getByRole("switch"));
 
       // When text clicked, exit rest state
-      confirmActiveState();
-      expect(testVal).toBe(false);
+      confirmAreaActiveState();
 
       // Press `enter`
       await act(async () => {
@@ -340,8 +340,7 @@ describe("Text component", () => {
       });
 
       // Confirm that we have returned to rest state
-      confirmRestState();
-      expect(testVal).toBe(false);
+      confirmAreaRestState();
     });
   });
 });

@@ -27,7 +27,7 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
+    expect(screen.getByText("Enter Name")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
   };
 
@@ -57,7 +57,7 @@ describe("New component", () => {
     expect(retrieveNotebooksTestValue).toBe(false);
 
     // "Create" a new notebook
-    userEvent.click(screen.getByText("No name saved."));
+    userEvent.click(screen.getByText("Enter Name"));
 
     await act(async () => {
       userEvent.type(screen.getByRole("textbox"), "New Notebook{enter}");

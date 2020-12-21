@@ -62,8 +62,8 @@ describe("Index component", () => {
     ).toBe(false);
 
     // Confirm notebook component is shown
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
+    expect(screen.getByText("No name saved")).toBeInTheDocument();
+    expect(screen.getByText("No summary saved")).toBeInTheDocument();
   });
 
   test("responding to tab with enter", async () => {
@@ -81,8 +81,8 @@ describe("Index component", () => {
     });
 
     // Confirm that we have left rest state
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
+    expect(screen.getByText("No name saved")).toBeInTheDocument();
+    expect(screen.getByText("No summary saved")).toBeInTheDocument();
 
     await act(async () => {
       userEvent.type(span, "{enter}", { skipClick: true });
@@ -107,8 +107,8 @@ describe("Index component", () => {
     });
 
     // Confirm that we have left rest state
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
+    expect(screen.getByText("No name saved")).toBeInTheDocument();
+    expect(screen.getByText("No summary saved")).toBeInTheDocument();
 
     await act(async () => {
       userEvent.type(span, "{space}", { skipClick: true });
