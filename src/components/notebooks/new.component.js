@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Text from "../inline_editor.component";
+import InlineEditor from "../inline_editor.component";
 import Button from "react-bootstrap/Button";
 import NotebookDataService from "../../services/notebook.service";
 
@@ -19,14 +19,14 @@ function New(props) {
 
   return (
     <div>
-      <Text
+      <InlineEditor
         value={name}
         setValue={setName}
         action={saveNotebook}
         onSubmitActions={updatePage}
         placeholder="Enter Name"
         fontSize="2rem"
-      ></Text>
+      ></InlineEditor>
 
       <Button
         variant="secondary"

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import Text from "../inline_editor.component";
+import InlineEditor from "../inline_editor.component";
 import Button from "react-bootstrap/Button";
 import ConfirmModal from "../modal.component";
 
@@ -55,22 +55,22 @@ function Edit(props) {
 
   return (
     <div>
-      <Text
+      <InlineEditor
         value={name}
         setValue={setName}
         action={saveName}
         placeholder="No name saved"
         fontSize="2rem"
-      ></Text>
+      ></InlineEditor>
 
-      <Text
+      <InlineEditor
         value={summary}
         type="textarea"
         setValue={setSummary}
         action={saveSummary}
         placeholder="No summary saved"
         helpText="Use shift+enter to add a new line"
-      ></Text>
+      ></InlineEditor>
 
       <Button
         variant="danger"
