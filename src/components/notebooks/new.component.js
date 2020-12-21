@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Text from "../inline-editors/text.component";
+import Text from "../inline_editor.component";
 import Button from "react-bootstrap/Button";
 import NotebookDataService from "../../services/notebook.service";
 

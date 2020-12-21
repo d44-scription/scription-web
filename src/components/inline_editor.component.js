@@ -2,10 +2,10 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import useKeypress from "../../hooks/useKeypress";
-import "../../scss/inline-editor.scss";
+import useKeypress from "../hooks/useKeypress";
+import "../scss/inline-editor.scss";
 
-function Text(props) {
+function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
   const [atRest, setAtRest] = useState(true);
   const [isBusy, setIsBusy] = useState(false);
@@ -179,9 +179,11 @@ function Text(props) {
         </Button>{" "}
         to cancel
       </p>
+
+      <p className="help-text">{props.helpText}</p>
       <p className="error">{error}</p>
     </span>
   );
 }
 
-export default Text;
+export default InlineEditor;
