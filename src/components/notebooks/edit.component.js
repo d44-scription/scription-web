@@ -3,6 +3,7 @@ import NotebookDataService from "../../services/notebook.service";
 import InlineEditor from "../inline_editor.component";
 import Button from "react-bootstrap/Button";
 import ConfirmModal from "../modal.component";
+import { Link } from "react-router-dom";
 
 function Edit(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -72,9 +73,17 @@ function Edit(props) {
         helpText="Use shift+enter to add a new line"
       ></InlineEditor>
 
+      <Link to={`/notebooks/${props.id}`}>
+        <Button
+        variant="primary"
+        className="mt-5 w-100">
+          Open Notebook
+        </Button>
+      </Link>
+
       <Button
         variant="danger"
-        className="mt-5"
+        className="mt-2 w-100"
         onClick={() => {
           setIsModalVisible(true);
         }}
