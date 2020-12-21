@@ -46,22 +46,31 @@ function Edit(props) {
     retrieveNotebook(props.id);
   }, [props.id, retrieveNotebook]);
 
+  const saveName = () => {
+    return NotebookDataService.update(props.id, "notebook", "name", name);
+  };
+
+  const saveSummary = () => {
+    return NotebookDataService.update(props.id, "notebook", "name", name);
+  };
+
   return (
     <div>
       <Text
         value={name}
-        id={props.id}
-        model="notebook"
-        param="name"
+        setValue={setName}
+        action={saveName}
+        placeholder="No name saved"
         fontSize="2rem"
       ></Text>
 
-      <TextArea
+      <Text
         value={summary}
-        id={props.id}
-        model="notebook"
-        param="summary"
-      ></TextArea>
+        type="textarea"
+        setValue={setSummary}
+        action={saveSummary}
+        placeholder="No name saved"
+      ></Text>
 
       <Button
         variant="danger"

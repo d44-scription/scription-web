@@ -11,7 +11,6 @@ function Text(props) {
   const [isBusy, setIsBusy] = useState(false);
 
   // Define callbacks for GETting and SETting the input value & error message
-  // const [value, setValue] = useState(props.value);
   const [error, setError] = useState("");
 
   const inputRef = useRef(null);
@@ -114,25 +113,47 @@ function Text(props) {
   return (
     <span>
       <div className="d-inline-flex justify-content-start align-items-center w-100">
-        <span
-          style={{ fontSize: props.fontSize || "1rem" }}
-          className={`inline-text-label inline-label w-100 ${
-            props.value ? "" : "placeholder"
-          }`}
-          onClick={onSpanClick}
-          hidden={!atRest}
-          tabIndex="0"
-          ref={spanRef}
-        >
-          {props.value || props.placeholder || "No data saved."}
-        </span>
+        {props.type === "textarea" ? (
+          <section
+            className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
+            onClick={onSpanClick}
+            hidden={!atRest}
+            role="switch"
+            aria-checked={!atRest}
+            tabIndex="0"
+            ref={spanRef}
+          >
+            <span
+              role="complementary"
+              className="inline-textarea-label"
+              style={{ fontSize: props.fontSize || "1rem" }}
+            >
+              {props.value || props.placeholder || "No data saved."}
+            </span>
+          </section>
+        ) : (
+          <span
+            style={{ fontSize: props.fontSize || "1rem" }}
+            className={`inline-text-label inline-label w-100 ${
+              props.value ? "" : "placeholder"
+            }`}
+            onClick={onSpanClick}
+            hidden={!atRest}
+            tabIndex="0"
+            ref={spanRef}
+          >
+            {props.value || props.placeholder || "No data saved."}
+          </span>
+        )}
 
         <Form.Control
+          as={props.type === "textarea" ? "textarea" : "input"}
+          rows={4}
           style={{ fontSize: props.fontSize || "1rem" }}
           ref={inputRef}
           value={props.value || ""}
           onChange={onChange}
-          className={`inline-input`}
+          className="inline-input"
           disabled={isBusy}
           hidden={atRest}
         />
