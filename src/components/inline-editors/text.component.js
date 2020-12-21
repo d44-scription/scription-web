@@ -124,7 +124,7 @@ function Text(props) {
           tabIndex="0"
           ref={spanRef}
         >
-          {props.value || `No ${props.param} saved.`}
+          {props.value || props.placeholder || "No data saved."}
         </span>
 
         <Form.Control

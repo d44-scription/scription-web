@@ -23,10 +23,9 @@ function New(props) {
         value={name}
         setValue={setName}
         action={saveNotebook}
-        model="notebook"
-        param="name"
-        fontSize="2rem"
         onSubmitActions={updatePage}
+        placeholder="Enter Name"
+        fontSize="2rem"
       ></Text>
 
       <Button
