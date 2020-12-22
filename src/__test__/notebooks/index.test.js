@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Index from "../../components/notebooks/index.component";
+import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
@@ -16,12 +17,20 @@ describe("Index component", () => {
     },
   ];
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(http, "get").mockImplementation(() =>
       Promise.resolve({
         data: fakeNotebooks,
       })
     );
+
+    await act(async () => {
+      render(
+        <BrowserRouter>
+          <Index />
+        </BrowserRouter>
+      );
+    });
   });
 
   afterEach(() => {
@@ -29,11 +38,6 @@ describe("Index component", () => {
   });
 
   test("rendering a list of notebooks", async () => {
-    // Use the asynchronous version of act to apply resolved promises
-    await act(async () => {
-      render(<Index />);
-    });
-
     // Confirm all list elements are rendered
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getByText("Notebook 2")).toBeInTheDocument();
@@ -67,10 +71,6 @@ describe("Index component", () => {
   });
 
   test("responding to tab with enter", async () => {
-    await act(async () => {
-      render(<Index />);
-    });
-
     userEvent.tab();
 
     // Retrieve first list item
@@ -93,10 +93,6 @@ describe("Index component", () => {
   });
 
   test("responding to tab with space", async () => {
-    await act(async () => {
-      render(<Index />);
-    });
-
     userEvent.tab();
 
     // Retrieve first list item
