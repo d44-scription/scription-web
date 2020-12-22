@@ -21,10 +21,15 @@ $modal-content-bg: $light;
   color: $body-bg;
 }
 
-.list-group-item {
+.list-group-item, link {
   cursor: pointer;
 }
 
 .navbar-brand {
   margin-left: 0.3125rem;
+}
+
+// Global scss
+.success {
+  color: $success;
 }
