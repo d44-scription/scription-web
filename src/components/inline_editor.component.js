@@ -36,7 +36,7 @@ function InlineEditor(props) {
 
         // If any additional actions need to be carried out, carry them out
         if (props.onSubmitAction) {
-          props.onSubmitAction(response.data.id);
+          props.onSubmitAction(response);
         }
       })
       .catch((e) => {
