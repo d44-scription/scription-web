@@ -190,7 +190,50 @@ describe("Text component", () => {
       });
 
       expect(screen.getByText("Error message")).toBeVisible();
-    })
+    });
+  });
+
+  describe("Carrying out onSubmitAction", () => {
+    let testVal = false;
+
+    const action = () => {
+      return Promise.resolve({
+        data: {
+          id: 0
+        }
+      });
+    };
+
+    const onSubmitAction = () => {
+      testVal = true
+    };
+
+    test("correctly running on enter", async () => {
+      await act(async () => {
+        render(
+          <InlineEditor
+            value={value}
+            setValue={setValue}
+            action={action}
+            onSubmitAction={onSubmitAction}
+          />
+        );
+      });
+
+      // Sanity check
+      expect(testVal).toBe(false);
+
+      // Click span
+      userEvent.click(screen.getByText(value));
+
+      // Press `enter`
+      await act(async () => {
+        userEvent.type(screen.getByRole("textbox"), "{enter}");
+      });
+
+      // Confirm action runs
+      expect(testVal).toBe(true);
+    });
   });
 
   describe("Rendering with variable font sizes", () => {
