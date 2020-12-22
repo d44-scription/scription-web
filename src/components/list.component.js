@@ -16,6 +16,7 @@ function List(props) {
     [props]
   );
 
+  // Used on keypress - checks for list element focus, then sets active id from that
   const setActiveItemFromFocus = useCallback(() => {
     const id = document.activeElement.getAttribute("listid");
 
