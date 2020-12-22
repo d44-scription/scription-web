@@ -10,9 +10,13 @@ function InlineEditor(props) {
   const [atRest, setAtRest] = useState(true);
   const [isBusy, setIsBusy] = useState(false);
 
-  // Define callbacks for GETting and SETting the input value & error message
+  // Define callbacks for GETting and SETting the cached value & error message
+  // The error appears below the component when a request fails
   const [error, setError] = useState("");
+  // The cache value stores the "value to return to" when a request is cancelled
+  const [cacheValue, setCacheValue] = useState("");
 
+  // Store references to the input field and span
   const inputRef = useRef(null);
   const spanRef = useRef(null);
 
@@ -28,6 +32,7 @@ function InlineEditor(props) {
         // If response is successful return to rest state
         setIsBusy(false);
         setError("");
+        setCacheValue(props.value);
 
         // If any additional actions need to be carried out, carry them out
         if (props.onSubmitActions) {
@@ -39,12 +44,12 @@ function InlineEditor(props) {
         setIsBusy(false);
         setError(e.response.data.join(", "));
       });
-  }, [props, setIsBusy, setError]);
+  }, [props, setIsBusy, setError, setCacheValue]);
 
   const exitWithoutSaving = useCallback(() => {
     setAtRest(true);
-    // TODO: Reset value
-  }, [setAtRest]);
+    props.setValue(cacheValue);
+  }, [setAtRest, props, cacheValue]);
 
   // Callback(/event handler) for when text is changed
   const onChange = useCallback(
@@ -105,10 +110,18 @@ function InlineEditor(props) {
       inputRef.current.focus();
       inputRef.current.value = props.value;
     }
-  }, [atRest, props]);
+  }, [atRest, props.value]);
 
   // Callback to update the rest state when the text span is clicked
-  const onSpanClick = useCallback(() => setAtRest(false), [setAtRest]);
+  const onSpanClick = useCallback(() => {
+    setAtRest(false);
+    setCacheValue(props.value);
+  }, [setAtRest, props.value]);
+
+  // Reset error when props change
+  useEffect(() => {
+    setError("");
+  }, [props.value, setError]);
 
   return (
     <span>
