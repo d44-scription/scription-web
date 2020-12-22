@@ -35,8 +35,8 @@ function InlineEditor(props) {
         setCacheValue(props.value);
 
         // If any additional actions need to be carried out, carry them out
-        if (props.onSubmitActions) {
-          props.onSubmitActions(response.data.id);
+        if (props.onSubmitAction) {
+          props.onSubmitAction(response.data.id);
         }
       })
       .catch((e) => {

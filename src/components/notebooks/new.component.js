@@ -23,7 +23,7 @@ function New(props) {
         value={name}
         setValue={setName}
         action={saveNotebook}
-        onSubmitActions={updatePage}
+        onSubmitAction={updatePage}
         placeholder="Enter Name"
         fontSize="2rem"
       ></InlineEditor>
