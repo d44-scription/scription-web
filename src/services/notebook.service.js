@@ -9,18 +9,18 @@ class NotebookDataService {
     return http.get(`/notebooks/${id}.json`);
   }
 
-  create(model, param, value) {
+  create(param, value) {
     let params = {};
-    params[model] = {};
-    params[model][param] = value;
+    params["notebook"] = {};
+    params["notebook"][param] = value;
 
     return http.post(`/notebooks.json`, params);
   }
 
-  update(id, model, param, value) {
+  update(id, param, value) {
     let params = {};
-    params[model] = {};
-    params[model][param] = value;
+    params["notebook"] = {};
+    params["notebook"][param] = value;
 
     return http.put(`/notebooks/${id}.json`, params);
   }
