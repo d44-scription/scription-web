@@ -17,6 +17,7 @@ describe("Details component", () => {
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
+    expect(screen.queryByText("Open notebook")).toBeNull();
     expect(screen.queryByText("Delete notebook")).toBeNull();
   };
 
@@ -31,6 +32,7 @@ describe("Details component", () => {
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
+    expect(screen.queryByText("Open notebook")).toBeNull();
     expect(screen.queryByText("Delete notebook")).toBeNull();
   };
 
@@ -45,6 +47,7 @@ describe("Details component", () => {
     // Confirm view notebook fields are shown
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
+    expect(screen.getByText("Open notebook")).toBeInTheDocument();
     expect(screen.getByText("Delete notebook")).toBeInTheDocument();
   };
 

@@ -77,7 +77,7 @@ function Edit(props) {
         <Button
         variant="primary"
         className="mt-5 w-100">
-          Open Notebook
+          Open notebook
         </Button>
       </Link>
 

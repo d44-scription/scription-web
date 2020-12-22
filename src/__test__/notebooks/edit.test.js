@@ -37,6 +37,8 @@ describe("Edit component", () => {
     // Confirm data is retrieved and displayed correctly
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
+
+    expect(screen.getByText("Open notebook")).toBeInTheDocument();
     expect(screen.getByText("Delete notebook")).toBeInTheDocument();
 
     // Click delete button for first item
