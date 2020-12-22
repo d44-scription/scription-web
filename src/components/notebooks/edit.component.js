@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import Text from "../inline-editors/text.component";
-import TextArea from "../inline-editors/textarea.component";
+import InlineEditor from "../inline_editor.component";
 import Button from "react-bootstrap/Button";
 import ConfirmModal from "../modal.component";
 
@@ -46,22 +45,32 @@ function Edit(props) {
     retrieveNotebook(props.id);
   }, [props.id, retrieveNotebook]);
 
+  const saveName = () => {
+    return NotebookDataService.update(props.id, "notebook", "name", name);
+  };
+
+  const saveSummary = () => {
+    return NotebookDataService.update(props.id, "notebook", "name", name);
+  };
+
   return (
     <div>
-      <Text
+      <InlineEditor
         value={name}
-        id={props.id}
-        model="notebook"
-        param="name"
+        setValue={setName}
+        action={saveName}
+        placeholder="No name saved"
         fontSize="2rem"
-      ></Text>
+      ></InlineEditor>
 
-      <TextArea
+      <InlineEditor
         value={summary}
-        id={props.id}
-        model="notebook"
-        param="summary"
-      ></TextArea>
+        type="textarea"
+        setValue={setSummary}
+        action={saveSummary}
+        placeholder="No summary saved"
+        helpText="Use shift+enter to add a new line"
+      ></InlineEditor>
 
       <Button
         variant="danger"

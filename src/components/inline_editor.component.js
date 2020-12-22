@@ -2,50 +2,61 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import useKeypress from "../../hooks/useKeypress";
-import NotebookDataService from "../../services/notebook.service";
-import "../../scss/inline-editor.scss";
+import useKeypress from "../hooks/useKeypress";
+import "../scss/inline-editor.scss";
 
-function TextArea(props) {
+function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
   const [atRest, setAtRest] = useState(true);
   const [isBusy, setIsBusy] = useState(false);
 
-  // Define callbacks for GETting and SETting the input value & error message
-  const [value, setValue] = useState(props.value);
+  // Define callbacks for GETting and SETting the cached value & error message
+  // The error appears below the component when a request fails
   const [error, setError] = useState("");
+  // The cache value stores the "value to return to" when a request is cancelled
+  const [cacheValue, setCacheValue] = useState("");
 
+  // Store references to the input field and span
   const inputRef = useRef(null);
   const spanRef = useRef(null);
 
   // Function to submit data & return to rest state
   const saveAndExit = useCallback(() => {
-    const { id, model, param } = props;
     setAtRest(true);
     setIsBusy(true);
 
-    NotebookDataService.update(id, model, param, value)
-      .then(() => {
+    // Carry out submit action
+    props
+      .action()
+      .then((response) => {
+        // If response is successful return to rest state
         setIsBusy(false);
         setError("");
+        setCacheValue(props.value);
+
+        // If any additional actions need to be carried out, carry them out
+        if (props.onSubmitAction) {
+          props.onSubmitAction(response.data.id);
+        }
       })
       .catch((e) => {
+        // If response is unsuccessful, return to rest state and display error
         setIsBusy(false);
         setError(e.response.data.join(", "));
       });
-  }, [value, props, setIsBusy, setError]);
+  }, [props, setIsBusy, setError, setCacheValue]);
 
   const exitWithoutSaving = useCallback(() => {
     setAtRest(true);
-    setValue(props.value);
-  }, [props.value, setAtRest, setValue]);
+    props.setValue(cacheValue);
+  }, [setAtRest, props, cacheValue]);
 
   // Callback(/event handler) for when text is changed
   const onChange = useCallback(
-    (event) => {
-      setValue(event.target.value);
+    (e) => {
+      props.setValue(e.target.value);
     },
-    [setValue]
+    [props]
   );
 
   // Callback for escape key - exit without saving (*only if the textbox is focused)
@@ -56,10 +67,10 @@ function TextArea(props) {
         exitWithoutSaving();
       }
     },
-    [atRest, setAtRest, setValue]
+    [atRest, setAtRest, props.setValue]
   );
 
-  // Callback for enter key - save & exit (*only if the textbox is focused)
+  // Callback for enter key
   useKeypress(
     "Enter",
     () => {
@@ -75,7 +86,7 @@ function TextArea(props) {
         }
       }
     },
-    [atRest, setAtRest, value]
+    [atRest, setAtRest]
   );
 
   // Callback for space key
@@ -86,63 +97,78 @@ function TextArea(props) {
         // If component is at rest and span has focus, space should simulate clicking the span
         onSpanClick();
       } else if (!atRest && document.activeElement === inputRef.current) {
-        setValue(`${value || ""} `);
+        // Otherwise add a space
+        props.setValue(`${inputRef.current.value || ""} `);
       }
     },
-    [atRest, setValue]
+    [atRest, props.setValue]
   );
 
   // Set focus to the text field when shown
   useEffect(() => {
     if (!atRest) {
       inputRef.current.focus();
-      inputRef.current.value = value || props.value;
+      inputRef.current.value = props.value;
     }
-  }, [atRest, value, props]);
-
-  // Update value when the given prop changes
-  useEffect(() => {
-    setValue(props.value);
-    setError("");
-  }, [props.value, setError]);
+  }, [atRest, props.value]);
 
   // Callback to update the rest state when the text span is clicked
-  const onSpanClick = useCallback(() => setAtRest(false), [setAtRest]);
+  const onSpanClick = useCallback(() => {
+    setAtRest(false);
+    setCacheValue(props.value);
+  }, [setAtRest, props.value]);
+
+  // Reset error when props change
+  useEffect(() => {
+    setError("");
+  }, [props.value, setError]);
 
   return (
     <span>
       <div className="d-inline-flex justify-content-start align-items-center w-100">
-        <section
-          className={`inline-label w-100 ${
-            props.value || value ? "" : "placeholder"
-          }`}
-          onClick={onSpanClick}
-          hidden={!atRest}
-          role="switch"
-          aria-checked={!atRest}
-          tabIndex="0"
-          ref={spanRef}
-        >
-          <span
-            role="complementary"
-            className="inline-textarea-label"
-            style={{ fontSize: props.fontSize || "1rem" }}
+        {props.type === "textarea" ? (
+          <section
+            className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
+            onClick={onSpanClick}
+            hidden={!atRest}
+            role="switch"
+            aria-checked={!atRest}
+            tabIndex="0"
+            ref={spanRef}
           >
-            {value || props.value || `No ${props.param} saved.`}
+            <span
+              role="complementary"
+              className="inline-textarea-label"
+              style={{ fontSize: props.fontSize || "1rem" }}
+            >
+              {props.value || props.placeholder || "No data saved."}
+            </span>
+          </section>
+        ) : (
+          <span
+            style={{ fontSize: props.fontSize || "1rem" }}
+            className={`inline-text-label inline-label w-100 ${
+              props.value ? "" : "placeholder"
+            }`}
+            onClick={onSpanClick}
+            hidden={!atRest}
+            tabIndex="0"
+            ref={spanRef}
+          >
+            {props.value || props.placeholder || "No data saved."}
           </span>
-        </section>
+        )}
 
         <Form.Control
-          as="textarea"
-          rows={3}
+          as={props.type === "textarea" ? "textarea" : "input"}
+          rows={4}
           style={{ fontSize: props.fontSize || "1rem" }}
           ref={inputRef}
-          type={"text"}
-          value={value || ""}
+          value={props.value || ""}
           onChange={onChange}
           className="inline-input"
-          hidden={atRest}
           disabled={isBusy}
+          hidden={atRest}
         />
 
         <Spinner
@@ -164,11 +190,13 @@ function TextArea(props) {
         <Button variant="link" onClick={exitWithoutSaving}>
           escape
         </Button>{" "}
-        to cancel &middot; Use shift+enter to add a new line
+        to cancel
       </p>
+
+      <p className="help-text">{props.helpText}</p>
       <p className="error">{error}</p>
     </span>
   );
 }
 
-export default TextArea;
+export default InlineEditor;
