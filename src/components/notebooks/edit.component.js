@@ -47,11 +47,11 @@ function Edit(props) {
   }, [props.id, retrieveNotebook]);
 
   const saveName = () => {
-    return NotebookDataService.update(props.id, "notebook", "name", name);
+    return NotebookDataService.update(props.id, "name", name);
   };
 
   const saveSummary = () => {
-    return NotebookDataService.update(props.id, "notebook", "name", name);
+    return NotebookDataService.update(props.id, "name", name);
   };
 
   return (
