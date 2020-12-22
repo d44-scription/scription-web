@@ -11,10 +11,10 @@ function New(props) {
     return NotebookDataService.create("notebook", "name", name);
   };
   // OnCreateAction - Set state in parent props to reflect new addition
-  const updatePage = (id) => {
+  const updatePage = (response) => {
     props.setNewRecord(false);
-    props.setId(id);
-    props.retrieveNotebooks(id);
+    props.setId(response.data.id);
+    props.retrieveNotebooks(response.data.id);
   };
 
   return (

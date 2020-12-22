@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Details from "../../components/notebooks/details.component";
+import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 import http from "../../http-common";
@@ -16,6 +17,7 @@ describe("Details component", () => {
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
+    expect(screen.queryByText("Open notebook")).toBeNull();
     expect(screen.queryByText("Delete notebook")).toBeNull();
   };
 
@@ -30,6 +32,7 @@ describe("Details component", () => {
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
+    expect(screen.queryByText("Open notebook")).toBeNull();
     expect(screen.queryByText("Delete notebook")).toBeNull();
   };
 
@@ -44,12 +47,17 @@ describe("Details component", () => {
     // Confirm view notebook fields are shown
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
+    expect(screen.getByText("Open notebook")).toBeInTheDocument();
     expect(screen.getByText("Delete notebook")).toBeInTheDocument();
-  }
+  };
 
   test("rendering details pane when no ID given", async () => {
     await act(async () => {
-      render(<Details />);
+      render(
+        <BrowserRouter>
+          <Details />
+        </BrowserRouter>
+      );
     });
 
     // Confirm we start at rest state
@@ -90,11 +98,15 @@ describe("Details component", () => {
 
     test("correctly viewing notebook page", async () => {
       await act(async () => {
-        render(<Details id={1} />);
+        render(
+          <BrowserRouter>
+            <Details id={1} />
+          </BrowserRouter>
+        );
       });
 
       // Confirm edit page is shown correctly
       confirmViewNotebookState();
-    })
+    });
   });
 });
