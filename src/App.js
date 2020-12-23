@@ -5,6 +5,8 @@ import Notebooks from "./components/notebooks/index.component";
 import Show from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
 
+const notableTypes = ["characters", "locations", "items"]
+
 function App() {
   return (
     <div>
@@ -15,9 +17,15 @@ function App() {
       <div className="container mt-3">
         <Switch>
           <Route exact path={["/", "/notebooks"]} component={Notebooks} />
-          <Route path="/notebooks/:notebookId/items" children={<Notables type="items"/>} />
-          <Route path="/notebooks/:notebookId/locations" children={<Notables type="locations"/>} />
-          <Route path="/notebooks/:notebookId/characters" children={<Notables type="characters"/>} />
+
+          {notableTypes.map((type, index) => (
+            <Route
+              path={`/notebooks/:notebookId/${type}`}
+              children={<Notables type={type} key={type} />}
+              key={index}
+            />
+          ))}
+
           <Route path="/notebooks/:id" children={<Show />} />
         </Switch>
       </div>
