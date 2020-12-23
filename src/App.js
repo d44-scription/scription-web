@@ -1,9 +1,9 @@
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
-import Index from "./components/notebooks/index.component";
+import Notebooks from "./components/notebooks/index.component";
 import Show from "./components/notebooks/show.component";
-import Characters from "./components/notables/characters.component";
+import Notables from "./components/notables/index.component";
 
 function App() {
   return (
@@ -14,8 +14,10 @@ function App() {
 
       <div className="container mt-3">
         <Switch>
-          <Route exact path={["/", "/notebooks"]} component={Index} />
-          <Route path="/notebooks/:notebookId/characters" children={<Characters />} />
+          <Route exact path={["/", "/notebooks"]} component={Notebooks} />
+          <Route path="/notebooks/:notebookId/items" children={<Notables type="items"/>} />
+          <Route path="/notebooks/:notebookId/locations" children={<Notables type="locations"/>} />
+          <Route path="/notebooks/:notebookId/characters" children={<Notables type="characters"/>} />
           <Route path="/notebooks/:id" children={<Show />} />
         </Switch>
       </div>

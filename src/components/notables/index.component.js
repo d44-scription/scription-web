@@ -6,29 +6,29 @@ import NotableDataService from "../../services/notable.service"
 function Show(props) {
   const { notebookId } = useParams();
 
-  const [characters, setCharacters] = useState([]);
+  const [notables, setNotables] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
   // Callback to update the list of chars
   useEffect(() => {
-    NotableDataService.index(notebookId, "characters")
+    NotableDataService.index(notebookId, props.type)
       .then((response) => {
-        setCharacters(response.data);
+        setNotables(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [setCharacters, notebookId]);
+  }, [setNotables, notebookId]);
 
   return (
     <div className="list row">
       <div className="col-md-6">
-        <h1>Characters</h1>
+        <h1 className="capitalise">{props.type}</h1>
 
         <List
           currentId={currentId}
           setCurrentId={setCurrentId}
-          items={characters}
+          items={notables}
           label="name"
         />
       </div>
