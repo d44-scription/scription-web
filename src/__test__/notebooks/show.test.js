@@ -10,8 +10,8 @@ describe("Show component", () => {
   const placeholder = "Click here to add a note";
 
   const fakeNotebook = {
-      name: "Notebook 1",
-      id: id,
+    name: "Notebook 1",
+    id: id,
   };
 
   const successfulResponse = {
@@ -55,6 +55,16 @@ describe("Show component", () => {
         "Use @ to reference a character, : to reference an item, and # to reference a location"
       )
     ).toBeVisible();
+
+    expect(
+      screen.getByTitle("View characters for Notebook 1")
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByTitle("View locations for Notebook 1")
+    ).toBeInTheDocument();
+
+    expect(screen.getByTitle("View items for Notebook 1")).toBeInTheDocument();
   };
 
   test("displaying success messages", async () => {
@@ -79,5 +89,36 @@ describe("Show component", () => {
 
     // Confirm success message disappears
     expect(screen.queryByText("Your note has been added")).toBeNull();
+  });
+
+  test("notable links respond to tab correctly", () => {
+    // Confirm we start at rest state
+    confirmRestState();
+
+    const charButton = screen
+      .getByTitle("View characters for Notebook 1")
+      .closest("button");
+
+    const locationButton = screen
+      .getByTitle("View locations for Notebook 1")
+      .closest("button");
+
+    const itemButton = screen
+      .getByTitle("View items for Notebook 1")
+      .closest("button");
+
+    // Skip note editor, this is testing at src/__test__/inline_editor.test.js
+    for (let i = 0; i < 5; i++) {
+      userEvent.tab();
+    }
+
+    // Confirm SVG buttons are focusable
+    expect(charButton).toHaveFocus();
+
+    userEvent.tab();
+    expect(locationButton).toHaveFocus();
+
+    userEvent.tab();
+    expect(itemButton).toHaveFocus();
   });
 });
