@@ -42,11 +42,11 @@ Tests are stored under the `src/__test__` directory, aiming to mirror the `src/c
 To stub API responses in tests Jest is used to `spy` on a module that makes API requests - in this instance, the `http-common.js` defaults defined at `src\http-common.js`. Therefore code similar to the following will watch the `http` module for any `get` requests:
 
 ```js
-  jest.spyOn(http, "get").mockImplementation(() =>
-    Promise.resolve({
-      data: mockJsonData,
-    })
-  );
+jest.spyOn(http, "get").mockImplementation(() =>
+  Promise.resolve({
+    data: mockJsonData,
+  })
+);
 ```
 
 Once more to standardise environments, the tests can be run in Docker:
@@ -61,4 +61,4 @@ Once more to standardise environments, the tests can be run in Docker:
     > ...
 ```
 
-*This doesn't have the live reloading that running `npm test` outside of Docker has, but pressing `Enter` will manually rerun any tests that could have changed*
+_This doesn't have the live reloading that running `npm test` outside of Docker has, but pressing `Enter` will manually rerun any tests that could have changed_

@@ -56,7 +56,7 @@ function List(props) {
             tabIndex="0"
             listid={item.id}
           >
-            <p style={{ margin: "0.75rem" }}>{item[props.label]}</p>
+            <p style={{ margin: "0.75rem" }}>{item[props.label || "name"]}</p>
           </ListGroup.Item>
         ))}
     </ListGroup>
