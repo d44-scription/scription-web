@@ -18,7 +18,7 @@ function Show(props) {
       .catch((e) => {
         console.log(e);
       });
-  }, [setNotables, notebookId]);
+  }, [setNotables, notebookId, props.type]);
 
   return (
     <div className="list row">
