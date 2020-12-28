@@ -71,5 +71,15 @@ describe("Index component", () => {
     expect(listItem1).toHaveClass("active");
     expect(listItem2).not.toHaveClass("active");
     expect(listItem3).not.toHaveClass("active");
+
+    // Click first list item again
+    await act(async () => {
+      userEvent.click(listItem1);
+    });
+
+    // Confirm that item has been deselected
+    expect(listItem1).not.toHaveClass("active");
+    expect(listItem2).not.toHaveClass("active");
+    expect(listItem3).not.toHaveClass("active");
   });
 });

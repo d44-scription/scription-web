@@ -46,8 +46,8 @@ describe("Index component", () => {
     expect(listItem2).toBeInTheDocument();
 
     // Confirm that, by default, no list items are selected
-    expect(listItem1).not.toHaveClass("active")
-    expect(listItem2).not.toHaveClass("active")
+    expect(listItem1).not.toHaveClass("active");
+    expect(listItem2).not.toHaveClass("active");
 
     // Click first list item
     await act(async () => {
@@ -61,5 +61,18 @@ describe("Index component", () => {
     // Confirm notebook component is shown
     expect(screen.getByText("No name saved")).toBeInTheDocument();
     expect(screen.getByText("No summary saved")).toBeInTheDocument();
+
+    // Click first list item again
+    await act(async () => {
+      userEvent.click(listItem1);
+    });
+
+    // When confirm item has been deselected
+    expect(listItem1).not.toHaveClass("active");
+    expect(listItem2).not.toHaveClass("active");
+
+    // Confirm notebook component is shown
+    expect(screen.queryByText("No name saved")).toBeNull();
+    expect(screen.queryByText("No summary saved")).toBeNull();
   });
 });
