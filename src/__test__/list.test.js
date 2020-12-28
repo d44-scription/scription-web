@@ -55,7 +55,7 @@ describe("Text component", () => {
 
     afterEach(() => {
       setCurrentId(-1);
-    })
+    });
 
     test("rendering all items", () => {
       expect(screen.getByText("Item 1")).toBeInTheDocument();

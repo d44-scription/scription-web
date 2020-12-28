@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 $body-bg: $dark;
 $body-color: $primary;
@@ -13,15 +13,15 @@ $modal-content-color: $dark;
 $modal-content-bg: $light;
 
 // Import Bootstrap
-@import '~bootstrap/scss/bootstrap.scss';
-
+@import "~bootstrap/scss/bootstrap.scss";
 
 .form-control:focus {
   background-color: scale-color($primary, $table-bg-scale);
   color: $body-bg;
 }
 
-.list-group-item, link {
+.list-group-item,
+link {
   cursor: pointer;
 }
 

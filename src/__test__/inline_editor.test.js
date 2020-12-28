@@ -199,13 +199,13 @@ describe("Text component", () => {
     const action = () => {
       return Promise.resolve({
         data: {
-          id: 0
-        }
+          id: 0,
+        },
       });
     };
 
     const onSubmitAction = () => {
-      testVal = true
+      testVal = true;
     };
 
     test("correctly running on enter", async () => {

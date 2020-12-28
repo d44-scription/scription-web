@@ -5,13 +5,15 @@ import Notebooks from "./components/notebooks/index.component";
 import Show from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
 
-const notableTypes = ["characters", "locations", "items"]
+const notableTypes = ["characters", "locations", "items"];
 
 function App() {
   return (
     <div>
       <Navbar bg="primary" variant="light">
-        <Navbar.Brand href="/"><h1>Scription</h1></Navbar.Brand>
+        <Navbar.Brand href="/">
+          <h1>Scription</h1>
+        </Navbar.Brand>
       </Navbar>
 
       <div className="container mt-3">

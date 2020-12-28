@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import List from "../list.component";
-import NotableDataService from "../../services/notable.service"
+import NotableDataService from "../../services/notable.service";
 
 function Show(props) {
   const { notebookId } = useParams();
