@@ -31,7 +31,7 @@ function Index(props) {
   return (
     <div className="list row">
       <div className="col-md-6">
-        <h1>Notebooks</h1>
+        <h2>Notebooks</h2>
 
         <List
           currentId={currentId}

@@ -64,7 +64,7 @@ function Show(props) {
   return (
     <div className="list row">
       <div className="col-md-6">
-        <h1>{name}</h1>
+        <h2>{name}</h2>
 
         <InlineEditor
           value={content}
@@ -81,7 +81,7 @@ function Show(props) {
       </div>
 
       <div className="col-md-6">
-        <h1>Notables</h1>
+        <h2>Notables</h2>
 
         <section className="d-inline-flex justify-content-between w-100">
           <Button
@@ -112,7 +112,7 @@ function Show(props) {
           </Button>
         </section>
 
-        <h1>Unlinked Notes</h1>
+        <h2>Unlinked Notes</h2>
       </div>
     </div>
   );
