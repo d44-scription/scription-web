@@ -1,6 +1,5 @@
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
 import Notebooks from "./components/notebooks/index.component";
 import Show from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
