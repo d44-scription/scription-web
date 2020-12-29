@@ -11,14 +11,18 @@ function Breadcrumbs(props) {
 
     if (index === 0) {
       // First breadcrumb returns a brand link
-      return <Breadcrumb.Item href="/">Scription</Breadcrumb.Item>;
+      return (
+        <Breadcrumb.Item key={index} href="/">
+          Scription
+        </Breadcrumb.Item>
+      );
     } else {
       // Otherwise return a breadcrumb where the last one in the list is active
       return (
         <Breadcrumb.Item
           href={url}
           key={index}
-          active={index === paths.length + 1}
+          active={index + 1 === paths.length}
         >
           {path}
         </Breadcrumb.Item>
