@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import useKeypress from "../hooks/useKeypress";
 import "../scss/list.scss";
 
 function List(props) {
@@ -16,32 +15,12 @@ function List(props) {
     [props]
   );
 
-  // Used on keypress - checks for list element focus, then sets active id from that
-  const setActiveItemFromFocus = useCallback(() => {
-    const id = document.activeElement.getAttribute("listid");
-
-    if (id) {
-      setActiveItem(id);
+  // Sets active id from focussed item
+  const onKeyDown = (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      setActiveItem(e.target.getAttribute("listid"));
     }
-  }, [setActiveItem]);
-
-  // Callback for enter key
-  useKeypress(
-    "Enter",
-    () => {
-      setActiveItemFromFocus();
-    },
-    [setActiveItemFromFocus]
-  );
-
-  // Callback for space key
-  useKeypress(
-    " ",
-    () => {
-      setActiveItemFromFocus();
-    },
-    [setActiveItemFromFocus]
-  );
+  };
 
   return (
     <ListGroup as="ul">
@@ -53,6 +32,7 @@ function List(props) {
             key={item.id}
             active={item.id === props.currentId}
             onClick={() => setActiveItem(item.id)}
+            onKeyDown={onKeyDown}
             tabIndex="0"
             listid={item.id}
           >
