@@ -1,8 +1,7 @@
-@import "./variables.scss";
+@import "./_variables.scss";
 
 $body-bg: $dark;
 $body-color: $primary;
-$navbar-light-brand-color: $dark;
 
 $input-bg: $light;
 $input-color: $dark;
@@ -25,11 +24,22 @@ link {
   cursor: pointer;
 }
 
-.navbar-brand {
-  margin-left: 0.3125rem;
-}
-
 // Global scss
 .success {
   color: $success;
+}
+
+.breadcrumb {
+  background-color: $primary;
+  font-size: 1.85rem;
+  .breadcrumb-item {
+    color: $dark;
+    a {
+      transition: color .1s ease-in;
+      color: $mid;
+      &:hover {
+        color: $dark;
+      }
+    }
+  }
 }
