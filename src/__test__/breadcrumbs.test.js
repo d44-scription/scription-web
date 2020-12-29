@@ -16,12 +16,14 @@ describe("Show component", () => {
 
     // First crumb ("/notebooks") replaced with brand
     const brandLink = screen.getByText("Scription");
+    const notebooksCrumb = screen.queryByText("notebooks");
     const pathCrumb = screen.getByText("path");
     const toCrumb = screen.getByText("to");
     const resourceCrumb = screen.getByText("resource");
 
     // Confirm all links rendered
     expect(brandLink).toBeVisible();
+    expect(notebooksCrumb).toBeNull();
     expect(pathCrumb).toBeVisible();
     expect(toCrumb).toBeVisible();
     expect(resourceCrumb).toBeVisible();
@@ -33,7 +35,7 @@ describe("Show component", () => {
     expect(resourceCrumb).toHaveClass("active");
 
     // Confirm links are generated correctly
-    expect(brandLink).toHaveAttribute("href", "/")
+    expect(brandLink).toHaveAttribute("href", "/");
     expect(pathCrumb).toHaveAttribute("href", "notebooks/path");
     expect(toCrumb).toHaveAttribute("href", "notebooks/path/to");
     expect(resourceCrumb).not.toHaveAttribute("href");
@@ -55,5 +57,5 @@ describe("Show component", () => {
     expect(brandLink).toHaveClass("active");
     expect(brandLink).not.toHaveAttribute("href");
     expect(screen.queryByText("/")).toBeNull();
-  })
+  });
 });
