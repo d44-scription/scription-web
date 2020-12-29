@@ -4,34 +4,29 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 function Breadcrumbs(props) {
   const location = useLocation();
+  const paths = location.pathname.split("/");
 
-  const getBreadcrumbs = () => {
-    let paths = location.pathname.split("/");
+  let crumbs = paths.map((path, index) => {
+    var url = `${paths.slice(0, index + 1).join("/")}`;
 
-    let crumbs = paths.map((path, index) => {
-      var url = `${paths.slice(0, index + 1).join("/")}`;
+    if (index === 0) {
+      // First breadcrumb returns a brand link
+      return <Breadcrumb.Item href="/">Scription</Breadcrumb.Item>;
+    } else {
+      // Otherwise return a breadcrumb where the last one in the list is active
+      return (
+        <Breadcrumb.Item
+          href={url}
+          key={index}
+          active={index === paths.length + 1}
+        >
+          {path}
+        </Breadcrumb.Item>
+      );
+    }
+  });
 
-      if (index === 0) {
-        return <Breadcrumb.Item href="/">Scription</Breadcrumb.Item>;
-      } else if (index + 1 === paths.length) {
-        return (
-          <Breadcrumb.Item active key={index}>
-            {path}
-          </Breadcrumb.Item>
-        );
-      } else {
-        return (
-          <Breadcrumb.Item href={url} key={index}>
-            {path}
-          </Breadcrumb.Item>
-        );
-      }
-    });
-
-    return <Breadcrumb>{crumbs}</Breadcrumb>;
-  };
-
-  return getBreadcrumbs();
+  return <Breadcrumb>{crumbs}</Breadcrumb>;
 }
 
 export default Breadcrumbs;
