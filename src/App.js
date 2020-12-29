@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Notebooks from "./components/notebooks/index.component";
 import Show from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
+import Breadcrumbs from "./components/breadcrumbs.component";
 
 const notableTypes = ["characters", "locations", "items"];
 
@@ -15,6 +16,7 @@ function App() {
           <h1>Scription</h1>
         </Navbar.Brand>
       </Navbar>
+      <Breadcrumbs />
 
       <div className="container mt-3">
         <Switch>
