@@ -11,11 +11,6 @@ const notableTypes = ["characters", "locations", "items"];
 function App() {
   return (
     <div>
-      <Navbar bg="primary" variant="light">
-        <Navbar.Brand href="/">
-          <h1>Scription</h1>
-        </Navbar.Brand>
-      </Navbar>
       <Breadcrumbs />
 
       <div className="container mt-3">

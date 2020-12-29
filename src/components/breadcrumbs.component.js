@@ -4,15 +4,24 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 function Breadcrumbs(props) {
   const location = useLocation();
-  const paths = location.pathname.split("/");
+  let paths = location.pathname.split("/");
 
-  let crumbs = paths.map((path, index) => {
+  // At root of website, second path is an empty string
+  // Remove this to correctly make root link "active"
+  paths = paths[1] === "" ? paths.slice(1) : paths;
+
+  const crumbs = paths.map((path, index) => {
     var url = `${paths.slice(0, index + 1).join("/")}`;
 
     if (index === 0) {
       // First breadcrumb returns a brand link
       return (
-        <Breadcrumb.Item key={index} href="/">
+        <Breadcrumb.Item
+          className="capitalise"
+          key={index}
+          href="/"
+          active={index + 1 === paths.length}
+        >
           Scription
         </Breadcrumb.Item>
       );
@@ -20,6 +29,7 @@ function Breadcrumbs(props) {
       // Otherwise return a breadcrumb where the last one in the list is active
       return (
         <Breadcrumb.Item
+          className="capitalise"
           href={url}
           key={index}
           active={index + 1 === paths.length}
