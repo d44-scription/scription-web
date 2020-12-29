@@ -51,7 +51,7 @@ function Edit(props) {
   };
 
   const saveSummary = () => {
-    return NotebookDataService.update(props.id, "name", name);
+    return NotebookDataService.update(props.id, "summary", summary);
   };
 
   return (
