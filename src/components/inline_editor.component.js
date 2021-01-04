@@ -2,7 +2,6 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import useKeypress from "../hooks/useKeypress";
 import "../scss/inline-editor.scss";
 
 function InlineEditor(props) {
@@ -13,6 +12,7 @@ function InlineEditor(props) {
   // Define callbacks for GETting and SETting the cached value & error message
   // The error appears below the component when a request fails
   const [error, setError] = useState("");
+
   // The cache value stores the "value to return to" when a request is cancelled
   const [cacheValue, setCacheValue] = useState("");
 
@@ -51,16 +51,13 @@ function InlineEditor(props) {
   }, [setAtRest, props, cacheValue]);
 
   // Callback(/event handler) for when text is changed
-  const onChange = useCallback(
-    (e) => {
-      props.setValue(e.target.value);
-    },
-    [props]
-  );
+  const onChange = (e) => {
+    props.setValue(e.target.value);
+  };
 
   // If component is at rest and span has focus, enter/space should simulate clicking the span
   const spanKeyDown = (e) => {
-    if (e.key === " " || (e.key === "Enter" && atRest)) {
+    if ([" ", "Enter"].includes(e.key) && atRest) {
       onSpanClick();
     }
   };
