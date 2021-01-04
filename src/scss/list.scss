@@ -7,3 +7,11 @@ li:focus {
     text-decoration: underline;
   }
 }
+
+.search-field {
+  margin-bottom: 1rem;
+
+  &:focus {
+
+  }
+}
