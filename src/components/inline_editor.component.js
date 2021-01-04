@@ -16,9 +16,8 @@ function InlineEditor(props) {
   // The cache value stores the "value to return to" when a request is cancelled
   const [cacheValue, setCacheValue] = useState("");
 
-  // Store references to the input field and span
+  // Store reference to the input field
   const inputRef = useRef(null);
-  const spanRef = useRef(null);
 
   // Function to submit data & return to rest state
   const saveAndExit = useCallback(() => {
@@ -59,50 +58,25 @@ function InlineEditor(props) {
     [props]
   );
 
-  // Callback for escape key - exit without saving (*only if the textbox is focused)
-  useKeypress(
-    "Escape",
-    () => {
-      if (document.activeElement === inputRef.current) {
+  // If component is at rest and span has focus, enter/space should simulate clicking the span
+  const spanKeyDown = (e) => {
+    if (e.key === " " || (e.key === "Enter" && atRest)) {
+      onSpanClick();
+    }
+  };
+
+  // If component is not at rest and input has focus...
+  const inputKeyDown = (e) => {
+    if (!atRest) {
+      if (e.key === "Escape") {
+        // Escape key should exit without saving
         exitWithoutSaving();
+      } else if (e.key === "Enter" && !e.shiftKey) {
+        // And enter key should save and exit
+        saveAndExit();
       }
-    },
-    [atRest, setAtRest, props.setValue]
-  );
-
-  // Callback for enter key
-  useKeypress(
-    "Enter",
-    () => {
-      if (atRest) {
-        if (document.activeElement === spanRef.current) {
-          // If component is at rest and span has focus, enter should simulate clicking the span
-          onSpanClick();
-        }
-      } else {
-        if (document.activeElement === inputRef.current) {
-          // If component is not at rest and text field has focus, enter should save and exit
-          saveAndExit();
-        }
-      }
-    },
-    [atRest, setAtRest]
-  );
-
-  // Callback for space key
-  useKeypress(
-    " ",
-    () => {
-      if (atRest && document.activeElement === spanRef.current) {
-        // If component is at rest and span has focus, space should simulate clicking the span
-        onSpanClick();
-      } else if (!atRest && document.activeElement === inputRef.current) {
-        // Otherwise add a space
-        props.setValue(`${inputRef.current.value || ""} `);
-      }
-    },
-    [atRest, props.setValue]
-  );
+    }
+  };
 
   // Set focus to the text field when shown
   useEffect(() => {
@@ -130,11 +104,11 @@ function InlineEditor(props) {
           <section
             className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
             onClick={onSpanClick}
+            onKeyDown={spanKeyDown}
             hidden={!atRest}
             role="switch"
             aria-checked={!atRest}
             tabIndex="0"
-            ref={spanRef}
           >
             <span
               role="complementary"
@@ -151,9 +125,9 @@ function InlineEditor(props) {
               props.value ? "" : "placeholder"
             }`}
             onClick={onSpanClick}
+            onKeyDown={spanKeyDown}
             hidden={!atRest}
             tabIndex="0"
-            ref={spanRef}
           >
             {props.value || props.placeholder || "No data saved."}
           </span>
@@ -166,6 +140,7 @@ function InlineEditor(props) {
           ref={inputRef}
           value={props.value || ""}
           onChange={onChange}
+          onKeyDown={inputKeyDown}
           className="inline-input"
           disabled={isBusy}
           hidden={atRest}

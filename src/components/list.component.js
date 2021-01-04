@@ -39,7 +39,7 @@ function List(props) {
     }
 
     setQueriedItems(searchedItems);
-  }, [query, props.items]);
+  }, [query, props.items, props.label]);
 
   const onChange = (e) => {
     setQuery(e.target.value);
