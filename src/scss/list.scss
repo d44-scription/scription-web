@@ -10,8 +10,5 @@ li:focus {
 
 .search-field {
   margin-bottom: 1rem;
-
-  &:focus {
-
-  }
+  border-bottom: 2px solid $primary;
 }
