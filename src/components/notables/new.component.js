@@ -1,29 +1,19 @@
 import React, { useState } from "react";
 import InlineEditor from "../inline_editor.component";
 import Button from "react-bootstrap/Button";
-import NotebookDataService from "../../services/notebook.service";
+import NotableDataService from "../../services/notable.service";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component
   const [name, setName] = useState(null);
 
-  const saveNotebook = () => {
-    return NotebookDataService.create("name", name);
-  };
-  // OnCreateAction - Set state in parent props to reflect new addition
-  const updatePage = (response) => {
-    props.setNewRecord(false);
-    props.setId(response.data.id);
-    props.retrieveNotebooks(response.data.id);
-  };
-
   return (
     <div>
+      <h2>Enter name</h2>
+
       <InlineEditor
         value={name}
         setValue={setName}
-        action={saveNotebook}
-        onSubmitAction={updatePage}
         placeholder="Enter Name"
         fontSize="2rem"
       />
