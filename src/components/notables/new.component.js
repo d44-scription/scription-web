@@ -19,7 +19,7 @@ function New(props) {
 
   return (
     <div>
-      <h2>Enter name</h2>
+      <h2>Name {props.type}</h2>
 
       <InlineEditor
         value={name}

@@ -22,13 +22,24 @@ describe("Index component", () => {
     },
   ];
 
-  beforeEach(() => {
+  beforeEach(async () => {
     // In each test, stub any GET requests made through the http module with fake notables
     jest.spyOn(http, "get").mockImplementation(() =>
       Promise.resolve({
         data: notables,
       })
     );
+
+    // Use the asynchronous version of act to apply resolved promises
+    await act(async () => {
+      render(
+        <MemoryRouter initialEntries={[`/notebooks/${notebookId}/characters`]}>
+          <Route path="/notebooks/:notebookId/characters">
+            <Index type="characters" />
+          </Route>
+        </MemoryRouter>
+      );
+    });
   });
 
   afterEach(() => {
@@ -36,17 +47,9 @@ describe("Index component", () => {
     http.get.mockRestore();
   });
 
-  test("rendering full notables", async () => {
-    // Use the asynchronous version of act to apply resolved promises
-    await act(async () => {
-      render(
-        <MemoryRouter initialEntries={[`/notebooks/${notebookId}/characters`]}>
-          <Route path="/notebooks/:notebookId/characters">
-            <Index />
-          </Route>
-        </MemoryRouter>
-      );
-    });
+  test("rendering full list of notables", async () => {
+    // Confirm "add new" button is available, and prop has been correctly trimmed & capitalised
+    expect(screen.getByText("Add Character")).toBeVisible();
 
     const listItem1 = screen.getByText("Notable 1").closest("li");
     const listItem2 = screen.getByText("Notable 2").closest("li");
@@ -81,5 +84,31 @@ describe("Index component", () => {
     expect(listItem1).not.toHaveClass("active");
     expect(listItem2).not.toHaveClass("active");
     expect(listItem3).not.toHaveClass("active");
+  });
+
+  test("accessing 'new' page", () => {
+    // Confirm that, at rest, fields are hidden
+    expect(screen.getByText("Add Character")).toBeVisible();
+    expect(screen.queryByText("Name Character")).toBeNull();
+    expect(screen.queryByText("Enter Name")).toBeNull();
+    expect(screen.queryByText("Cancel")).toBeNull();
+
+    // Click add button
+    userEvent.click(screen.getByText("Add Character"));
+
+    // Confirm that, when active, add button is hidden and fields are shown
+    expect(screen.queryByText("Add Character")).toBeNull();
+    expect(screen.getByText("Name Character")).toBeVisible();
+    expect(screen.getByText("Enter Name")).toBeVisible();
+    expect(screen.getByText("Cancel")).toBeVisible();
+
+    // Click cancel
+    userEvent.click(screen.getByText("Cancel"));
+
+    // Confirm we have returned to rest state
+    expect(screen.getByText("Add Character")).toBeVisible();
+    expect(screen.queryByText("Name Character")).toBeNull();
+    expect(screen.queryByText("Enter Name")).toBeNull();
+    expect(screen.queryByText("Cancel")).toBeNull();
   });
 });
