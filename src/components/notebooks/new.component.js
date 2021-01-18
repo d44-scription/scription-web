@@ -13,7 +13,6 @@ function New(props) {
   // OnCreateAction - Set state in parent props to reflect new addition
   const updatePage = (response) => {
     props.setNewRecord(false);
-    props.setId(response.data.id);
     props.retrieveNotebooks(response.data.id);
   };
 
