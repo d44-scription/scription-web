@@ -56,6 +56,10 @@ describe("Inline editor component", () => {
       });
     });
 
+    afterEach(() => {
+      confirmRestState();
+    })
+
     test("entering and leaving rest state", async () => {
       // By default, should be in rest state
       confirmRestState();
@@ -100,6 +104,9 @@ describe("Inline editor component", () => {
 
       // Confirm that we have left rest state
       confirmActiveState();
+
+      // Return to rest state
+      userEvent.type(span, "{esc}", { skipClick: true });
     });
 
     test("responding to tab using space", async () => {
@@ -112,15 +119,14 @@ describe("Inline editor component", () => {
       // Confirm we are in rest state
       confirmRestState();
 
-      // TODO: This breaks a lot of tests for some reason :(
-      // Since changing the inline_editor to use `onKeyDown`
-      // instead of the useKeypress hook
+      // Press space on focused element
+      userEvent.type(span, "{enter}", { skipClick: true });
 
-      // // Press space on focused element
-      // userEvent.type(span, "{space}", { skipClick: true });
+      // Confirm that we have left rest state
+      confirmActiveState();
 
-      // // Confirm that we have left rest state
-      // confirmActiveState();
+      // Return to rest state
+      userEvent.type(span, "{esc}", { skipClick: true });
     });
 
     test("saving via help text", async () => {

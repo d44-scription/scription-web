@@ -92,7 +92,7 @@ describe("Text component", () => {
     });
 
     test("responding to tab with space", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list");
+      const searchBar = screen.getByPlaceholderText("Search list...");
       const listItem1 = screen.getByText("Item 1").closest("li");
       const listItem2 = screen.getByText("Item 2").closest("li");
       const listItem3 = screen.getByText("Item 3").closest("li");
@@ -129,7 +129,7 @@ describe("Text component", () => {
     });
 
     test("responding to tab with enter", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list");
+      const searchBar = screen.getByPlaceholderText("Search list...");
       const listItem1 = screen.getByText("Item 1").closest("li");
       const listItem2 = screen.getByText("Item 2").closest("li");
       const listItem3 = screen.getByText("Item 3").closest("li");
@@ -166,7 +166,7 @@ describe("Text component", () => {
     });
 
     test("searching list", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list");
+      const searchBar = screen.getByPlaceholderText("Search list...");
 
       // Confirm all items shown in un-searched list
       expect(screen.getByText("Item 1")).toBeVisible();
