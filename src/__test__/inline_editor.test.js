@@ -56,10 +56,6 @@ describe("Inline editor component", () => {
       });
     });
 
-    afterEach(() => {
-      confirmRestState();
-    })
-
     test("entering and leaving rest state", async () => {
       // By default, should be in rest state
       confirmRestState();
