@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Index from "../../components/notebooks/index.component";
+import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
@@ -16,12 +17,20 @@ describe("Index component", () => {
     },
   ];
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(http, "get").mockImplementation(() =>
       Promise.resolve({
         data: fakeNotebooks,
       })
     );
+
+    await act(async () => {
+      render(
+        <BrowserRouter>
+          <Index />
+        </BrowserRouter>
+      );
+    });
   });
 
   afterEach(() => {
@@ -29,92 +38,41 @@ describe("Index component", () => {
   });
 
   test("rendering a list of notebooks", async () => {
-    // Use the asynchronous version of act to apply resolved promises
-    await act(async () => {
-      render(<Index />);
-    });
+    const listItem1 = screen.getByText("Notebook 1").closest("li");
+    const listItem2 = screen.getByText("Notebook 2").closest("li");
 
     // Confirm all list elements are rendered
-    expect(screen.getByText("Notebook 1")).toBeInTheDocument();
-    expect(screen.getByText("Notebook 2")).toBeInTheDocument();
+    expect(listItem1).toBeInTheDocument();
+    expect(listItem2).toBeInTheDocument();
 
     // Confirm that, by default, no list items are selected
-    expect(
-      screen.getAllByRole("listitem")[0].className.includes("active")
-    ).toBe(false);
-
-    expect(
-      screen.getAllByRole("listitem")[1].className.includes("active")
-    ).toBe(false);
+    expect(listItem1).not.toHaveClass("active");
+    expect(listItem2).not.toHaveClass("active");
 
     // Click first list item
     await act(async () => {
-      userEvent.click(screen.getByText("Notebook 1"));
+      userEvent.click(listItem1);
     });
 
     // When clicked, only target element should be active
-    expect(
-      screen.getAllByRole("listitem")[0].className.includes("active")
-    ).toBe(true);
-
-    expect(
-      screen.getAllByRole("listitem")[1].className.includes("active")
-    ).toBe(false);
+    expect(listItem1).toHaveClass("active");
+    expect(listItem2).not.toHaveClass("active");
 
     // Confirm notebook component is shown
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
-  });
+    expect(screen.getByText("No name saved")).toBeInTheDocument();
+    expect(screen.getByText("No summary saved")).toBeInTheDocument();
 
-  test("responding to tab with enter", async () => {
+    // Click first list item again
     await act(async () => {
-      render(<Index />);
+      userEvent.click(listItem1);
     });
 
-    userEvent.tab();
+    // When confirm item has been deselected
+    expect(listItem1).not.toHaveClass("active");
+    expect(listItem2).not.toHaveClass("active");
 
-    // Retrieve first list item
-    const span = screen.getByText("Notebook 1");
-
-    await act(async () => {
-      userEvent.type(span, "{enter}", { skipClick: true });
-    });
-
-    // Confirm that we have left rest state
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
-
-    await act(async () => {
-      userEvent.type(span, "{enter}", { skipClick: true });
-    });
-
-    // Confirm we have returned to rest state
-    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
-  });
-
-  test("responding to tab with space", async () => {
-    await act(async () => {
-      render(<Index />);
-    });
-
-    userEvent.tab();
-
-    // Retrieve first list item
-    const span = screen.getByText("Notebook 1");
-
-    await act(async () => {
-      userEvent.type(span, "{space}", { skipClick: true });
-    });
-
-    // Confirm that we have left rest state
-    expect(screen.getByText("No name saved.")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved.")).toBeInTheDocument();
-
-    await act(async () => {
-      userEvent.type(span, "{space}", { skipClick: true });
-    });
-
-    // Confirm we have returned to rest state
-    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
+    // Confirm notebook component is shown
+    expect(screen.queryByText("No name saved")).toBeNull();
+    expect(screen.queryByText("No summary saved")).toBeNull();
   });
 });

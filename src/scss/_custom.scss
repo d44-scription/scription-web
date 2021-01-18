@@ -1,0 +1,44 @@
+@import "./_variables.scss";
+
+$body-bg: $dark;
+$body-color: $primary;
+
+$input-bg: $light;
+$input-color: $dark;
+
+$table-bg-scale: -85%;
+
+$modal-content-color: $dark;
+$modal-content-bg: $light;
+
+// Import Bootstrap
+@import "~bootstrap/scss/bootstrap.scss";
+
+.form-control:focus {
+  color: $input-color;
+}
+
+.list-group-item,
+link {
+  cursor: pointer;
+}
+
+// Global scss
+.success {
+  color: $success;
+}
+
+.breadcrumb {
+  background-color: $primary;
+  font-size: 1.85rem;
+  .breadcrumb-item {
+    color: $dark;
+    a {
+      transition: color .1s ease-in;
+      color: $mid;
+      &:hover {
+        color: $dark;
+      }
+    }
+  }
+}
