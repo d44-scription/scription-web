@@ -15,8 +15,7 @@ $modal-content-bg: $light;
 @import "~bootstrap/scss/bootstrap.scss";
 
 .form-control:focus {
-  background-color: scale-color($primary, $table-bg-scale);
-  color: $body-bg;
+  color: $input-color;
 }
 
 .list-group-item,

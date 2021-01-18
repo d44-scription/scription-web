@@ -3,7 +3,7 @@ import InlineEditor from "../components/inline_editor.component";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 
-describe("Text component", () => {
+describe("Inline editor component", () => {
   let value = "Test Text";
 
   const setValue = (v) => {
@@ -100,6 +100,9 @@ describe("Text component", () => {
 
       // Confirm that we have left rest state
       confirmActiveState();
+
+      // Return to rest state
+      userEvent.type(span, "{esc}", { skipClick: true });
     });
 
     test("responding to tab using space", async () => {
@@ -115,8 +118,23 @@ describe("Text component", () => {
       // Press space on focused element
       userEvent.type(span, "{space}", { skipClick: true });
 
-      // Confirm that we have left rest state
-      confirmActiveState();
+      // Custom active state checker required for this test :/
+
+      // Confirm text span does not show
+      expect(screen.queryByText(value)).toBeNull();
+
+      // Confirm help text shows
+      expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
+      expect(screen.getByRole("button", { name: "escape" })).toBeVisible();
+
+      // Confirm input field shows
+      expect(screen.getByRole("textbox")).toBeVisible();
+
+      // Confirm saving svg does not show
+      expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
+
+      // Return to rest state
+      userEvent.type(span, "{esc}", { skipClick: true });
     });
 
     test("saving via help text", async () => {
