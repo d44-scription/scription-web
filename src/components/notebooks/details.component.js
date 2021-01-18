@@ -30,7 +30,6 @@ function Details(props) {
         <h2>Name notebook</h2>
         <New
           setNewRecord={setNewRecord}
-          setId={props.setId}
           retrieveNotebooks={props.retrieveNotebooks}
         />
       </div>

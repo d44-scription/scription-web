@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import New from "../../components/notebooks/new.component";
+import New from "../../components/notables/new.component";
 import { act } from "react-dom/test-utils";
 import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("New component", () => {
   let setNewRecordTestValue = false;
-  let retrieveNotebooksTestValue = false;
+  let retrieveNotablesTestValue = false;
 
   const successfulResponse = {
     code: 200,
@@ -34,11 +34,13 @@ describe("New component", () => {
     await act(async () => {
       render(
         <New
+          type="Character"
+          notebookId="1"
           setNewRecord={() => {
             setNewRecordTestValue = true;
           }}
-          retrieveNotebooks={() => {
-            retrieveNotebooksTestValue = true;
+          retrieveNotables={() => {
+            retrieveNotablesTestValue = true;
           }}
         />
       );
@@ -49,11 +51,11 @@ describe("New component", () => {
 
     // Sanity check
     expect(setNewRecordTestValue).toBe(false);
-    expect(retrieveNotebooksTestValue).toBe(false);
+    expect(retrieveNotablesTestValue).toBe(false);
 
-    // "Create" a new notebook
+    // "Create" a new notable
     userEvent.click(screen.getByText("Enter Name"));
-    userEvent.type(screen.getByRole("textbox"), "Notebook");
+    userEvent.type(screen.getByRole("textbox"), "Notable");
 
     await act(async () => {
       userEvent.type(screen.getByRole("textbox"), "{enter}");
@@ -61,10 +63,10 @@ describe("New component", () => {
 
     // Confirm `postCreateActions` are run correctly
     expect(setNewRecordTestValue).toBe(true);
-    expect(retrieveNotebooksTestValue).toBe(true);
+    expect(retrieveNotablesTestValue).toBe(true);
 
-    expect(http.post).toBeCalledWith("/notebooks.json", {
-      notebook: { name: "Notebook" },
+    expect(http.post).toBeCalledWith("/notebooks/1/notables.json", {
+      notable: { name: "Notable", type: "Character" },
     });
   });
 });

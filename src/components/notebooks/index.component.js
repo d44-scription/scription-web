@@ -43,7 +43,6 @@ function Index(props) {
 
       <Details
         id={currentId}
-        setId={setCurrentId}
         retrieveNotebooks={retrieveNotebooks}
       />
     </div>
