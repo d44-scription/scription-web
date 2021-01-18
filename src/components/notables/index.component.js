@@ -27,6 +27,13 @@ function Show(props) {
     retrieveNotables();
   }, [retrieveNotables]);
 
+  // In some use cases the singular of the `type` prop (ie "item" instead of "items") is needed
+  // This removes the last character from and capitalises the string. While not perfect, it works
+  // for the available notable types.
+  const singularType = () => {
+    return `${props.type.charAt(0).toUpperCase()}${props.type.slice(1, -1)}`;
+  }
+
   return (
     <div className="list row">
       <div className="col-md-6">
@@ -44,8 +51,9 @@ function Show(props) {
         {newRecord ? (
           <New
             setNewRecord={setNewRecord}
-            setId={setCurrentId}
             retrieveNotables={retrieveNotables}
+            notebookId={notebookId}
+            type={singularType()}
           />
         ) : (
           <Button
@@ -54,7 +62,7 @@ function Show(props) {
             }}
             className="w-100"
           >
-            Add new {props.type}
+            Add {singularType()}
           </Button>
         )}
       </div>
