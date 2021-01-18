@@ -6,7 +6,6 @@ import userEvent from "@testing-library/user-event";
 
 describe("New component", () => {
   let setNewRecordTestValue = false;
-  let setIdTestValue = false;
   let retrieveNotebooksTestValue = false;
 
   const successfulResponse = {
@@ -38,9 +37,6 @@ describe("New component", () => {
           setNewRecord={() => {
             setNewRecordTestValue = true;
           }}
-          setId={() => {
-            setIdTestValue = true;
-          }}
           retrieveNotebooks={() => {
             retrieveNotebooksTestValue = true;
           }}
@@ -53,19 +49,22 @@ describe("New component", () => {
 
     // Sanity check
     expect(setNewRecordTestValue).toBe(false);
-    expect(setIdTestValue).toBe(false);
     expect(retrieveNotebooksTestValue).toBe(false);
 
     // "Create" a new notebook
     userEvent.click(screen.getByText("Enter Name"));
+    userEvent.type(screen.getByRole("textbox"), "Notebook");
 
     await act(async () => {
-      userEvent.type(screen.getByRole("textbox"), "New Notebook{enter}");
+      userEvent.type(screen.getByRole("textbox"), "{enter}");
     });
 
     // Confirm `postCreateActions` are run correctly
     expect(setNewRecordTestValue).toBe(true);
-    expect(setIdTestValue).toBe(true);
     expect(retrieveNotebooksTestValue).toBe(true);
+
+    expect(http.post).toBeCalledWith("/notebooks.json", {
+      notebook: { name: "Notebook" },
+    });
   });
 });
