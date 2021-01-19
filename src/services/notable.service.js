@@ -1,8 +1,14 @@
 import http from "../http-common";
 
 class NotableDataService {
-  index(notebookId, notableType) {
-    return http.get(`/notebooks/${notebookId}/${notableType}.json`);
+  index(notebookId, notableType, query) {
+    let url = `/notebooks/${notebookId}/${notableType}.json`;
+
+    if (query !== null) {
+      url = `${url}?q=${query}`;
+    }
+
+    return http.get(url);
   }
 
   create(notebookId, name, type) {

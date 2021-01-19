@@ -8,8 +8,6 @@ import Person from "../icons/person.component";
 import House from "../icons/house.component";
 import Gem from "../icons/gem.component";
 import "../../scss/show.scss";
-
-// TEMP
 import NotableDataService from "../../services/notable.service";
 import { MentionsInput, Mention } from "react-mentions";
 
@@ -21,9 +19,6 @@ function Show(props) {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
-
-  // TEMP
-  const [characters, setCharacters] = useState([]);
 
   const history = useHistory();
 
@@ -38,16 +33,26 @@ function Show(props) {
       });
   }, [setName, id]);
 
+  const fetchCharacters = useCallback(
+    (query, callback) => {
+      if (!query) return;
+
+      NotableDataService.index(id, "characters", query)
+        // Transform response data to what react-mentions expects
+        .then((response) =>
+          response.data.map((character) => ({
+            display: character.name,
+            id: character.id,
+          }))
+        )
+        .then(callback);
+    },
+    [id]
+  );
+
   // Fetch target notebook on load
   useEffect(() => {
     retrieveNotebook();
-
-    // TEMP
-    NotableDataService.index(id, "characters").then((response) =>
-      setCharacters(
-        response.data.map((char) => ({ display: char.name, id: char.id }))
-      )
-    );
   }, [retrieveNotebook]);
 
   // When content is changed away from null state, reset error message
@@ -98,7 +103,11 @@ function Show(props) {
           }}
           a11ySuggestionsListLabel={"Suggested notables to mention"}
         >
-          <Mention trigger="@" data={characters} markup="@[__display__](__id__)" />
+          <Mention
+            trigger="@"
+            data={fetchCharacters}
+            markup="@[__display__](__id__)"
+          />
         </MentionsInput>
 
         <p className="success">{successMessage}</p>
