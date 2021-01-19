@@ -9,14 +9,21 @@ import House from "../icons/house.component";
 import Gem from "../icons/gem.component";
 import "../../scss/show.scss";
 
+// TEMP
+import NotableDataService from "../../services/notable.service";
+import { MentionsInput, Mention } from "react-mentions";
+
 function Show(props) {
   // ID of notebook to show, taken from params
   const { id } = useParams();
 
   // Define callbacks for GETting and SETting the component state
   const [name, setName] = useState("");
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
+
+  // TEMP
+  const [characters, setCharacters] = useState([]);
 
   const history = useHistory();
 
@@ -34,6 +41,13 @@ function Show(props) {
   // Fetch target notebook on load
   useEffect(() => {
     retrieveNotebook();
+
+    // TEMP
+    NotableDataService.index(id, "characters").then((response) =>
+      setCharacters(
+        response.data.map((char) => ({ display: char.name, id: char.id }))
+      )
+    );
   }, [retrieveNotebook]);
 
   // When content is changed away from null state, reset error message
@@ -75,7 +89,17 @@ function Show(props) {
           fontSize="1.5rem"
           placeholder="Click here to add a note"
           helpText="Use @ to reference a character, : to reference an item, and # to reference a location"
-        ></InlineEditor>
+        />
+
+        <MentionsInput
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+          a11ySuggestionsListLabel={"Suggested notables to mention"}
+        >
+          <Mention trigger="@" data={characters} markup="@[__display__](__id__)" />
+        </MentionsInput>
 
         <p className="success">{successMessage}</p>
       </div>
