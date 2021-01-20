@@ -38,22 +38,26 @@ function Show(props) {
 
   // When content is changed away from null state, reset error message
   useEffect(() => {
-    if (content !== null) {
+    if (content !== "") {
       setSuccessMessage(null);
     }
   }, [content]);
 
   // Send POST request
   const submitNote = () => {
-    return NoteDataService.create(content, id);
-  };
+    NoteDataService.create(content, id)
+    .then(() => {
+      // Empty text box when note added and display success message
+      setContent("");
 
-  // Empty text box when note added and display success message
-  const clearContent = (response) => {
-    setContent(null);
-
-    // TODO: Retrieve success message from response
-    setSuccessMessage("Your note has been added");
+      // TODO: Retrieve success message from response
+      // TODO: Refactor this to be part of mentionable
+      setSuccessMessage("Your note has been added");
+    })
+    .catch((e) => {
+      // TODO: Error handling the same way inline editors do
+      console.log(e)
+    });
   };
 
   // Programmatically handle navigation to support accessible buttons
@@ -72,6 +76,7 @@ function Show(props) {
             setContent(e.target.value);
           }}
           notebookId={id}
+          onSubmit={submitNote}
         />
 
         <p className="help-text">Use @ to reference a character, : to reference an item, and # to reference a location</p>
