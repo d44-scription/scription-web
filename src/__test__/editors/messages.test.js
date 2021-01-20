@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Messages from "../../components/editors/messages.component";
 
-describe("Show component", () => {
+describe("Messages component", () => {
   const errorMessage = "Error Message";
   const successMessage = "Success Message";
   const helpMessage = "Help Message";
