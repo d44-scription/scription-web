@@ -53,12 +53,11 @@ function Show(props) {
       setContent("");
 
       // TODO: Retrieve success message from response
-      // TODO: Refactor this to be part of mentionable
       setSuccessMessage("Your note has been added");
+      setErrorMessage(null);
     })
     .catch((e) => {
-      // TODO: Error handling the same way inline editors do
-      console.log(e)
+      setErrorMessage(e.response.data.join(", "));
     });
   };
 
