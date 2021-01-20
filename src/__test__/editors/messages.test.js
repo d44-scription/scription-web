@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Messages from "../../components/editors/messages.component";
 
 describe("Show component", () => {
@@ -50,7 +51,46 @@ describe("Show component", () => {
     expect(screen.queryByText(helpMessage)).toBeNull();
   });
 
-  test("Running save and cancel actions successfully", () => {});
+  test("Running save and cancel actions successfully", () => {
+    let testSaveVal = false;
+    let testCancelVal = false;
+
+    render(
+      <Messages
+        saveAction={() => {
+          testSaveVal = true;
+        }}
+        cancelAction={() => {
+          testCancelVal = true;
+        }}
+      />
+    );
+
+    const saveButton = screen.getByRole("button", { name: "enter" });
+    const cancelButton = screen.getByRole("button", { name: "escape" });
+
+    // Confirm default help text shows
+    expect(saveButton).toBeVisible();
+    expect(cancelButton).toBeVisible();
+
+    // Sanity check
+    expect(testSaveVal).toBe(false);
+    expect(testCancelVal).toBe(false);
+
+    // Click save
+    userEvent.click(saveButton);
+
+    // Confirm only save action passed
+    expect(testSaveVal).toBe(true);
+    expect(testCancelVal).toBe(false);
+
+    // Click cancel
+    userEvent.click(cancelButton);
+
+    // Confirm both actions passed
+    expect(testSaveVal).toBe(true);
+    expect(testCancelVal).toBe(true);
+  });
 
   test("showing and hiding default text as props change", () => {});
 });
