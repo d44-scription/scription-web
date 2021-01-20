@@ -28,13 +28,19 @@ link {
   color: $success;
 }
 
+.help-text {
+  margin: 0.3rem 0 0 0;
+  font-size: 0.85rem;
+  color: $subtle;
+}
+
 .breadcrumb {
   background-color: $primary;
   font-size: 1.85rem;
   .breadcrumb-item {
     color: $dark;
     a {
-      transition: color .1s ease-in;
+      transition: color 0.1s ease-in;
       color: $mid;
       &:hover {
         color: $dark;
