@@ -5,8 +5,6 @@ import NotableDataService from "../services/notable.service";
 function Mentionable(props) {
   const fetchNotables = useCallback(
     (query, callback, type) => {
-      if (!query) return;
-
       NotableDataService.index(props.notebookId, type, query)
         // Transform response data to what react-mentions expects
         .then((response) => {
@@ -43,6 +41,7 @@ function Mentionable(props) {
         }}
         markup="@[__display__](@__id__)"
         className="characters"
+        appendSpaceOnAdd
       />
 
       <Mention
@@ -52,6 +51,17 @@ function Mentionable(props) {
         }}
         markup=":[__display__](:__id__)"
         className="items"
+        appendSpaceOnAdd
+      />
+
+      <Mention
+        trigger="#"
+        data={(query, callback) => {
+          fetchNotables(query, callback, "locations");
+        }}
+        markup="#[__display__](#__id__)"
+        className="locations"
+        appendSpaceOnAdd
       />
     </MentionsInput>
   );
