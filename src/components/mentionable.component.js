@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { MentionsInput, Mention } from "react-mentions";
 import NotableDataService from "../services/notable.service";
+import "../scss/mentionable.scss"
 
 function Mentionable(props) {
   const fetchNotables = useCallback(
