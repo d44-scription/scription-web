@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import { MentionsInput, Mention } from "react-mentions";
 import NotableDataService from "../../services/notable.service";
-import "../../scss/mentionable.scss"
+import "../../scss/mentionable.scss";
+import Messages from "./messages.component";
 
 function Mentionable(props) {
   const fetchNotables = useCallback(
@@ -24,47 +25,56 @@ function Mentionable(props) {
       e.preventDefault();
       props.onSubmit();
     }
-  }
+  };
 
   return (
-    <MentionsInput
-      value={props.value}
-      onChange={props.onChange}
-      a11ySuggestionsListLabel={"Suggested notables to mention"}
-      placeholder="Click here to add a note"
-      className="mentions"
-      onKeyDown={onKeyDown}
-    >
-      <Mention
-        trigger="@"
-        data={(query, callback) => {
-          fetchNotables(query, callback, "characters");
-        }}
-        markup="@[__display__](@__id__)"
-        className="characters"
-        appendSpaceOnAdd
-      />
+    <div>
+      <MentionsInput
+        value={props.value}
+        onChange={props.onChange}
+        a11ySuggestionsListLabel={"Suggested notables to mention"}
+        placeholder="Click here to add a note"
+        className="mentions"
+        onKeyDown={onKeyDown}
+      >
+        <Mention
+          trigger="@"
+          data={(query, callback) => {
+            fetchNotables(query, callback, "characters");
+          }}
+          markup="@[__display__](@__id__)"
+          className="characters"
+          appendSpaceOnAdd
+        />
 
-      <Mention
-        trigger=":"
-        data={(query, callback) => {
-          fetchNotables(query, callback, "items");
-        }}
-        markup=":[__display__](:__id__)"
-        className="items"
-        appendSpaceOnAdd
-      />
+        <Mention
+          trigger=":"
+          data={(query, callback) => {
+            fetchNotables(query, callback, "items");
+          }}
+          markup=":[__display__](:__id__)"
+          className="items"
+          appendSpaceOnAdd
+        />
 
-      <Mention
-        trigger="#"
-        data={(query, callback) => {
-          fetchNotables(query, callback, "locations");
-        }}
-        markup="#[__display__](#__id__)"
-        className="locations"
-        appendSpaceOnAdd
+        <Mention
+          trigger="#"
+          data={(query, callback) => {
+            fetchNotables(query, callback, "locations");
+          }}
+          markup="#[__display__](#__id__)"
+          className="locations"
+          appendSpaceOnAdd
+        />
+      </MentionsInput>
+
+      <Messages
+        help="Use @ to reference a character, : to reference an item, and # to reference a location"
+        success={props.successMessage}
+        error={props.errorMessage}
+        hideHelpText
       />
-    </MentionsInput>
+    </div>
   );
 }
 

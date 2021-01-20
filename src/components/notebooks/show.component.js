@@ -16,6 +16,8 @@ function Show(props) {
   // Define callbacks for GETting and SETting the component state
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null);
 
   const history = useHistory();
@@ -77,10 +79,9 @@ function Show(props) {
           }}
           notebookId={id}
           onSubmit={submitNote}
+          successMessage={successMessage}
+          errorMessage={errorMessage}
         />
-
-        <p className="help-text">Use @ to reference a character, : to reference an item, and # to reference a location</p>
-        <p className="success">{successMessage}</p>
       </div>
 
       <div className="col-md-6">

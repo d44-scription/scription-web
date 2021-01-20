@@ -1,6 +1,6 @@
 import React from "react";
-import { render } from "react-dom";
 import Button from "react-bootstrap/Button";
+import "../../scss/messages.scss";
 
 function Messages(props) {
   return(
@@ -17,9 +17,9 @@ function Messages(props) {
         to cancel
       </p>
 
-      <small className="error-text">{props.error}</small>
-      <small className="success-text">{props.success}</small>
-      <small className="help-text">{props.help}</small>
+      <p className="error-text">{props.error}</p>
+      <p className="success-text">{props.success}</p>
+      <p className="help-text">{props.help}</p>
     </div>
   );
 }

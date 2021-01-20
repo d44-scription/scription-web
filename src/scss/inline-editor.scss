@@ -1,4 +1,4 @@
-@import "../scss/_variables.scss";
+@import "./variables.scss";
 
 .inline-label {
   border-bottom: 2px dashed $subtle;
@@ -20,22 +20,6 @@
 .placeholder {
   color: $subtle;
   font-style: italic;
-}
-
-.error,
-.btn-link {
-  margin: 0.3rem 0 0 0;
-  font-size: 0.85rem;
-}
-
-.btn-link {
-  vertical-align: bottom;
-  padding: 0;
-  text-decoration: none;
-}
-
-.error {
-  color: $error;
 }
 
 .busy-svg {

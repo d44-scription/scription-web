@@ -1,0 +1,27 @@
+@import "./variables.scss";
+
+.error-text,
+.btn-link,
+.help-text,
+.success-text {
+  margin: 0.3rem 0 0 0;
+  font-size: 0.85rem;
+}
+
+.btn-link {
+  vertical-align: bottom;
+  padding: 0;
+  text-decoration: none;
+}
+
+.error-text {
+  color: $error;
+}
+
+.help-text {
+  color: $subtle;
+}
+
+.success-text {
+  color: $success;
+}
