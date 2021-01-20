@@ -31,7 +31,8 @@ function Mentionable(props) {
       <Mention
         trigger="@"
         data={fetchCharacters}
-        markup="@[__display__](__id__)"
+        markup="@[__display__](@__id__)"
+        className="characters"
       />
     </MentionsInput>
   );
