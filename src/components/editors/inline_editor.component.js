@@ -2,8 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-import "../scss/inline-editor.scss";
-import Mentionable from "./mentionable.component";
+import "../../scss/inline-editor.scss";
 
 function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component

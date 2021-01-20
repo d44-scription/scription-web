@@ -107,7 +107,7 @@ describe("Show component", () => {
       .getByTitle("View items for Notebook 1")
       .closest("button");
 
-    // Skip note editor, this is testing at src/__test__/inline_editor.test.js
+    // Skip note editor, this is testing at src/__test__/editors/inline_editor.test.js
     for (let i = 0; i < 5; i++) {
       userEvent.tab();
     }
