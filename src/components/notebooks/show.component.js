@@ -3,13 +3,11 @@ import { useParams, useHistory } from "react-router-dom";
 import NotebookDataService from "../../services/notebook.service";
 import Button from "react-bootstrap/Button";
 import NoteDataService from "../../services/note.service";
-import InlineEditor from "../inline_editor.component";
 import Person from "../icons/person.component";
 import House from "../icons/house.component";
 import Gem from "../icons/gem.component";
 import "../../scss/show.scss";
-import NotableDataService from "../../services/notable.service";
-import { MentionsInput, Mention } from "react-mentions";
+import Mentionable from "../mentionable.component";
 
 function Show(props) {
   // ID of notebook to show, taken from params
@@ -32,23 +30,6 @@ function Show(props) {
         console.log(e);
       });
   }, [setName, id]);
-
-  const fetchCharacters = useCallback(
-    (query, callback) => {
-      if (!query) return;
-
-      NotableDataService.index(id, "characters", query)
-        // Transform response data to what react-mentions expects
-        .then((response) =>
-          response.data.map((character) => ({
-            display: character.name,
-            id: character.id,
-          }))
-        )
-        .then(callback);
-    },
-    [id]
-  );
 
   // Fetch target notebook on load
   useEffect(() => {
@@ -85,31 +66,15 @@ function Show(props) {
       <div className="col-md-6">
         <h2>{name}</h2>
 
-        <InlineEditor
-          value={content}
-          type="textarea"
-          setValue={setContent}
-          action={submitNote}
-          onSubmitAction={clearContent}
-          fontSize="1.5rem"
-          placeholder="Click here to add a note"
-          helpText="Use @ to reference a character, : to reference an item, and # to reference a location"
-        />
-
-        <MentionsInput
+        <Mentionable
           value={content}
           onChange={(e) => {
             setContent(e.target.value);
           }}
-          a11ySuggestionsListLabel={"Suggested notables to mention"}
-        >
-          <Mention
-            trigger="@"
-            data={fetchCharacters}
-            markup="@[__display__](__id__)"
-          />
-        </MentionsInput>
+          notebookId={id}
+        />
 
+        <p className="help-text">Use @ to reference a character, : to reference an item, and # to reference a location</p>
         <p className="success">{successMessage}</p>
       </div>
 
