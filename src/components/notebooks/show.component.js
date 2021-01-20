@@ -7,7 +7,7 @@ import Person from "../icons/person.component";
 import House from "../icons/house.component";
 import Gem from "../icons/gem.component";
 import "../../scss/show.scss";
-import Mentionable from "../mentionable.component";
+import Mentionable from "../editors/mentionable.component";
 
 function Show(props) {
   // ID of notebook to show, taken from params
