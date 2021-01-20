@@ -39,24 +39,32 @@ describe("Show component", () => {
       submitTestVal = true;
     };
 
-    render(
-      <Mentionable value={value} onChange={setValue} notebookId={notebookId} onSubmit={onSubmit} />
-    );
+    render(<Mentionable onSubmit={onSubmit} />);
 
     // Sanity check
-    expect(submitTestVal).toBe(false)
+    expect(submitTestVal).toBe(false);
 
     // Type into text box and hit enter
     const textField = screen.getByPlaceholderText("Click here to add a note");
-    userEvent.type(textField, "Note contents{enter}")
+    userEvent.type(textField, "Note contents{enter}");
 
     // Confirm action runs
     expect(submitTestVal).toBe(true);
   });
 
   test("Correctly rendering messages", () => {
-    const successMessage = "Success";
-    const errorMessage = "Error";
+    const successMessage = "Success Message";
+    const errorMessage = "Error Message";
+
+    render(
+      <Mentionable
+        successMessage={successMessage}
+        errorMessage={errorMessage}
+      />
+    );
+
+    expect(screen.getByText("Success Message")).toBeVisible();
+    expect(screen.getByText("Error Message")).toBeVisible();
   });
 
   test("Rendering list of mentionables", () => {
