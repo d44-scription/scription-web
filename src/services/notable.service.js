@@ -4,7 +4,7 @@ class NotableDataService {
   index(notebookId, notableType, query) {
     let url = `/notebooks/${notebookId}/${notableType}.json`;
 
-    if (query !== null) {
+    if (query !== undefined) {
       url = `${url}?q=${query}`;
     }
 

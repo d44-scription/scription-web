@@ -9,12 +9,12 @@ function Mentionable(props) {
 
       NotableDataService.index(props.notebookId, "characters", query)
         // Transform response data to what react-mentions expects
-        .then((response) =>
-          response.data.map((character) => ({
+        .then((response) => {
+          return response.data.map((character) => ({
             display: character.name,
             id: character.id,
-          }))
-        )
+          }));
+        })
         .then(callback);
     },
     [props.notebookId]
