@@ -92,5 +92,17 @@ describe("Show component", () => {
     expect(testCancelVal).toBe(true);
   });
 
-  test("showing and hiding default text as props change", () => {});
+  test("showing and hiding default text as props change", () => {
+    const { rerender } = render(<Messages />);
+
+    // Confirm help text shows by default
+    expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "escape" })).toBeVisible();
+
+    rerender(<Messages hideHelpText />);
+
+    // Confirm `hideHelpText` prop hides text
+    expect(screen.queryByRole("button", { name: "enter" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "escape" })).toBeNull();
+  });
 });
