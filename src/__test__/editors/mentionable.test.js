@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Mentionable from "../../components/editors/mentionable.component";
 import http from "../../http-common";
@@ -7,7 +7,7 @@ describe("Show component", () => {
   const notebookId = 1;
   let value = "";
   const setValue = (e) => {
-    value = e.target.value;
+    value = `${value}${e.target.value}`;
   };
 
   const fakeMentionables = [
@@ -38,6 +38,20 @@ describe("Show component", () => {
     const onSubmit = () => {
       submitTestVal = true;
     };
+
+    render(
+      <Mentionable value={value} onChange={setValue} notebookId={notebookId} onSubmit={onSubmit} />
+    );
+
+    // Sanity check
+    expect(submitTestVal).toBe(false)
+
+    // Type into text box and hit enter
+    const textField = screen.getByPlaceholderText("Click here to add a note");
+    userEvent.type(textField, "Note contents{enter}")
+
+    // Confirm action runs
+    expect(submitTestVal).toBe(true);
   });
 
   test("Correctly rendering messages", () => {
