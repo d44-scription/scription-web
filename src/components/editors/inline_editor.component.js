@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
 import "../../scss/inline-editor.scss";
+import Messages from "./messages.component";
 
 function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -168,20 +168,13 @@ function InlineEditor(props) {
         />
       </div>
 
-      <p className="help-text" hidden={atRest}>
-        Press{" "}
-        <Button variant="link" onClick={saveAndExit}>
-          enter
-        </Button>{" "}
-        to save &middot; Press{" "}
-        <Button variant="link" onClick={exitWithoutSaving}>
-          escape
-        </Button>{" "}
-        to cancel
-      </p>
-
-      <p className="help-text">{props.helpText}</p>
-      <p className="error">{error}</p>
+      <Messages
+        hideHelpText={atRest}
+        saveAction={saveAndExit}
+        cancelAction={exitWithoutSaving}
+        help={props.helpText}
+        error={error}
+      />
     </span>
   );
 }
