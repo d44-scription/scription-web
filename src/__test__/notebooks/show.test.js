@@ -49,7 +49,7 @@ describe("Show component", () => {
 
   const confirmRestState = () => {
     expect(screen.getByText("Notebook 1")).toBeVisible();
-    expect(screen.getByText(placeholder)).toBeVisible();
+    expect(screen.getByPlaceholderText(placeholder)).toBeVisible();
     expect(
       screen.getByText(
         "Use @ to reference a character, : to reference an item, and # to reference a location"
@@ -72,7 +72,7 @@ describe("Show component", () => {
     confirmRestState();
 
     // Add a new note
-    userEvent.click(screen.getByText(placeholder));
+    userEvent.click(screen.getByPlaceholderText(placeholder));
     await act(async () => {
       userEvent.type(screen.getByRole("textbox"), "{enter}");
     });
@@ -82,7 +82,7 @@ describe("Show component", () => {
     confirmRestState();
 
     // Type another note
-    userEvent.click(screen.getByText(placeholder));
+    userEvent.click(screen.getByPlaceholderText(placeholder));
     await act(async () => {
       userEvent.type(screen.getByRole("textbox"), "A");
     });
@@ -107,8 +107,8 @@ describe("Show component", () => {
       .getByTitle("View items for Notebook 1")
       .closest("button");
 
-    // Skip note editor, this is testing at src/__test__/inline_editor.test.js
-    for (let i = 0; i < 5; i++) {
+    // Skip note editor, this is tested at src/__test__/editors/inline_editor.test.js
+    for (let i = 0; i < 4; i++) {
       userEvent.tab();
     }
 

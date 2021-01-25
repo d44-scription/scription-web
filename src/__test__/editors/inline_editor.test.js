@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import InlineEditor from "../components/inline_editor.component";
+import InlineEditor from "../../components/editors/inline_editor.component";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 
@@ -89,7 +89,7 @@ describe("Inline editor component", () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
       // Confirm we are in rest state
@@ -109,7 +109,7 @@ describe("Inline editor component", () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
       // Confirm we are in rest state

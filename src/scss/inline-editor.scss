@@ -1,18 +1,17 @@
-@import "../scss/_variables.scss";
+@import "./variables.scss";
 
 .inline-label {
   border-bottom: 2px dashed $subtle;
   margin: 1rem 0 0 0;
   font-weight: 500;
-  word-wrap: break-word;
   cursor: pointer;
+
+  &:focus {
+    @include tabbable;
+  }
 }
 
-.inline-label:focus {
-  @include tabbable;
-}
-
-.inline-textarea-label {
+.inline-text-label {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
@@ -20,27 +19,6 @@
 .placeholder {
   color: $subtle;
   font-style: italic;
-}
-
-.help-text,
-.error,
-.btn-link {
-  margin: 0.3rem 0 0 0;
-  font-size: 0.85rem;
-}
-
-.btn-link {
-  vertical-align: bottom;
-  padding: 0;
-  text-decoration: none;
-}
-
-.help-text {
-  color: $subtle;
-}
-
-.error {
-  color: $error;
 }
 
 .busy-svg {

@@ -24,9 +24,6 @@ link {
 }
 
 // Global scss
-.success {
-  color: $success;
-}
 
 .breadcrumb {
   background-color: $primary;
@@ -34,7 +31,7 @@ link {
   .breadcrumb-item {
     color: $dark;
     a {
-      transition: color .1s ease-in;
+      transition: color 0.1s ease-in;
       color: $mid;
       &:hover {
         color: $dark;

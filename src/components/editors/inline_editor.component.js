@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
-import "../scss/inline-editor.scss";
+import "../../scss/inline-editor.scss";
+import Messages from "./messages.component";
 
 function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -94,54 +94,50 @@ function InlineEditor(props) {
     setError("");
   }, [props.value, setError]);
 
+  const renderSpan = () => {
+    return (
+      <section
+        className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
+        onClick={onSpanClick}
+        onKeyDown={spanKeyDown}
+        hidden={!atRest}
+        role="switch"
+        aria-checked={!atRest}
+        tabIndex="0"
+      >
+        <span
+          role="complementary"
+          className="inline-text-label"
+          style={{ fontSize: props.fontSize || "1rem" }}
+        >
+          {props.value || props.placeholder || "No data saved."}
+        </span>
+      </section>
+    );
+  };
+
+  const renderInput = () => {
+    return (
+      <Form.Control
+        as={props.type === "textarea" ? "textarea" : "input"}
+        rows={4}
+        style={{ fontSize: props.fontSize || "1rem" }}
+        ref={inputRef}
+        value={props.value || ""}
+        onChange={onChange}
+        onKeyDown={inputKeyDown}
+        className="inline-input"
+        disabled={isBusy}
+        hidden={atRest}
+      />
+    );
+  };
+
   return (
     <span>
       <div className="d-inline-flex justify-content-start align-items-center w-100">
-        {props.type === "textarea" ? (
-          <section
-            className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
-            onClick={onSpanClick}
-            onKeyDown={spanKeyDown}
-            hidden={!atRest}
-            role="switch"
-            aria-checked={!atRest}
-            tabIndex="0"
-          >
-            <span
-              role="complementary"
-              className="inline-textarea-label"
-              style={{ fontSize: props.fontSize || "1rem" }}
-            >
-              {props.value || props.placeholder || "No data saved."}
-            </span>
-          </section>
-        ) : (
-          <span
-            style={{ fontSize: props.fontSize || "1rem" }}
-            className={`inline-text-label inline-label w-100 ${
-              props.value ? "" : "placeholder"
-            }`}
-            onClick={onSpanClick}
-            onKeyDown={spanKeyDown}
-            hidden={!atRest}
-            tabIndex="0"
-          >
-            {props.value || props.placeholder || "No data saved."}
-          </span>
-        )}
-
-        <Form.Control
-          as={props.type === "textarea" ? "textarea" : "input"}
-          rows={4}
-          style={{ fontSize: props.fontSize || "1rem" }}
-          ref={inputRef}
-          value={props.value || ""}
-          onChange={onChange}
-          onKeyDown={inputKeyDown}
-          className="inline-input"
-          disabled={isBusy}
-          hidden={atRest}
-        />
+        {renderSpan()}
+        {renderInput()}
 
         <Spinner
           animation="border"
@@ -153,20 +149,13 @@ function InlineEditor(props) {
         />
       </div>
 
-      <p className="help-text" hidden={atRest}>
-        Press{" "}
-        <Button variant="link" onClick={saveAndExit}>
-          enter
-        </Button>{" "}
-        to save &middot; Press{" "}
-        <Button variant="link" onClick={exitWithoutSaving}>
-          escape
-        </Button>{" "}
-        to cancel
-      </p>
-
-      <p className="help-text">{props.helpText}</p>
-      <p className="error">{error}</p>
+      <Messages
+        hideHelpText={atRest}
+        saveAction={saveAndExit}
+        cancelAction={exitWithoutSaving}
+        help={props.helpText}
+        error={error}
+      />
     </span>
   );
 }

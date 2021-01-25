@@ -3,11 +3,11 @@ import { useParams, useHistory } from "react-router-dom";
 import NotebookDataService from "../../services/notebook.service";
 import Button from "react-bootstrap/Button";
 import NoteDataService from "../../services/note.service";
-import InlineEditor from "../inline_editor.component";
 import Person from "../icons/person.component";
 import House from "../icons/house.component";
 import Gem from "../icons/gem.component";
 import "../../scss/show.scss";
+import Mentionable from "../editors/mentionable.component";
 
 function Show(props) {
   // ID of notebook to show, taken from params
@@ -15,7 +15,9 @@ function Show(props) {
 
   // Define callbacks for GETting and SETting the component state
   const [name, setName] = useState("");
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
   const history = useHistory();
@@ -38,22 +40,25 @@ function Show(props) {
 
   // When content is changed away from null state, reset error message
   useEffect(() => {
-    if (content !== null) {
+    if (content !== "") {
       setSuccessMessage(null);
     }
   }, [content]);
 
   // Send POST request
   const submitNote = () => {
-    return NoteDataService.create(content, id);
-  };
+    NoteDataService.create(content, id)
+      .then(() => {
+        // Empty text box when note added and display success message
+        setContent("");
 
-  // Empty text box when note added and display success message
-  const clearContent = (response) => {
-    setContent(null);
-
-    // TODO: Retrieve success message from response
-    setSuccessMessage("Your note has been added");
+        // TODO: Retrieve success message from response
+        setSuccessMessage("Your note has been added");
+        setErrorMessage(null);
+      })
+      .catch((e) => {
+        setErrorMessage(e.response.data.join(", "));
+      });
   };
 
   // Programmatically handle navigation to support accessible buttons
@@ -66,18 +71,14 @@ function Show(props) {
       <div className="col-md-6">
         <h2>{name}</h2>
 
-        <InlineEditor
+        <Mentionable
           value={content}
-          type="textarea"
           setValue={setContent}
-          action={submitNote}
-          onSubmitAction={clearContent}
-          fontSize="1.5rem"
-          placeholder="Click here to add a note"
-          helpText="Use @ to reference a character, : to reference an item, and # to reference a location"
-        ></InlineEditor>
-
-        <p className="success">{successMessage}</p>
+          notebookId={id}
+          onSubmit={submitNote}
+          successMessage={successMessage}
+          errorMessage={errorMessage}
+        />
       </div>
 
       <div className="col-md-6">
