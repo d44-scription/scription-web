@@ -17,7 +17,7 @@ function Show(props) {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
   const history = useHistory();
@@ -48,17 +48,17 @@ function Show(props) {
   // Send POST request
   const submitNote = () => {
     NoteDataService.create(content, id)
-    .then(() => {
-      // Empty text box when note added and display success message
-      setContent("");
+      .then(() => {
+        // Empty text box when note added and display success message
+        setContent("");
 
-      // TODO: Retrieve success message from response
-      setSuccessMessage("Your note has been added");
-      setErrorMessage(null);
-    })
-    .catch((e) => {
-      setErrorMessage(e.response.data.join(", "));
-    });
+        // TODO: Retrieve success message from response
+        setSuccessMessage("Your note has been added");
+        setErrorMessage(null);
+      })
+      .catch((e) => {
+        setErrorMessage(e.response.data.join(", "));
+      });
   };
 
   // Programmatically handle navigation to support accessible buttons
@@ -73,9 +73,7 @@ function Show(props) {
 
         <Mentionable
           value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
+          setValue={setContent}
           notebookId={id}
           onSubmit={submitNote}
           successMessage={successMessage}

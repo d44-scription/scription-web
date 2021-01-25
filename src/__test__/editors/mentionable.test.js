@@ -6,8 +6,8 @@ import http from "../../http-common";
 describe("Show component", () => {
   const notebookId = 1;
   let value = "";
-  const setValue = (e) => {
-    value = `${value}${e.target.value}`;
+  const setValue = (v) => {
+    value = v;
   };
 
   const fakeMentionables = [
@@ -31,6 +31,8 @@ describe("Show component", () => {
         data: fakeMentionables,
       })
     );
+
+    setValue("");
   });
 
   test("Running action correctly on enter", () => {
@@ -39,7 +41,9 @@ describe("Show component", () => {
       submitTestVal = true;
     };
 
-    render(<Mentionable onSubmit={onSubmit} />);
+    render(
+      <Mentionable onSubmit={onSubmit} value={value} setValue={setValue} />
+    );
 
     // Sanity check
     expect(submitTestVal).toBe(false);
@@ -67,11 +71,19 @@ describe("Show component", () => {
     expect(screen.getByText("Error Message")).toBeVisible();
   });
 
-  test("Rendering list of mentionables", () => {
+  test("Rendering list of mentionables", async () => {
+    // FIXME: Add tests for the list rendering correctly.
+
     render(
-      <Mentionable value={value} onChange={setValue} notebookId={notebookId} />
+      <Mentionable value={value} setValue={setValue} notebookId={notebookId} />
     );
 
-    const inputField = screen.getByPlaceholderText("Click here to add a note");
+    const textField = screen.getByPlaceholderText("Click here to add a note");
+
+    await act(async () => {
+      userEvent.type(textField, "@");
+    });
+
+    // expect(http.get).toBeCalledWith("/notebooks/1/characters.json");
   });
 });

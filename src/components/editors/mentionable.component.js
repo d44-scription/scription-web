@@ -20,18 +20,22 @@ function Mentionable(props) {
     [props.notebookId]
   );
 
-  const onKeyDown = (e) => {
+  const onKeyDown = useCallback((e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       props.onSubmit();
     }
+  }, [props]);
+
+  const onChange = (e) => {
+    props.setValue(e.target.value);
   };
 
   return (
     <div>
       <MentionsInput
         value={props.value}
-        onChange={props.onChange}
+        onChange={onChange}
         a11ySuggestionsListLabel={"Suggested notables to mention"}
         placeholder="Click here to add a note"
         className="mentions"
