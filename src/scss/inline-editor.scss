@@ -4,15 +4,14 @@
   border-bottom: 2px dashed $subtle;
   margin: 1rem 0 0 0;
   font-weight: 500;
-  word-wrap: break-word;
   cursor: pointer;
+
+  &:focus {
+    @include tabbable;
+  }
 }
 
-.inline-label:focus {
-  @include tabbable;
-}
-
-.inline-textarea-label {
+.inline-text-label {
   white-space: pre-wrap;
   word-wrap: break-word;
 }

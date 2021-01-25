@@ -95,44 +95,25 @@ function InlineEditor(props) {
   }, [props.value, setError]);
 
   const renderSpan = () => {
-    if (props.type === "textarea") {
-      return (
-        <section
-          className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
-          onClick={onSpanClick}
-          onKeyDown={spanKeyDown}
-          hidden={!atRest}
-          role="switch"
-          aria-checked={!atRest}
-          tabIndex="0"
-        >
-          <span
-            role="complementary"
-            className="inline-textarea-label"
-            style={{ fontSize: props.fontSize || "1rem" }}
-          >
-            {props.value || props.placeholder || "No data saved."}
-          </span>
-        </section>
-      );
-    } else {
-      return (
+    return (
+      <section
+        className={`inline-label w-100 ${props.value ? "" : "placeholder"}`}
+        onClick={onSpanClick}
+        onKeyDown={spanKeyDown}
+        hidden={!atRest}
+        role="switch"
+        aria-checked={!atRest}
+        tabIndex="0"
+      >
         <span
+          role="complementary"
+          className="inline-text-label"
           style={{ fontSize: props.fontSize || "1rem" }}
-          className={`inline-text-label inline-label w-100 ${
-            props.value ? "" : "placeholder"
-          }`}
-          onClick={onSpanClick}
-          onKeyDown={spanKeyDown}
-          hidden={!atRest}
-          role="switch"
-          aria-checked={!atRest}
-          tabIndex="0"
         >
           {props.value || props.placeholder || "No data saved."}
         </span>
-      );
-    }
+      </section>
+    );
   };
 
   const renderInput = () => {

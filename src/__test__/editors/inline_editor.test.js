@@ -89,7 +89,7 @@ describe("Inline editor component", () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
       // Confirm we are in rest state
@@ -109,7 +109,7 @@ describe("Inline editor component", () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
       // Confirm we are in rest state
