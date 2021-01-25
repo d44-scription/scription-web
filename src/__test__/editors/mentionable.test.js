@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import Mentionable from "../../components/editors/mentionable.component";
 import http from "../../http-common";
 
-describe("Show component", () => {
+describe("Mentionable component", () => {
   const notebookId = 1;
   let value = "";
   const setValue = (v) => {
