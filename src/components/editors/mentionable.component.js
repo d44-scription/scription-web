@@ -8,6 +8,7 @@ function Mentionable(props) {
   // Store reference to the input field
   const inputRef = useRef(null);
 
+  // Data retrieval function for when a trigger character is typed
   const fetchNotables = useCallback(
     (query, callback, type) => {
       NotableDataService.index(props.notebookId, type, query)
@@ -23,11 +24,13 @@ function Mentionable(props) {
     [props.notebookId]
   );
 
+  // Even tot cancel input - removes focus, clears text box
   const cancel = useCallback(() => {
     props.setValue("");
     inputRef.current.blur();
   }, [props, inputRef])
 
+  // Keydown event handler for enter and escape actions
   const onKeyDown = useCallback((e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -37,6 +40,7 @@ function Mentionable(props) {
     }
   }, [props, cancel]);
 
+  // Standard function to update state when user types
   const onChange = (e) => {
     props.setValue(e.target.value);
   };
