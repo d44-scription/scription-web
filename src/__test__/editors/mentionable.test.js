@@ -56,6 +56,20 @@ describe("Show component", () => {
     expect(submitTestVal).toBe(true);
   });
 
+  test("Correctly cancelling submit on escape", () => {
+    render(<Mentionable value={value} setValue={setValue} />);
+
+    // Add content to text field
+    const textField = screen.getByPlaceholderText("Click here to add a note");
+
+    userEvent.type(textField, "X");
+    expect(value).toBe("X");
+
+    // Press escape, confirm that text is removed
+    userEvent.type(textField, "{esc}");
+    expect(value).toBe("");
+  });
+
   test("Correctly rendering messages", () => {
     const successMessage = "Success Message";
     const errorMessage = "Error Message";

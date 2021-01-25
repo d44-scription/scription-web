@@ -1,10 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { MentionsInput, Mention } from "react-mentions";
 import NotableDataService from "../../services/notable.service";
 import "../../scss/mentionable.scss";
 import Messages from "./messages.component";
 
 function Mentionable(props) {
+  // Store reference to the input field
+  const inputRef = useRef(null);
+
   const fetchNotables = useCallback(
     (query, callback, type) => {
       NotableDataService.index(props.notebookId, type, query)
@@ -20,12 +23,19 @@ function Mentionable(props) {
     [props.notebookId]
   );
 
+  const cancel = useCallback(() => {
+    props.setValue("");
+    inputRef.current.blur();
+  }, [props, inputRef])
+
   const onKeyDown = useCallback((e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       props.onSubmit();
+    } else if (e.key === "Escape") {
+      cancel()
     }
-  }, [props]);
+  }, [props, cancel]);
 
   const onChange = (e) => {
     props.setValue(e.target.value);
@@ -40,6 +50,7 @@ function Mentionable(props) {
         placeholder="Click here to add a note"
         className="mentions"
         onKeyDown={onKeyDown}
+        inputRef={inputRef}
       >
         <Mention
           trigger="@"
@@ -72,11 +83,13 @@ function Mentionable(props) {
         />
       </MentionsInput>
 
+      {/* TODO: Make help text render when element has focus */}
       <Messages
         help="Use @ to reference a character, : to reference an item, and # to reference a location"
         success={props.successMessage}
         error={props.errorMessage}
-        hideHelpText
+        saveAction={props.onSubmit}
+        cancelAction={cancel}
       />
     </div>
   );
