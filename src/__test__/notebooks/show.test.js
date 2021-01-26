@@ -8,6 +8,7 @@ import userEvent from "@testing-library/user-event";
 describe("Show component", () => {
   const id = 1;
   const placeholder = "Click here to add a note";
+  const successMessage = "Test success message";
 
   const fakeNotebook = {
     name: "Notebook 1",
@@ -16,6 +17,7 @@ describe("Show component", () => {
 
   const successfulResponse = {
     code: 200,
+    success_message: successMessage,
   };
 
   beforeEach(async () => {
@@ -78,7 +80,7 @@ describe("Show component", () => {
     });
 
     // Confirm we have returned to rest state with a success message
-    expect(screen.getByText("Your note has been added")).toBeVisible();
+    expect(screen.getByText(successMessage)).toBeVisible();
     confirmRestState();
 
     // Type another note
@@ -88,7 +90,7 @@ describe("Show component", () => {
     });
 
     // Confirm success message disappears
-    expect(screen.queryByText("Your note has been added")).toBeNull();
+    expect(screen.queryByText(successMessage)).toBeNull();
   });
 
   test("notable links respond to tab correctly", () => {
