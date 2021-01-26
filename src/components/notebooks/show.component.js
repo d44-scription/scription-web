@@ -46,15 +46,16 @@ function Show(props) {
   }, [content]);
 
   // Send POST request
-  const submitNote = () => {
+  const submitNote = (response) => {
     NoteDataService.create(content, id)
-      .then(() => {
+      .then((response) => {
         // Empty text box when note added and display success message
         setContent("");
 
-        // TODO: Retrieve success message from response
-        setSuccessMessage("Your note has been added");
         setErrorMessage(null);
+        setSuccessMessage(
+          response.data.success_message || "Your note has been added"
+        );
       })
       .catch((e) => {
         setErrorMessage(e.response.data.join(", "));
