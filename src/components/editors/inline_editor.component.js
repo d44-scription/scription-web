@@ -12,6 +12,7 @@ function InlineEditor(props) {
   // Define callbacks for GETting and SETting the cached value & error message
   // The error appears below the component when a request fails
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(null);
 
   // The cache value stores the "value to return to" when a request is cancelled
   const [cacheValue, setCacheValue] = useState("");
@@ -31,6 +32,7 @@ function InlineEditor(props) {
         // If response is successful return to rest state
         setIsBusy(false);
         setError("");
+        setSuccess("Changes have been saved successfully")
         setCacheValue(props.value);
 
         // If any additional actions need to be carried out, carry them out
@@ -42,11 +44,13 @@ function InlineEditor(props) {
         // If response is unsuccessful, return to rest state and display error
         setIsBusy(false);
         setError(e.response.data.join(", "));
+        setSuccess("");
       });
-  }, [props, setIsBusy, setError, setCacheValue]);
+  }, [props, setIsBusy, setError, setSuccess, setCacheValue]);
 
   const exitWithoutSaving = useCallback(() => {
     setAtRest(true);
+    setSuccess("");
     props.setValue(cacheValue);
   }, [setAtRest, props, cacheValue]);
 
@@ -89,9 +93,10 @@ function InlineEditor(props) {
     setCacheValue(props.value);
   }, [setAtRest, props.value]);
 
-  // Reset error when props change
+  // Reset error & success messages when props change
   useEffect(() => {
     setError("");
+    setSuccess("");
   }, [props.value, setError]);
 
   const renderSpan = () => {
@@ -155,6 +160,7 @@ function InlineEditor(props) {
         cancelAction={exitWithoutSaving}
         help={props.helpText}
         error={error}
+        success={success}
       />
     </span>
   );
