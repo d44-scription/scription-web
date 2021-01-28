@@ -11,6 +11,10 @@ class NotableDataService {
     return http.get(url);
   }
 
+  get(notebookId, id) {
+    return http.get(`/notebooks/${notebookId}/notables/${id}.json`);
+  }
+
   create(notebookId, name, type) {
     let params = {};
     params["notable"] = {};

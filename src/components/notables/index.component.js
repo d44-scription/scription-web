@@ -10,15 +10,19 @@ function Show(props) {
   const [notables, setNotables] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
-  const retrieveNotables = useCallback(() => {
-    NotableDataService.index(notebookId, props.type)
-      .then((response) => {
-        setNotables(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [setNotables, notebookId, props.type]);
+  const retrieveNotables = useCallback(
+    (id) => {
+      NotableDataService.index(notebookId, props.type)
+        .then((response) => {
+          setNotables(response.data);
+          setCurrentId(id || null);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    [setNotables, notebookId, props.type]
+  );
 
   // Callback to update the list of chars
   useEffect(() => {

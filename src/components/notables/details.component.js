@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import New from "./new.component";
+import Edit from "./edit.component";
 import Button from "react-bootstrap/Button";
 
 // Middle-man component to assess state of index page and decide which sub-component to show
@@ -17,7 +18,9 @@ function Details(props) {
   if (props.id) {
     return (
       // If a notable has been selected, show the notable
-      <div className="col-md-6">Edit char form</div>
+      <div className="col-md-6">
+        <Edit notebookId={props.notebookId} id={props.id} />
+      </div>
     );
   } else if (newRecord) {
     return (
