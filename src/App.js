@@ -17,13 +17,13 @@ function App() {
         <Switch>
           <Route exact path={["/", "/notebooks"]} component={Notebooks} />
 
-          {notableTypes.map((type, index) => {
+          {notableTypes.map((type, index) => (
             <Route
               path={`/notebooks/:notebookId/${type}/:id`}
               children={<NotableShow type={type} />}
               key={index}
-            />;
-          })}
+            />
+          ))}
 
           {notableTypes.map((type, index) => (
             <Route
