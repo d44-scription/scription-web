@@ -28,6 +28,7 @@ function Details(props) {
       <div className="col-md-6">
         <Edit
           notebookId={props.notebookId}
+          retrieveNotables={props.retrieveNotables}
           id={props.id}
           type={props.type}
           singularType={singularType()}

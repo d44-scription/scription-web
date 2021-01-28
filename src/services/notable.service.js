@@ -31,6 +31,10 @@ class NotableDataService {
 
     return http.put(`/notebooks/${notebookId}/notables/${id}.json`, params);
   }
+
+  delete(notebookId, id) {
+    return http.delete(`/notebooks/${notebookId}/notables/${id}.json`);
+  }
 }
 
 export default new NotableDataService();

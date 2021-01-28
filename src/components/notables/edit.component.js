@@ -2,12 +2,15 @@ import react, { useCallback, useState, useEffect } from "react";
 import NotableDataService from "../../services/notable.service";
 import InlineEditor from "../editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
+import ConfirmModal from "../modal.component";
 import { Link } from "react-router-dom";
 
 function Edit(props) {
   // State management for name & description fields for target notable
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Function to retrieve target notable
   const retrieveNotable = useCallback(
@@ -25,6 +28,18 @@ function Edit(props) {
     },
     [setName, setDescription]
   );
+
+  // Callback used when the delete is confirmed
+  const deleteNotable = useCallback(() => {
+    NotableDataService.delete(props.notebookId, props.id)
+      .then(() => {
+        setIsModalVisible(false);
+        props.retrieveNotables();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [props, setIsModalVisible]);
 
   // Update notable when the given id prop changes
   useEffect(() => {
@@ -72,6 +87,24 @@ function Edit(props) {
           View {props.singularType}
         </Button>
       </Link>
+
+      <Button
+        variant="danger"
+        className="mt-2 w-100"
+        onClick={() => {
+          setIsModalVisible(true);
+        }}
+      >
+        Delete {props.singularType}
+      </Button>
+
+      <ConfirmModal
+        visible={isModalVisible}
+        title={`Delete ${props.singularType}?`}
+        text={`This will delete ${name} and all associated notes. Are you sure you wish to continue?`}
+        confirmAction={deleteNotable}
+        closeAction={() => setIsModalVisible(false)}
+      />
     </div>
   );
 }
