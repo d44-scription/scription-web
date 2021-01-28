@@ -23,6 +23,14 @@ class NotableDataService {
 
     return http.post(`/notebooks/${notebookId}/notables.json`, params);
   }
+
+  update(notebookId, id, param, value) {
+    let params = {};
+    params["notable"] = {};
+    params["notable"][param] = value;
+
+    return http.put(`/notebooks/${notebookId}/notables/${id}.json`, params);
+  }
 }
 
 export default new NotableDataService();

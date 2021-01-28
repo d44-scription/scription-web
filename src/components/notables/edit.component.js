@@ -1,5 +1,6 @@
 import react, { useCallback, useState, useEffect } from "react";
 import NotableDataService from "../../services/notable.service";
+import InlineEditor from "../editors/inline_editor.component";
 
 function Edit(props) {
   const [name, setName] = useState(null);
@@ -26,7 +27,21 @@ function Edit(props) {
     retrieveNotable(props.id);
   }, [props.id, retrieveNotable]);
 
-  return <p>{name} {summary}</p>;
+  const saveName = () => {
+    return NotableDataService.update(props.notebookId, props.id, "name", name);
+  };
+
+  return (
+    <div>
+      <InlineEditor
+        value={name}
+        setValue={setName}
+        action={saveName}
+        placeholder="No name saved"
+        fontSize="2rem"
+      />
+    </div>
+  );
 }
 
 export default Edit;
