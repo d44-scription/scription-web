@@ -4,7 +4,7 @@ import InlineEditor from "../editors/inline_editor.component";
 
 function Edit(props) {
   const [name, setName] = useState(null);
-  const [summary, setSummary] = useState(null);
+  const [description, setDescription] = useState(null);
 
   const retrieveNotable = useCallback(
     (id) => {
@@ -13,13 +13,13 @@ function Edit(props) {
           const notable = response.data;
 
           setName(notable.name);
-          setSummary(notable.summary);
+          setDescription(notable.description);
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    [setName, setSummary]
+    [setName, setDescription]
   );
 
   // Update notebook when the given id prop changes
@@ -31,6 +31,10 @@ function Edit(props) {
     return NotableDataService.update(props.notebookId, props.id, "name", name);
   };
 
+  const saveDescription = () => {
+    return NotableDataService.update(props.notebookId, props.id, "description", description);
+  };
+
   return (
     <div>
       <InlineEditor
@@ -39,6 +43,15 @@ function Edit(props) {
         action={saveName}
         placeholder="No name saved"
         fontSize="2rem"
+      />
+
+      <InlineEditor
+        value={description}
+        type="textarea"
+        setValue={setDescription}
+        action={saveDescription}
+        placeholder="No description saved"
+        helpText="Use shift+enter to add a new line"
       />
     </div>
   );
