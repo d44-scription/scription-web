@@ -1,9 +1,9 @@
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
 import Notebooks from "./components/notebooks/index.component";
-import Show from "./components/notebooks/show.component";
+import NotebookShow from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
-import Notes from "./components/notables/notes.component";
+import NotableShow from "./components/notables/show.component";
 import Breadcrumbs from "./components/breadcrumbs.component";
 
 const notableTypes = ["characters", "locations", "items"];
@@ -16,7 +16,14 @@ function App() {
       <div className="container mt-3">
         <Switch>
           <Route exact path={["/", "/notebooks"]} component={Notebooks} />
-          <Route path="/notebooks/:notebookId/notes" children={<Notes />} />
+
+          {notableTypes.map((type, index) => {
+            <Route
+              path={`/notebooks/:notebookId/${type}/:id`}
+              children={<NotableShow type={type} />}
+              key={index}
+            />;
+          })}
 
           {notableTypes.map((type, index) => (
             <Route
@@ -26,7 +33,7 @@ function App() {
             />
           ))}
 
-          <Route path="/notebooks/:id" children={<Show />} />
+          <Route path="/notebooks/:id" children={<NotebookShow />} />
         </Switch>
       </div>
     </div>

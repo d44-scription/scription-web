@@ -7,6 +7,13 @@ import Button from "react-bootstrap/Button";
 function Details(props) {
   const [newRecord, setNewRecord] = useState(false);
 
+  // In some use cases the singular of the `type` prop (ie "item" instead of "items") is needed
+  // This removes the last character from and capitalises the string. While not perfect, it works
+  // for the available notable types.
+  const singularType = () => {
+    return `${props.type.charAt(0).toUpperCase()}${props.type.slice(1, -1)}`;
+  };
+
   // When selected ID is changed, default to regular view
   // If a user starts creating a new notable, then selects & deselects an existing one,
   // this stops them from returning to an empty form
@@ -19,7 +26,12 @@ function Details(props) {
     return (
       // If a notable has been selected, show the notable
       <div className="col-md-6">
-        <Edit notebookId={props.notebookId} id={props.id} />
+        <Edit
+          notebookId={props.notebookId}
+          id={props.id}
+          type={props.type}
+          singularType={singularType()}
+        />
       </div>
     );
   } else if (newRecord) {
@@ -30,7 +42,7 @@ function Details(props) {
           setNewRecord={setNewRecord}
           retrieveNotables={props.retrieveNotables}
           notebookId={props.notebookId}
-          type={props.type}
+          type={singularType()}
         />
       </div>
     );
@@ -44,7 +56,7 @@ function Details(props) {
           }}
           className="w-100"
         >
-          Add {props.type}
+          Add {singularType()}
         </Button>
       </div>
     );

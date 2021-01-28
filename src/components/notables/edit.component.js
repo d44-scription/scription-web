@@ -1,6 +1,8 @@
 import react, { useCallback, useState, useEffect } from "react";
 import NotableDataService from "../../services/notable.service";
 import InlineEditor from "../editors/inline_editor.component";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 function Edit(props) {
   const [name, setName] = useState(null);
@@ -32,7 +34,12 @@ function Edit(props) {
   };
 
   const saveDescription = () => {
-    return NotableDataService.update(props.notebookId, props.id, "description", description);
+    return NotableDataService.update(
+      props.notebookId,
+      props.id,
+      "description",
+      description
+    );
   };
 
   return (
@@ -53,6 +60,15 @@ function Edit(props) {
         placeholder="No description saved"
         helpText="Use shift+enter to add a new line"
       />
+
+      <Link
+        to={`/notebooks/${props.notebookId}/${props.type}/${props.id}`}
+        tabIndex="-1"
+      >
+        <Button variant="primary" className="mt-5 w-100">
+          View {props.singularType}
+        </Button>
+      </Link>
     </div>
   );
 }
