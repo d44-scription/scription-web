@@ -85,30 +85,4 @@ describe("Index component", () => {
     expect(listItem2).not.toHaveClass("active");
     expect(listItem3).not.toHaveClass("active");
   });
-
-  test("accessing 'new' page", () => {
-    // Confirm that, at rest, fields are hidden
-    expect(screen.getByText("Add Character")).toBeVisible();
-    expect(screen.queryByText("Name Character")).toBeNull();
-    expect(screen.queryByText("Enter Name")).toBeNull();
-    expect(screen.queryByText("Cancel")).toBeNull();
-
-    // Click add button
-    userEvent.click(screen.getByText("Add Character"));
-
-    // Confirm that, when active, add button is hidden and fields are shown
-    expect(screen.queryByText("Add Character")).toBeNull();
-    expect(screen.getByText("Name Character")).toBeVisible();
-    expect(screen.getByText("Enter Name")).toBeVisible();
-    expect(screen.getByText("Cancel")).toBeVisible();
-
-    // Click cancel
-    userEvent.click(screen.getByText("Cancel"));
-
-    // Confirm we have returned to rest state
-    expect(screen.getByText("Add Character")).toBeVisible();
-    expect(screen.queryByText("Name Character")).toBeNull();
-    expect(screen.queryByText("Enter Name")).toBeNull();
-    expect(screen.queryByText("Cancel")).toBeNull();
-  });
 });
