@@ -5,9 +5,11 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 function Edit(props) {
+  // State management for name & description fields for target notable
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
 
+  // Function to retrieve target notable
   const retrieveNotable = useCallback(
     (id) => {
       NotableDataService.get(props.notebookId, id)
@@ -24,11 +26,12 @@ function Edit(props) {
     [setName, setDescription]
   );
 
-  // Update notebook when the given id prop changes
+  // Update notable when the given id prop changes
   useEffect(() => {
     retrieveNotable(props.id);
   }, [props.id, retrieveNotable]);
 
+  // Functions to submit data to API when inline editor dictates
   const saveName = () => {
     return NotableDataService.update(props.notebookId, props.id, "name", name);
   };
