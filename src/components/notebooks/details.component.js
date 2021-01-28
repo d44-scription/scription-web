@@ -3,7 +3,7 @@ import Edit from "./edit.component";
 import New from "./new.component";
 import Button from "react-bootstrap/Button";
 
-// Middle-man component that asses state of index page and decides which sub-component to show
+// Middle-man component to assess state of index page and decide which sub-component to show
 function Details(props) {
   const [newRecord, setNewRecord] = useState(false);
 

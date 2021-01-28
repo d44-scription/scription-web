@@ -41,10 +41,7 @@ function Index(props) {
         />
       </div>
 
-      <Details
-        id={currentId}
-        retrieveNotebooks={retrieveNotebooks}
-      />
+      <Details id={currentId} retrieveNotebooks={retrieveNotebooks} />
     </div>
   );
 }

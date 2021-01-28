@@ -12,9 +12,9 @@ function New(props) {
   };
 
   // OnCreateAction - Set state in parent props to reflect new addition
-  const updatePage = () => {
+  const updatePage = (response) => {
     props.setNewRecord(false);
-    props.retrieveNotables();
+    props.retrieveNotables(response.data.id);
   };
 
   return (

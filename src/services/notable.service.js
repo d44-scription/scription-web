@@ -11,6 +11,10 @@ class NotableDataService {
     return http.get(url);
   }
 
+  get(notebookId, id) {
+    return http.get(`/notebooks/${notebookId}/notables/${id}.json`);
+  }
+
   create(notebookId, name, type) {
     let params = {};
     params["notable"] = {};
@@ -18,6 +22,18 @@ class NotableDataService {
     params["notable"]["type"] = type;
 
     return http.post(`/notebooks/${notebookId}/notables.json`, params);
+  }
+
+  update(notebookId, id, param, value) {
+    let params = {};
+    params["notable"] = {};
+    params["notable"][param] = value;
+
+    return http.put(`/notebooks/${notebookId}/notables/${id}.json`, params);
+  }
+
+  delete(notebookId, id) {
+    return http.delete(`/notebooks/${notebookId}/notables/${id}.json`);
   }
 }
 
