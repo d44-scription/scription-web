@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Notebooks from "./components/notebooks/index.component";
 import Show from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
+import Notes from "./components/notables/notes.component";
 import Breadcrumbs from "./components/breadcrumbs.component";
 
 const notableTypes = ["characters", "locations", "items"];
@@ -15,6 +16,7 @@ function App() {
       <div className="container mt-3">
         <Switch>
           <Route exact path={["/", "/notebooks"]} component={Notebooks} />
+          <Route path="/notebooks/:notebookId/notes" children={<Notes />} />
 
           {notableTypes.map((type, index) => (
             <Route
