@@ -14,16 +14,19 @@ describe("Text component", () => {
       id: 1,
       name: "Item 1",
       label: "Label 1",
+      longValue: "1".repeat(199),
     },
     {
       id: 2,
       name: "Item 2",
       label: "Label 2",
+      longValue: "2".repeat(201),
     },
     {
       id: 3,
       name: "Item 3",
       label: "Label 3",
+      longValue: "3".repeat(250),
     },
   ];
 
@@ -43,6 +46,31 @@ describe("Text component", () => {
       expect(screen.getByText("Label 1")).toBeInTheDocument();
       expect(screen.getByText("Label 2")).toBeInTheDocument();
       expect(screen.getByText("Label 3")).toBeInTheDocument();
+    });
+  });
+
+  describe("when using long labels", () => {
+    beforeEach(() => {
+      render(
+        <List
+          items={items}
+          currentId={currentId}
+          setCurrentId={setCurrentId}
+          label="longValue"
+        />
+      );
+    });
+
+    test("truncating items longer than 200 chars", () => {
+      // Items shorter than 200 chars are not truncated
+      expect(screen.getByText("1".repeat(199))).toBeInTheDocument();
+
+      // Items longer than 200 chars are truncated and given a "..."
+      expect(screen.queryByText("2".repeat(201))).toBeNull();
+      expect(screen.getByText(`${"2".repeat(200)}...`)).toBeInTheDocument();
+
+      expect(screen.queryByText("3".repeat(250))).toBeNull();
+      expect(screen.getByText(`${"3".repeat(200)}...`)).toBeInTheDocument();
     });
   });
 
