@@ -12,7 +12,7 @@ describe("Show component", () => {
   const placeholderText = "No content";
   const helpText =
     "Use @ to reference a character, : to reference an item, and # to reference a location";
-  const deleteText = "Delete Note"
+  const deleteText = "Delete Note";
 
   const notes = [
     {

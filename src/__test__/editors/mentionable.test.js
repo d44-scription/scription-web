@@ -57,7 +57,13 @@ describe("Mentionable component", () => {
   });
 
   test("Rendering with a custom placeholder", () => {
-    render(<Mentionable value={value} setValue={setValue} placeholder="Test placeholder" />);
+    render(
+      <Mentionable
+        value={value}
+        setValue={setValue}
+        placeholder="Test placeholder"
+      />
+    );
 
     // Confirm field has desired placeholder
     expect(screen.queryByPlaceholderText("No content")).toBeNull();
