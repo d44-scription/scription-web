@@ -36,10 +36,16 @@ describe("Edit component", () => {
       })
     );
 
+    jest.spyOn(http, "delete").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
     await act(async () => {
       render(
         <BrowserRouter>
-          <Edit id={noteId} notebookId={notebookId} />
+          <Edit id={noteId} notebookId={notebookId} retrieveNotes={() => {}} />
         </BrowserRouter>
       );
     });
@@ -55,19 +61,67 @@ describe("Edit component", () => {
     expect(screen.getByText(helpText)).toBeVisible();
     expect(screen.getByText("Delete Note")).toBeVisible();
 
-    // Click delete button for first item
+    // Click delete button
     await act(async () => {
       userEvent.click(screen.getByText("Delete Note"));
     });
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete note?")).toBeInTheDocument();
+    expect(screen.getByText("Delete note?")).toBeVisible();
 
     expect(
       screen.getByText(
         "This note will be deleted. Are you sure you wish to continue?"
       )
-    ).toBeInTheDocument();
+    ).toBeVisible();
+
+    // Cancel delete
+    await act(async () => {
+      userEvent.click(screen.getByText("Cancel"));
+    });
+
+    expect(http.delete).not.toHaveBeenCalled();
+
+    // Confirm modal is hidden
+    expect(screen.queryByText("Delete note?")).toBeNull();
+
+    expect(
+      screen.queryByText(
+        "This note will be deleted. Are you sure you wish to continue?"
+      )
+    ).toBeNull();
+
+    // Click delete button
+    await act(async () => {
+      userEvent.click(screen.getByText("Delete Note"));
+    });
+
+    // Confirm modal is shown
+    expect(screen.getByText("Delete note?")).toBeVisible();
+
+    expect(
+      screen.getByText(
+        "This note will be deleted. Are you sure you wish to continue?"
+      )
+    ).toBeVisible();
+
+    // Confirm delete
+    await act(async () => {
+      userEvent.click(screen.getByText("OK"));
+    });
+
+    expect(http.delete).toHaveBeenCalledWith(
+      `/notebooks/${notebookId}/notes/${noteId}.json`
+    );
+
+    // Confirm modal is hidden
+    expect(screen.queryByText("Delete note?")).toBeNull();
+
+    expect(
+      screen.queryByText(
+        "This note will be deleted. Are you sure you wish to continue?"
+      )
+    ).toBeNull();
   });
 
   test("responding to tab", () => {
