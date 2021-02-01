@@ -56,6 +56,14 @@ describe("Mentionable component", () => {
     expect(submitTestVal).toBe(true);
   });
 
+  test("Rendering with a custom placeholder", () => {
+    render(<Mentionable value={value} setValue={setValue} placeholder="Test placeholder" />);
+
+    // Confirm field has desired placeholder
+    expect(screen.queryByPlaceholderText("No content")).toBeNull();
+    expect(screen.getByPlaceholderText("Test placeholder")).toBeVisible();
+  });
+
   describe("Cancelling submission", () => {
     test("Clearing input when clearOnCancel prop is given", () => {
       render(<Mentionable value={value} setValue={setValue} clearOnCancel />);
