@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import List from "../list.component";
 import NotableDataService from "../../services/notable.service";
+import Edit from "./notes/edit.component";
 
 function Show(props) {
   const { notebookId, id } = useParams();
@@ -36,6 +37,10 @@ function Show(props) {
           label="content"
           mentionable
         />
+      </div>
+
+      <div className="col-md-6">
+        {currentId ? <Edit id={currentId} /> : <p>no id</p>}
       </div>
     </div>
   );
