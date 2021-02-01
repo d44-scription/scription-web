@@ -37,7 +37,11 @@ function Index(props) {
       <div className="col-md-6">
         <h2>Notebooks</h2>
 
-        <Search items={notebooks} queriedItems={queriedNotebooks} setQueriedItems={setQueriedNotebooks} />
+        <Search
+          items={notebooks}
+          queriedItems={queriedNotebooks}
+          setQueriedItems={setQueriedNotebooks}
+        />
 
         <List
           currentId={currentId}

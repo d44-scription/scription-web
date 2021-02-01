@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import List from "../list.component";
+import Search from "../search.component";
 import NotableDataService from "../../services/notable.service";
 import Edit from "./notes/edit.component";
 
@@ -10,16 +11,22 @@ function Show(props) {
   const [notes, setNotes] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
-  const retrieveNotes = useCallback((noteId) => {
-    NotableDataService.notes(notebookId, id)
-      .then((response) => {
-        setNotes(response.data);
-        setCurrentId(noteId || null)
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [setNotes, notebookId, id]);
+  // Filtered notes
+  const [queriedNotes, setQueriedNotes] = useState([]);
+
+  const retrieveNotes = useCallback(
+    (noteId) => {
+      NotableDataService.notes(notebookId, id)
+        .then((response) => {
+          setNotes(response.data);
+          setCurrentId(noteId || null);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    [setNotes, notebookId, id]
+  );
 
   // Callback to update the list of chars
   useEffect(() => {
@@ -31,10 +38,17 @@ function Show(props) {
       <div className="col-md-6">
         <h2 className="capitalise">Notes</h2>
 
+        <Search
+          items={notes}
+          queriedItems={queriedNotes}
+          setQueriedItems={setQueriedNotes}
+          label="content"
+        />
+
         <List
           currentId={currentId}
           setCurrentId={setCurrentId}
-          items={notes}
+          items={queriedNotes}
           label="content"
           mentionable
         />
