@@ -11,7 +11,6 @@ function List(props) {
   // Callback triggered when list items are clicked
   const setActiveItem = useCallback(
     (id) => {
-      console.log("Here");
       if (props.currentId === id) {
         props.setCurrentId(null);
       } else {
