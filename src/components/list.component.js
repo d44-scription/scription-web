@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
+import MentionableReadonly from "./editors/mentionable_readonly.component";
 import "../scss/list.scss";
 
 function List(props) {
@@ -10,6 +11,7 @@ function List(props) {
   // Callback triggered when list items are clicked
   const setActiveItem = useCallback(
     (id) => {
+      console.log("Here");
       if (props.currentId === id) {
         props.setCurrentId(null);
       } else {
@@ -73,7 +75,13 @@ function List(props) {
               tabIndex="0"
               listid={item.id}
             >
-              <p style={{ margin: "0.75rem" }}>{item[props.label || "name"]}</p>
+              {props.mentionable ? (
+                <MentionableReadonly value={item[props.label || "name"]} />
+              ) : (
+                <p style={{ margin: "0.75rem" }}>
+                  {item[props.label || "name"]}
+                </p>
+              )}
             </ListGroup.Item>
           ))}
       </ListGroup>

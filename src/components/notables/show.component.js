@@ -13,8 +13,6 @@ function Show(props) {
     NotableDataService.notes(notebookId, id)
       .then((response) => {
         setNotes(response.data);
-
-        console.log(response.data)
       })
       .catch((e) => {
         console.log(e);
@@ -44,6 +42,7 @@ function Show(props) {
           setCurrentId={setCurrentId}
           items={notes}
           label="content"
+          mentionable
         />
       </div>
     </div>
