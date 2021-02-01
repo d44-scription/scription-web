@@ -19,7 +19,8 @@ describe("Show component", () => {
       id: 2,
     },
     {
-      content: "Note 3 mentions @[Wheaty](@1), #[Diskworld](#1), and :[Luggage](:1)",
+      content:
+        "Note 3 mentions @[Wheaty](@1), #[Diskworld](#1), and :[Luggage](:1)",
       id: 3,
     },
   ];
@@ -35,7 +36,9 @@ describe("Show component", () => {
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
       render(
-        <MemoryRouter initialEntries={[`/notebooks/${notebookId}/characters/${notableId}`]}>
+        <MemoryRouter
+          initialEntries={[`/notebooks/${notebookId}/characters/${notableId}`]}
+        >
           <Route path="/notebooks/:notebookId/characters/:id">
             <Show />
           </Route>
@@ -52,8 +55,12 @@ describe("Show component", () => {
   test("rendering full list of notes", async () => {
     // Confirm elements with mentions are rendered in a user-friendly format
     const listItem1 = screen.getByText("Note 1 mentions Wheaty").closest("li");
-    const listItem2 = screen.getByText("Note 2 mentions Wheaty and Diskworld").closest("li");
-    const listItem3 = screen.getByText("Note 3 mentions Wheaty, Diskworld, and Luggage").closest("li");
+    const listItem2 = screen
+      .getByText("Note 2 mentions Wheaty and Diskworld")
+      .closest("li");
+    const listItem3 = screen
+      .getByText("Note 3 mentions Wheaty, Diskworld, and Luggage")
+      .closest("li");
 
     // Confirm all list elements are rendered
     expect(listItem1).toBeInTheDocument();

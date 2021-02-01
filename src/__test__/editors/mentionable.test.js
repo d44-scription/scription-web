@@ -94,7 +94,9 @@ describe("Mentionable component", () => {
     );
 
     // Confirm mentions are formatted nicely
-    expect(screen.getByText("This note mentions Wheaty, Diskworld, and Luggage")).toBeVisible();
+    expect(
+      screen.getByText("This note mentions Wheaty, Diskworld, and Luggage")
+    ).toBeVisible();
   });
 
   test("Rendering list of mentionables", async () => {
