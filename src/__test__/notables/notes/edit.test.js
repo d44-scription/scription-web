@@ -8,10 +8,19 @@ import userEvent from "@testing-library/user-event";
 describe("Edit component", () => {
   const helpText =
     "Use @ to reference a character, : to reference an item, and # to reference a location";
+  const successMessage = "Test message";
+
+  const notebookId = 1;
+  const noteId = 2;
 
   const fakeNote = {
     content: "Note that mentions @[Wheaty](@1).",
-    id: 1,
+    id: noteId,
+  };
+
+  const successfulResponse = {
+    code: 200,
+    success_message: successMessage,
   };
 
   beforeEach(async () => {
@@ -21,10 +30,16 @@ describe("Edit component", () => {
       })
     );
 
+    jest.spyOn(http, "put").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
     await act(async () => {
       render(
         <BrowserRouter>
-          <Edit id="1" notebookId="1" />
+          <Edit id={noteId} notebookId={notebookId} />
         </BrowserRouter>
       );
     });
@@ -73,5 +88,26 @@ describe("Edit component", () => {
         "This note will be deleted. Are you sure you wish to continue?"
       )
     ).toBeInTheDocument();
+  });
+
+  test("Rendering success messages correctly", async () => {
+    const textField = screen.getByText("Note that mentions Wheaty.");
+
+    // Submit message
+    await act(async () => {
+      userEvent.type(textField, "{enter}");
+    });
+
+    expect(http.put).toHaveBeenCalledWith(
+      `/notebooks/${notebookId}/notes/${noteId}.json`,
+      {
+        note: { content: "Note that mentions @[Wheaty](@1)." },
+      }
+    );
+
+    // Confirm success message shows
+    expect(
+      screen.getByText(`Note has been updated. ${successMessage}`)
+    ).toBeVisible();
   });
 });
