@@ -54,7 +54,7 @@ function Show(props) {
 
         setErrorMessage(null);
         setSuccessMessage(
-          response.data.success_message || "Your note has been added"
+          `Your note has been added. ${response.data.success_message}`
         );
       })
       .catch((e) => {
@@ -79,6 +79,8 @@ function Show(props) {
           onSubmit={submitNote}
           successMessage={successMessage}
           errorMessage={errorMessage}
+          placeholder="Click here to add a note"
+          clearOnCancel
         />
       </div>
 
