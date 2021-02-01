@@ -28,6 +28,19 @@ function Show(props) {
     [setNotes, notebookId, id]
   );
 
+  const renderSearch = () => {
+    if (notes.length) {
+      return (
+        <Search
+          items={notes}
+          queriedItems={queriedNotes}
+          setQueriedItems={setQueriedNotes}
+          label="content"
+        />
+      );
+    }
+  };
+
   // Callback to update the list of chars
   useEffect(() => {
     retrieveNotes();
@@ -38,12 +51,7 @@ function Show(props) {
       <div className="col-md-6">
         <h2 className="capitalise">Notes</h2>
 
-        <Search
-          items={notes}
-          queriedItems={queriedNotes}
-          setQueriedItems={setQueriedNotes}
-          label="content"
-        />
+        {renderSearch()}
 
         <List
           currentId={currentId}

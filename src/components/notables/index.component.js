@@ -28,6 +28,18 @@ function Show(props) {
     [setNotables, notebookId, props.type]
   );
 
+  const renderSearch = () => {
+    if (notables.length) {
+      return (
+        <Search
+          items={notables}
+          queriedItems={queriedNotables}
+          setQueriedItems={setQueriedNotables}
+        />
+      );
+    }
+  };
+
   // Callback to update the list of chars
   useEffect(() => {
     retrieveNotables();
@@ -38,11 +50,7 @@ function Show(props) {
       <div className="col-md-6">
         <h2 className="capitalise">{props.type}</h2>
 
-        <Search
-          items={notables}
-          queriedItems={queriedNotables}
-          setQueriedItems={setQueriedNotables}
-        />
+        {renderSearch()}
 
         <List
           currentId={currentId}

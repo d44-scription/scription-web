@@ -27,6 +27,18 @@ function Index(props) {
     [setNotebooks, setCurrentId]
   );
 
+  const renderSearch = () => {
+    if (notebooks.length) {
+      return (
+        <Search
+          items={notebooks}
+          queriedItems={queriedNotebooks}
+          setQueriedItems={setQueriedNotebooks}
+        />
+      );
+    }
+  };
+
   // Fetch list of notebooks on load
   useEffect(() => {
     retrieveNotebooks();
@@ -37,11 +49,7 @@ function Index(props) {
       <div className="col-md-6">
         <h2>Notebooks</h2>
 
-        <Search
-          items={notebooks}
-          queriedItems={queriedNotebooks}
-          setQueriedItems={setQueriedNotebooks}
-        />
+        {renderSearch()}
 
         <List
           currentId={currentId}
