@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 
 function Search(props) {
   const [query, setQuery] = useState("");
+  const [hideMessage, setHideMessage] = useState(true);
+
   const setQueriedItems = props.setQueriedItems;
 
   // When search query changes, update the queriedItems prop with filtered items
@@ -18,6 +20,7 @@ function Search(props) {
     }
 
     setQueriedItems(searchedItems);
+    setHideMessage(searchedItems.length || query === "");
   }, [query, props.items, props.label, setQueriedItems]);
 
   // Event handler for search bar input change
@@ -34,9 +37,7 @@ function Search(props) {
         onChange={onChange}
       />
 
-      <p hidden={props.queriedItems.length > 0 || query === ""}>
-        No search results found
-      </p>
+      <p hidden={hideMessage}>No search results found</p>
     </span>
   );
 }
