@@ -26,8 +26,11 @@ function Mentionable(props) {
 
   // Event to cancel input - removes focus, clears text box
   const cancel = useCallback(() => {
-    props.setValue("");
     inputRef.current.blur();
+
+    if (props.clearOnCancel) {
+      props.setValue("");
+    }
   }, [props, inputRef]);
 
   // Keydown event handler for enter and escape actions
@@ -54,7 +57,7 @@ function Mentionable(props) {
         value={props.value}
         onChange={onChange}
         a11ySuggestionsListLabel={"Suggested notables to mention"}
-        placeholder="Click here to add a note"
+        placeholder={props.placeholder || "No content"}
         className="mentions"
         onKeyDown={onKeyDown}
         inputRef={inputRef}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import List from "../list.component";
 import NotableDataService from "../../services/notable.service";
+import Edit from "./notes/edit.component";
 
 function Show(props) {
   const { notebookId, id } = useParams();
@@ -9,10 +10,11 @@ function Show(props) {
   const [notes, setNotes] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
-  const retrieveNotes = useCallback(() => {
+  const retrieveNotes = useCallback((noteId) => {
     NotableDataService.notes(notebookId, id)
       .then((response) => {
         setNotes(response.data);
+        setCurrentId(noteId || null)
       })
       .catch((e) => {
         console.log(e);
@@ -37,6 +39,16 @@ function Show(props) {
           mentionable
         />
       </div>
+
+      {currentId ? (
+        <Edit
+          id={currentId}
+          notebookId={notebookId}
+          retrieveNotes={retrieveNotes}
+        />
+      ) : (
+        <p>No note selected</p>
+      )}
     </div>
   );
 }

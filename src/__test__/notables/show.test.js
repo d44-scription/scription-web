@@ -9,6 +9,11 @@ describe("Show component", () => {
   const notebookId = 1;
   const notableId = 2;
 
+  const placeholderText = "No content";
+  const helpText =
+    "Use @ to reference a character, : to reference an item, and # to reference a location";
+  const deleteText = "Delete Note";
+
   const notes = [
     {
       content: "Note 1 mentions @[Wheaty](@1)",
@@ -72,6 +77,11 @@ describe("Show component", () => {
     expect(listItem2).not.toHaveClass("active");
     expect(listItem3).not.toHaveClass("active");
 
+    // Edit page not shown when no items selected
+    expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
+    expect(screen.queryByText(helpText)).toBeNull();
+    expect(screen.queryByText(deleteText)).toBeNull();
+
     // Click first list item
     await act(async () => {
       userEvent.click(listItem1);
@@ -82,6 +92,11 @@ describe("Show component", () => {
     expect(listItem2).not.toHaveClass("active");
     expect(listItem3).not.toHaveClass("active");
 
+    // Edit page shows
+    expect(screen.getByPlaceholderText(placeholderText)).toBeVisible();
+    expect(screen.getByText(helpText)).toBeVisible();
+    expect(screen.getByText(deleteText)).toBeVisible();
+
     // Click first list item again
     await act(async () => {
       userEvent.click(listItem1);
@@ -91,5 +106,10 @@ describe("Show component", () => {
     expect(listItem1).not.toHaveClass("active");
     expect(listItem2).not.toHaveClass("active");
     expect(listItem3).not.toHaveClass("active");
+
+    // Edit page not shown when no items selected
+    expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
+    expect(screen.queryByText(helpText)).toBeNull();
+    expect(screen.queryByText(deleteText)).toBeNull();
   });
 });
