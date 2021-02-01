@@ -24,21 +24,24 @@ function Mentionable(props) {
     [props.notebookId]
   );
 
-  // Even tot cancel input - removes focus, clears text box
+  // Event to cancel input - removes focus, clears text box
   const cancel = useCallback(() => {
     props.setValue("");
     inputRef.current.blur();
-  }, [props, inputRef])
+  }, [props, inputRef]);
 
   // Keydown event handler for enter and escape actions
-  const onKeyDown = useCallback((e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      props.onSubmit();
-    } else if (e.key === "Escape") {
-      cancel()
-    }
-  }, [props, cancel]);
+  const onKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        props.onSubmit();
+      } else if (e.key === "Escape") {
+        cancel();
+      }
+    },
+    [props, cancel]
+  );
 
   // Standard function to update state when user types
   const onChange = (e) => {
@@ -63,7 +66,6 @@ function Mentionable(props) {
           }}
           markup="@[__display__](@__id__)"
           className="characters"
-          appendSpaceOnAdd
         />
 
         <Mention
@@ -73,7 +75,6 @@ function Mentionable(props) {
           }}
           markup=":[__display__](:__id__)"
           className="items"
-          appendSpaceOnAdd
         />
 
         <Mention
@@ -83,7 +84,6 @@ function Mentionable(props) {
           }}
           markup="#[__display__](#__id__)"
           className="locations"
-          appendSpaceOnAdd
         />
       </MentionsInput>
 

@@ -1,4 +1,4 @@
-import react, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import NotableDataService from "../../services/notable.service";
 import InlineEditor from "../editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
@@ -26,7 +26,7 @@ function Edit(props) {
           console.log(e);
         });
     },
-    [setName, setDescription]
+    [setName, setDescription, props.notebookId]
   );
 
   // Callback used when the delete is confirmed
