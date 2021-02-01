@@ -10,10 +10,11 @@ function Show(props) {
   const [notes, setNotes] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
-  const retrieveNotes = useCallback(() => {
+  const retrieveNotes = useCallback((noteId) => {
     NotableDataService.notes(notebookId, id)
       .then((response) => {
         setNotes(response.data);
+        setCurrentId(noteId || null)
       })
       .catch((e) => {
         console.log(e);
@@ -39,13 +40,15 @@ function Show(props) {
         />
       </div>
 
-      <div className="col-md-6">
-        {currentId ? (
-          <Edit id={currentId} notebookId={notebookId} />
-        ) : (
-          <p>no id</p>
-        )}
-      </div>
+      {currentId ? (
+        <Edit
+          id={currentId}
+          notebookId={notebookId}
+          retrieveNotes={retrieveNotes}
+        />
+      ) : (
+        <p>No note selected</p>
+      )}
     </div>
   );
 }

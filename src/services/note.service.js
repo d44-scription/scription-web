@@ -20,6 +20,10 @@ class NoteDataService {
 
     return http.put(`/notebooks/${notebookId}/notes/${id}.json`, params);
   }
+
+  delete(notebookId, id) {
+    return http.delete(`/notebooks/${notebookId}/notes/${id}.json`);
+  }
 }
 
 export default new NoteDataService();
