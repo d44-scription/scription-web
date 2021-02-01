@@ -38,6 +38,11 @@ function Edit(props) {
       });
   };
 
+  // When content is changed, reset success message
+  useEffect(() => {
+    setSuccessMessage(null);
+  }, [content]);
+
   return (
     <Mentionable
       value={content}
