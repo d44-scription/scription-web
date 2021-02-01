@@ -24,14 +24,6 @@ function Show(props) {
     retrieveNotes();
   }, [retrieveNotes]);
 
-  const truncate = (text) => {
-    if (text.length > 300) {
-      return `${text.substr(0, 300)}...`;
-    } else {
-      return text;
-    }
-  }
-
   return (
     <div className="list row">
       <div className="col-md-6">
