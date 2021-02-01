@@ -85,6 +85,18 @@ describe("Mentionable component", () => {
     expect(screen.getByText("Error Message")).toBeVisible();
   });
 
+  test("Formatting mentions correctly", () => {
+    render(
+      <Mentionable
+        value="This note mentions @[Wheaty](@1), #[Diskworld](#1), and :[Luggage](:1)"
+        setValue={setValue}
+      />
+    );
+
+    // Confirm mentions are formatted nicely
+    expect(screen.getByText("This note mentions Wheaty, Diskworld, and Luggage")).toBeVisible();
+  });
+
   test("Rendering list of mentionables", async () => {
     // FIXME: Add tests for the list rendering correctly.
 
