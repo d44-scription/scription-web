@@ -27,7 +27,7 @@ function Show(props) {
   return (
     <div className="list row">
       <div className="col-md-6">
-        <h2 className="capitalise">{props.type}</h2>
+        <h2 className="capitalise">Notes</h2>
 
         <List
           currentId={currentId}

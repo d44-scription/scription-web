@@ -20,7 +20,7 @@ function App() {
           {notableTypes.map((type, index) => (
             <Route
               path={`/notebooks/:notebookId/${type}/:id`}
-              children={<NotableShow type={type} />}
+              children={<NotableShow />}
               key={index}
             />
           ))}
