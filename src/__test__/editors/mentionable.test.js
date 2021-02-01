@@ -49,25 +49,41 @@ describe("Mentionable component", () => {
     expect(submitTestVal).toBe(false);
 
     // Type into text box and hit enter
-    const textField = screen.getByPlaceholderText("Click here to add a note");
+    const textField = screen.getByPlaceholderText("No content");
     userEvent.type(textField, "Note contents{enter}");
 
     // Confirm action runs
     expect(submitTestVal).toBe(true);
   });
 
-  test("Correctly cancelling submit on escape", () => {
-    render(<Mentionable value={value} setValue={setValue} />);
+  describe("Cancelling submission", () => {
+    test("Clearing input when clearOnCancel prop is given", () => {
+      render(<Mentionable value={value} setValue={setValue} clearOnCancel />);
 
-    // Add content to text field
-    const textField = screen.getByPlaceholderText("Click here to add a note");
+      // Add content to text field
+      const textField = screen.getByPlaceholderText("No content");
 
-    userEvent.type(textField, "X");
-    expect(value).toBe("X");
+      userEvent.type(textField, "X");
+      expect(value).toBe("X");
 
-    // Press escape, confirm that text is removed
-    userEvent.type(textField, "{esc}");
-    expect(value).toBe("");
+      // Press escape, confirm that text is removed
+      userEvent.type(textField, "{esc}");
+      expect(value).toBe("");
+    });
+
+    test("Persisting input when clearOnCancel prop is false", () => {
+      render(<Mentionable value={value} setValue={setValue} />);
+
+      // Add content to text field
+      const textField = screen.getByPlaceholderText("No content");
+
+      userEvent.type(textField, "X");
+      expect(value).toBe("X");
+
+      // Press escape, confirm that text is removed
+      userEvent.type(textField, "{esc}");
+      expect(value).toBe("X");
+    });
   });
 
   test("Correctly rendering messages", () => {
@@ -106,7 +122,7 @@ describe("Mentionable component", () => {
       <Mentionable value={value} setValue={setValue} notebookId={notebookId} />
     );
 
-    const textField = screen.getByPlaceholderText("Click here to add a note");
+    const textField = screen.getByPlaceholderText("No content");
 
     await act(async () => {
       userEvent.type(textField, "@");

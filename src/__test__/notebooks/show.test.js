@@ -80,7 +80,7 @@ describe("Show component", () => {
     });
 
     // Confirm we have returned to rest state with a success message
-    expect(screen.getByText(successMessage)).toBeVisible();
+    expect(screen.getByText(`Your note has been added. ${successMessage}`)).toBeVisible();
     confirmRestState();
 
     // Type another note
@@ -90,7 +90,7 @@ describe("Show component", () => {
     });
 
     // Confirm success message disappears
-    expect(screen.queryByText(successMessage)).toBeNull();
+    expect(screen.queryByText(`Your note has been added. ${successMessage}`)).toBeNull();
   });
 
   test("notable links respond to tab correctly", () => {
