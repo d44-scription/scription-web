@@ -40,7 +40,11 @@ function Show(props) {
       </div>
 
       <div className="col-md-6">
-        {currentId ? <Edit id={currentId} /> : <p>no id</p>}
+        {currentId ? (
+          <Edit id={currentId} notebookId={notebookId} />
+        ) : (
+          <p>no id</p>
+        )}
       </div>
     </div>
   );
