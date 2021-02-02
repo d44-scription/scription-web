@@ -7,7 +7,7 @@ import Details from "./details.component";
 import Button from "react-bootstrap/Button";
 import Helper from "../../helpers/notable_helper";
 
-function Show(props) {
+function Index(props) {
   const { notebookId } = useParams();
 
   const [notables, setNotables] = useState([]);
@@ -46,11 +46,6 @@ function Show(props) {
     }
   };
 
-  // Callback to update the list of chars
-  useEffect(() => {
-    retrieveNotables();
-  }, [retrieveNotables]);
-
   // Event handler for switching to "New" page
   const showNew = () => {
     setNewRecord(true);
@@ -63,6 +58,11 @@ function Show(props) {
     setCurrentId(id);
   };
 
+  // Callback to update the list of chars
+  useEffect(() => {
+    retrieveNotables();
+  }, [retrieveNotables]);
+
   return (
     <div className="list row">
       <div className="col-md-6">
@@ -70,14 +70,9 @@ function Show(props) {
 
         {renderSearch()}
 
-        <div className="col-md-6">
-          <Button
-            onClick={showNew}
-            className="w-100"
-          >
-            Add {Helper.singular(props.type)}
-          </Button>
-        </div>
+        <Button onClick={showNew} className="w-100 mb-3">
+          Add {Helper.singular(props.type)}
+        </Button>
 
         <List
           currentId={currentId}
@@ -99,4 +94,4 @@ function Show(props) {
   );
 }
 
-export default Show;
+export default Index;
