@@ -21,7 +21,7 @@ function Details(props) {
     );
   } else if (props.newRecord) {
     return (
-      // Otherwise, if the user has clicked the "Add new notable" button, render the new notable form
+      // Otherwise, if the user has clicked the "Add notable" button, render the new notable form
       <div className="col-md-6">
         <New
           setNewRecord={setNewRecord}

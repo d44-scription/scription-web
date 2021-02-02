@@ -72,7 +72,7 @@ function Index(props) {
           onClick={showNew}
           className="w-100 mb-3"
         >
-          Add new notebook
+          Add Notebook
         </Button>
 
         <List
