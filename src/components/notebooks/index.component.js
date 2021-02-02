@@ -3,6 +3,7 @@ import NotebookDataService from "../../services/notebook.service";
 import Details from "./details.component";
 import List from "../list.component";
 import Search from "../search.component";
+import Button from "react-bootstrap/Button";
 
 function Index(props) {
   // Define callbacks for GETting and SETting the component state
@@ -11,6 +12,9 @@ function Index(props) {
 
   // Filtered notebooks
   const [queriedNotebooks, setQueriedNotebooks] = useState([]);
+
+  // State of new button
+  const [newRecord, setNewRecord] = useState(false);
 
   // Callback to update the displayed notebooks
   const retrieveNotebooks = useCallback(
@@ -51,6 +55,15 @@ function Index(props) {
 
         {renderSearch()}
 
+        <Button
+          onClick={() => {
+            setNewRecord(true);
+          }}
+          className="w-100 mb-3"
+        >
+          Add new notebook
+        </Button>
+
         <List
           currentId={currentId}
           setCurrentId={setCurrentId}
@@ -58,7 +71,12 @@ function Index(props) {
         />
       </div>
 
-      <Details id={currentId} retrieveNotebooks={retrieveNotebooks} />
+      <Details
+        id={currentId}
+        retrieveNotebooks={retrieveNotebooks}
+        newRecord={newRecord}
+        setNewRecord={setNewRecord}
+      />
     </div>
   );
 }
