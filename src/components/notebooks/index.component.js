@@ -31,6 +31,7 @@ function Index(props) {
     [setNotebooks, setCurrentId]
   );
 
+  // Conditionally render search bar if any notebooks
   const renderSearch = () => {
     if (notebooks.length) {
       return (
@@ -42,6 +43,18 @@ function Index(props) {
       );
     }
   };
+
+  // Event handler for switching to "New" page
+  const showNew = () => {
+    setNewRecord(true);
+    setCurrentId(null);
+  }
+
+  // Set current ID & reset new page view
+  const showItem = (id) => {
+    setNewRecord(false)
+    setCurrentId(id)
+  }
 
   // Fetch list of notebooks on load
   useEffect(() => {
@@ -56,9 +69,7 @@ function Index(props) {
         {renderSearch()}
 
         <Button
-          onClick={() => {
-            setNewRecord(true);
-          }}
+          onClick={showNew}
           className="w-100 mb-3"
         >
           Add new notebook
@@ -66,7 +77,7 @@ function Index(props) {
 
         <List
           currentId={currentId}
-          setCurrentId={setCurrentId}
+          setCurrentId={showItem}
           items={queriedNotebooks}
         />
       </div>

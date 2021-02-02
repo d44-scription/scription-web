@@ -1,17 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Edit from "./edit.component";
 import New from "./new.component";
 
 // Middle-man component to assess state of index page and decide which sub-component to show
 function Details(props) {
   const setNewRecord = props.setNewRecord;
-
-  // When selected ID is changed, default to regular view
-  // If a user starts creating a new notebook, then selects & deselects an existing one,
-  // this stops them from returning to an empty form
-  useEffect(() => {
-    setNewRecord(false);
-  }, [props.id, setNewRecord]);
 
   // Decide which panel to show
   if (props.id) {
