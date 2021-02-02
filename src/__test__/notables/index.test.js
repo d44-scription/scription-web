@@ -89,6 +89,29 @@ describe("Index component", () => {
       expect(listItem2).not.toHaveClass("active");
       expect(listItem3).not.toHaveClass("active");
     });
+
+    test("navigating between new and rest pages", () => {
+      const addButton = screen.getByText("Add Character");
+
+      // Confirm new fields are not shown
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Character")).toBeVisible();
+
+      userEvent.click(screen.getByText("Cancel"));
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+    });
   });
 
   describe("Without notables", () => {
