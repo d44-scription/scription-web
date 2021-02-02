@@ -34,7 +34,7 @@ describe("New component", () => {
     await act(async () => {
       render(
         <New
-          type="Character"
+          type="characters"
           notebookId="1"
           setNewRecord={() => {
             setNewRecordTestValue = true;

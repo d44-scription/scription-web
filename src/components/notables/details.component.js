@@ -27,6 +27,7 @@ function Details(props) {
           setNewRecord={setNewRecord}
           retrieveNotables={props.retrieveNotables}
           notebookId={props.notebookId}
+          type={props.type}
         />
       </div>
     );
