@@ -3,6 +3,7 @@ import NotableDataService from "../../services/notable.service";
 import InlineEditor from "../editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
 import ConfirmModal from "../modal.component";
+import Helper from "../../helpers/notable_helper";
 import { Link } from "react-router-dom";
 
 function Edit(props) {
@@ -84,7 +85,7 @@ function Edit(props) {
         tabIndex="-1"
       >
         <Button variant="primary" className="mt-5 w-100">
-          View {props.singularType}
+          View {Helper.singular(props.type)}
         </Button>
       </Link>
 
@@ -95,12 +96,12 @@ function Edit(props) {
           setIsModalVisible(true);
         }}
       >
-        Delete {props.singularType}
+        Delete {Helper.singular(props.type)}
       </Button>
 
       <ConfirmModal
         visible={isModalVisible}
-        title={`Delete ${props.singularType}?`}
+        title={`Delete ${Helper.singular(props.type)}?`}
         text={`This will delete ${name} and all associated notes. Are you sure you wish to continue?`}
         confirmAction={deleteNotable}
         closeAction={() => setIsModalVisible(false)}
