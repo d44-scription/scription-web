@@ -78,6 +78,29 @@ describe("Index component", () => {
       expect(screen.queryByText("No name saved")).toBeNull();
       expect(screen.queryByText("No summary saved")).toBeNull();
     });
+
+    test("navigating between new and rest pages", () => {
+      const addButton = screen.getByText("Add Notebook");
+
+      // Confirm new fields are not shown
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Notebook")).toBeVisible();
+
+      userEvent.click(screen.getByText("Cancel"));
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+    });
   });
 
   describe("Without notebooks", () => {
