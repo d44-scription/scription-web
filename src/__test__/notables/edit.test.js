@@ -6,8 +6,6 @@ import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Edit component", () => {
-  const helpText =
-    "Use @ to reference a character, : to reference an item, and # to reference a location";
   const successMessage = "Test message";
 
   const notebookId = 1;
