@@ -97,6 +97,10 @@ describe("Index component", () => {
       expect(screen.queryByText("Enter Name")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
       userEvent.click(addButton);
 
       // Confirm new fields are shown
@@ -132,6 +136,20 @@ describe("Index component", () => {
       // Confirm Edit page is shown
       expect(screen.getByText("View Character")).toBeVisible();
       expect(screen.getByText("Delete Character")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Character")).toBeVisible();
+
+      // Return to new page
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
 
       // Confirm add button is persistent
       expect(screen.getByText("Add Character")).toBeVisible();
