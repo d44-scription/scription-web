@@ -49,7 +49,7 @@ describe("Mentionable component", () => {
     render(<Mentionable action={action} value={value} setValue={setValue} />);
 
     // Sanity check
-    expect(screen.queryByText(`Note saved. ${successMessage}`)).toBeNull();
+    expect(screen.queryByText(`Successfully saved. ${successMessage}`)).toBeNull();
 
     // Type into text box and hit enter
     const textField = screen.getByPlaceholderText("No content");
@@ -59,7 +59,7 @@ describe("Mentionable component", () => {
     });
 
     // Confirm success message shows
-    expect(screen.getByText(`Note saved. ${successMessage}`)).toBeVisible();
+    expect(screen.getByText(`Successfully saved. ${successMessage}`)).toBeVisible();
   });
 
   test("Rendering with a custom placeholder", () => {
@@ -115,7 +115,7 @@ describe("Mentionable component", () => {
     );
 
     // TODO: Rewrite this to go through actions that would cause success or error
-    // expect(screen.getByText(`Note saved. ${successMessage}`)).toBeVisible();
+    // expect(screen.getByText(`Successfully saved. ${successMessage}`)).toBeVisible();
     // expect(screen.getByText(errorMessage)).toBeVisible();
   });
 

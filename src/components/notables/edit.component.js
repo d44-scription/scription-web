@@ -54,7 +54,7 @@ function Edit(props) {
   };
 
   const saveDescription = () => {
-    NotableDataService.update(
+    return NotableDataService.update(
       props.notebookId,
       props.id,
       "description",
@@ -76,7 +76,7 @@ function Edit(props) {
         value={description}
         setValue={setDescription}
         notebookId={props.notebookId}
-        onSubmit={saveDescription}
+        action={saveDescription}
       />
 
       <Link
