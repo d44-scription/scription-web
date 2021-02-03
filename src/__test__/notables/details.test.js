@@ -6,10 +6,12 @@ import userEvent from "@testing-library/user-event";
 import http from "../../http-common";
 
 describe("Details component", () => {
-  const confirmRestState = () => {
-    // Confirm default button is shown
-    expect(screen.getByText("Add Character")).toBeInTheDocument();
+  let newRecord = false;
+  let setNewRecord = (val) => {
+    newRecord = val;
+  };
 
+  const confirmRestState = () => {
     // Confirm new fields are not shown
     expect(screen.queryByText("Enter Name")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
@@ -22,9 +24,6 @@ describe("Details component", () => {
   };
 
   const confirmNewNotableState = () => {
-    // Confirm default button is not shown
-    expect(screen.queryByText("Add Character")).not.toBeInTheDocument();
-
     // Confirm new fields are shown
     expect(screen.getByText("Enter Name")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
@@ -37,9 +36,6 @@ describe("Details component", () => {
   };
 
   const confirmViewNotableState = () => {
-    // Confirm default button is not shown
-    expect(screen.queryByText("Add Character")).not.toBeInTheDocument();
-
     // Confirm new fields are not shown
     expect(screen.queryByText("Enter Name")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
@@ -52,32 +48,41 @@ describe("Details component", () => {
   };
 
   test("rendering details pane when no ID given", async () => {
-    await act(async () => {
-      render(
-        <BrowserRouter>
-          <Details type="characters" />
-        </BrowserRouter>
-      );
-    });
+    const { rerender } = render(
+      <BrowserRouter>
+        <Details
+          type="characters"
+          newRecord={newRecord}
+          setNewRecord={setNewRecord}
+        />
+      </BrowserRouter>
+    );
 
     // Confirm we start at rest state
     confirmRestState();
 
-    // Click "Add notable" button
-    await act(async () => {
-      userEvent.click(screen.getByText("Add Character"));
-    });
+    // Update "new Record" prop
+    setNewRecord(true);
+
+    // Simulate clicking "add new"
+    rerender(
+      <BrowserRouter>
+        <Details
+          type="characters"
+          newRecord={newRecord}
+          setNewRecord={setNewRecord}
+        />
+      </BrowserRouter>
+    );
 
     // Confirm we navigate to "New notable" page
     confirmNewNotableState();
 
     // Click "Cancel" button
-    await act(async () => {
-      userEvent.click(screen.getByText("Cancel"));
-    });
+    userEvent.click(screen.getByText("Cancel"));
 
-    // Confirm we return to rest state
-    confirmRestState();
+    // Confirm we would return to rest state
+    expect(newRecord).toBe(false);
   });
 
   describe("When given an ID", () => {

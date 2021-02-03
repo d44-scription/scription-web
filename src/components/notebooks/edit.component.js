@@ -75,7 +75,7 @@ function Edit(props) {
 
       <Link to={`/notebooks/${props.id}`} tabIndex="-1">
         <Button variant="primary" className="mt-5 w-100">
-          Open notebook
+          Open Notebook
         </Button>
       </Link>
 
@@ -86,7 +86,7 @@ function Edit(props) {
           setIsModalVisible(true);
         }}
       >
-        Delete notebook
+        Delete Notebook
       </Button>
 
       <ConfirmModal

@@ -4,12 +4,17 @@ import Search from "../search.component";
 import List from "../list.component";
 import NotableDataService from "../../services/notable.service";
 import Details from "./details.component";
+import Button from "react-bootstrap/Button";
+import Helper from "../../helpers/notable_helper";
 
-function Show(props) {
+function Index(props) {
   const { notebookId } = useParams();
 
   const [notables, setNotables] = useState([]);
   const [currentId, setCurrentId] = useState(null);
+
+  // Manage state of new page
+  const [newRecord, setNewRecord] = useState(false);
 
   // Filtered notables
   const [queriedNotables, setQueriedNotables] = useState([]);
@@ -28,6 +33,7 @@ function Show(props) {
     [setNotables, notebookId, props.type]
   );
 
+  // Conditionally render search bar
   const renderSearch = () => {
     if (notables.length) {
       return (
@@ -38,6 +44,18 @@ function Show(props) {
         />
       );
     }
+  };
+
+  // Event handler for switching to "New" page
+  const showNew = () => {
+    setNewRecord(true);
+    setCurrentId(null);
+  };
+
+  // Set current ID & reset new page view
+  const showItem = (id) => {
+    setNewRecord(false);
+    setCurrentId(id);
   };
 
   // Callback to update the list of chars
@@ -52,9 +70,13 @@ function Show(props) {
 
         {renderSearch()}
 
+        <Button onClick={showNew} className="w-100 mb-3">
+          Add {Helper.singular(props.type)}
+        </Button>
+
         <List
           currentId={currentId}
-          setCurrentId={setCurrentId}
+          setCurrentId={showItem}
           items={queriedNotables}
           label="name"
         />
@@ -65,9 +87,11 @@ function Show(props) {
         retrieveNotables={retrieveNotables}
         type={props.type}
         notebookId={notebookId}
+        newRecord={newRecord}
+        setNewRecord={setNewRecord}
       />
     </div>
   );
 }
 
-export default Show;
+export default Index;

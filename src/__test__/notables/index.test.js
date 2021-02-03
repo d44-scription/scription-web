@@ -89,6 +89,71 @@ describe("Index component", () => {
       expect(listItem2).not.toHaveClass("active");
       expect(listItem3).not.toHaveClass("active");
     });
+
+    test("navigating between new, edit, and rest pages", async() => {
+      const addButton = screen.getByText("Add Character");
+
+      // Confirm new fields are not shown
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Character")).toBeVisible();
+
+      userEvent.click(screen.getByText("Cancel"));
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
+      // Click first list item
+      await act(async () => {
+        userEvent.click(screen.getByText("Notable 1").closest("li"));
+      });
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is shown
+      expect(screen.getByText("View Character")).toBeVisible();
+      expect(screen.getByText("Delete Character")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Character")).toBeVisible();
+
+      // Return to new page
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Character")).toBeVisible();
+    });
   });
 
   describe("Without notables", () => {

@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Edit from "./edit.component";
 import New from "./new.component";
-import Button from "react-bootstrap/Button";
 
 // Middle-man component to assess state of index page and decide which sub-component to show
 function Details(props) {
-  const [newRecord, setNewRecord] = useState(false);
-
-  // When selected ID is changed, default to regular view
-  // If a user starts creating a new notebook, then selects & deselects an existing one,
-  // this stops them from returning to an empty form
-  useEffect(() => {
-    setNewRecord(false);
-  }, [props.id]);
+  const setNewRecord = props.setNewRecord;
 
   // Decide which panel to show
   if (props.id) {
@@ -23,9 +15,9 @@ function Details(props) {
         <Edit id={props.id} retrieveNotebooks={props.retrieveNotebooks} />
       </div>
     );
-  } else if (newRecord) {
+  } else if (props.newRecord) {
     return (
-      // Otherwise, if the user has clicked the "Add new notebook" button, render the new notebook form
+      // Otherwise, if the user has clicked the "Add Notebook" button, render the new notebook form
       <div className="col-md-6">
         <h2>Name notebook</h2>
         <New
@@ -34,21 +26,9 @@ function Details(props) {
         />
       </div>
     );
-  } else {
-    return (
-      // By default, just show a button to add a new notebook
-      <div className="col-md-6">
-        <Button
-          onClick={() => {
-            setNewRecord(true);
-          }}
-          className="w-100"
-        >
-          Add new notebook
-        </Button>
-      </div>
-    );
   }
+
+  return null;
 }
 
 export default Details;
