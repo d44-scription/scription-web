@@ -161,7 +161,7 @@ describe("Edit component", () => {
 
     // Confirm success message shows
     expect(
-      screen.getByText(`Note has been updated. ${successMessage}`)
+      screen.getByText(`Note saved. ${successMessage}`)
     ).toBeVisible();
   });
 });
