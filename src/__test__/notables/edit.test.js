@@ -6,10 +6,22 @@ import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Edit component", () => {
+  const helpText =
+    "Use @ to reference a character, : to reference an item, and # to reference a location";
+  const successMessage = "Test message";
+
+  const notebookId = 1;
+  const notableId = 2;
+
   const fakeNotable = {
     name: "Character 1",
     id: 1,
     description: "Mock description",
+  };
+
+  const successfulResponse = {
+    code: 200,
+    success_message: successMessage,
   };
 
   beforeEach(async () => {
@@ -19,10 +31,27 @@ describe("Edit component", () => {
       })
     );
 
+    jest.spyOn(http, "put").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
+    jest.spyOn(http, "delete").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
     await act(async () => {
       render(
         <BrowserRouter>
-          <Edit id="1" type="characters" singularType="Character" />
+          <Edit
+            notebookId={notebookId}
+            id={notableId}
+            type="characters"
+            retrieveNotables={() => {}}
+          />
         </BrowserRouter>
       );
     });
@@ -40,19 +69,67 @@ describe("Edit component", () => {
     expect(screen.getByText("View Character")).toBeInTheDocument();
     expect(screen.getByText("Delete Character")).toBeInTheDocument();
 
-    // Click delete button for first item
+    // Click delete button
     await act(async () => {
       userEvent.click(screen.getByText("Delete Character"));
     });
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete Character?")).toBeInTheDocument();
+    expect(screen.getByText("Delete Character?")).toBeVisible();
 
     expect(
       screen.getByText(
         "This will delete Character 1 and all associated notes. Are you sure you wish to continue?"
       )
-    ).toBeInTheDocument();
+    ).toBeVisible();
+
+    // Cancel delete
+    await act(async () => {
+      userEvent.click(screen.getByText("Cancel"));
+    });
+
+    expect(http.delete).not.toHaveBeenCalled();
+
+    // Confirm modal is hidden
+    expect(screen.queryByText("Delete Character?")).toBeNull();
+
+    expect(
+      screen.queryByText(
+        "This will delete Character 1 and all associated notes. Are you sure you wish to continue?"
+      )
+    ).toBeNull();
+
+    // Click delete button
+    await act(async () => {
+      userEvent.click(screen.getByText("Delete Character"));
+    });
+
+    // Confirm modal is shown
+    expect(screen.getByText("Delete Character?")).toBeVisible();
+
+    expect(
+      screen.getByText(
+        "This will delete Character 1 and all associated notes. Are you sure you wish to continue?"
+      )
+    ).toBeVisible();
+
+    // Confirm delete
+    await act(async () => {
+      userEvent.click(screen.getByText("OK"));
+    });
+
+    expect(http.delete).toHaveBeenCalledWith(
+      `/notebooks/${notebookId}/notables/${notableId}.json`
+    );
+
+    // Confirm modal is hidden
+    expect(screen.queryByText("Delete Character?")).toBeNull();
+
+    expect(
+      screen.queryByText(
+        "This will delete Character 1 and all associated notes. Are you sure you wish to continue?"
+      )
+    ).toBeNull();
   });
 
   test("responding to tab", () => {
@@ -74,4 +151,28 @@ describe("Edit component", () => {
       )
     ).toBeInTheDocument();
   });
+
+  test("Rendering success messages correctly", async () => {
+    const textField = screen.getByText("Character 1");
+
+    // Submit message
+    await act(async () => {
+      userEvent.click(textField);
+      userEvent.click(screen.getAllByText("enter")[0])
+    });
+
+    expect(http.put).toHaveBeenCalledWith(
+      `/notebooks/${notebookId}/notables/${notableId}.json`,
+      {
+        notable: { name: "Character 1" },
+      }
+    );
+
+    // Confirm success message shows
+    expect(
+      screen.getByText("Changes have been saved successfully")
+    ).toBeVisible();
+  });
+
+  test("Rendering mentioned notables in description correctly", () => {});
 });

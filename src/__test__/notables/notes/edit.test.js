@@ -55,7 +55,7 @@ describe("Edit component", () => {
     http.get.mockRestore();
   });
 
-  test("rendering information for a given notable", async () => {
+  test("rendering information for a given note", async () => {
     // Confirm data is retrieved and displayed correctly
     expect(screen.getByText("Note that mentions Wheaty.")).toBeVisible();
     expect(screen.getByText(helpText)).toBeVisible();
