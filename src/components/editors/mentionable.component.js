@@ -11,6 +11,9 @@ function Mentionable(props) {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  const action = props.action;
+  const setValue = props.setValue;
+
   // Data retrieval function for when a trigger character is typed
   const fetchNotables = useCallback(
     (query, callback, type) => {
@@ -29,22 +32,21 @@ function Mentionable(props) {
 
   // Send request
   const saveAndExit = useCallback(() => {
-    props
-      .action()
+    action()
       .then((response) => {
         inputRef.current.blur();
 
         if (props.clearOnSubmit) {
-          props.setValue("");
+          setValue("");
         }
 
         setError(null);
-        setSuccess(`Note saved. ${response.data.success_message}`);
+        setSuccess(`Note saved. ${response.data.success_message || ""}`);
       })
       .catch((e) => {
         setError(e.response.data.join(", "));
       });
-  }, [setError, setSuccess, props.action]);
+  }, [setError, setSuccess, action, setValue, props.clearOnSubmit]);
 
   // Event to cancel input - removes focus, clears text box
   const cancel = useCallback(() => {
@@ -54,9 +56,9 @@ function Mentionable(props) {
     setError("");
 
     if (props.clearOnCancel) {
-      props.setValue("");
+      setValue("");
     }
-  }, [props, inputRef]);
+  }, [setValue, props.clearOnCancel, inputRef]);
 
   // Keydown event handler for enter and escape actions
   const onKeyDown = useCallback(
@@ -68,12 +70,12 @@ function Mentionable(props) {
         cancel();
       }
     },
-    [props, cancel]
+    [saveAndExit, cancel]
   );
 
   // Standard function to update state when user types
   const onChange = (e) => {
-    props.setValue(e.target.value);
+    setValue(e.target.value);
   };
 
   // When value is changed away from null state, reset error message
