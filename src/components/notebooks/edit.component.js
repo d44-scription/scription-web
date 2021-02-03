@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 
 function Edit(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
-  const [name, setName] = useState(null);
-  const [summary, setSummary] = useState(null);
+  const [name, setName] = useState("");
+  const [summary, setSummary] = useState("");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 

@@ -6,7 +6,7 @@ import Helper from "../../helpers/notable_helper";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("");
 
   const saveNotable = () => {
     return NotableDataService.create(

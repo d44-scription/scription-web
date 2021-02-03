@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 function Edit(props) {
   // State management for name & description fields for target notable
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const [isModalVisible, setIsModalVisible] = useState(false);

@@ -12,7 +12,7 @@ function InlineEditor(props) {
   // Define callbacks for GETting and SETting the cached value & error message
   // The error appears below the component when a request fails
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState("");
 
   // The cache value stores the "value to return to" when a request is cancelled
   const [cacheValue, setCacheValue] = useState("");
