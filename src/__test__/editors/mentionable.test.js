@@ -4,6 +4,8 @@ import Mentionable from "../../components/editors/mentionable.component";
 import http from "../../http-common";
 
 describe("Mentionable component", () => {
+  const successMessage = "Success Message";
+  const errorMessage = "Error Message";
   const notebookId = 1;
   let value = "";
   const setValue = (v) => {
@@ -35,25 +37,33 @@ describe("Mentionable component", () => {
     setValue("");
   });
 
-  test("Running action correctly on enter", () => {
-    let submitTestVal = false;
-    const onSubmit = () => {
-      submitTestVal = true;
+  test("Running action correctly on enter", async () => {
+    const action = () => {
+      return Promise.resolve({
+        data: {
+          success_message: successMessage,
+        },
+      });
     };
 
-    render(
-      <Mentionable onSubmit={onSubmit} value={value} setValue={setValue} />
-    );
+    render(<Mentionable action={action} value={value} setValue={setValue} />);
 
     // Sanity check
-    expect(submitTestVal).toBe(false);
+    expect(
+      screen.queryByText(`Successfully saved. ${successMessage}`)
+    ).toBeNull();
 
     // Type into text box and hit enter
     const textField = screen.getByPlaceholderText("No content");
-    userEvent.type(textField, "Note contents{enter}");
 
-    // Confirm action runs
-    expect(submitTestVal).toBe(true);
+    await act(async () => {
+      userEvent.type(textField, "Note contents{enter}");
+    });
+
+    // Confirm success message shows
+    expect(
+      screen.getByText(`Successfully saved. ${successMessage}`)
+    ).toBeVisible();
   });
 
   test("Rendering with a custom placeholder", () => {
@@ -100,19 +110,151 @@ describe("Mentionable component", () => {
     });
   });
 
-  test("Correctly rendering messages", () => {
-    const successMessage = "Success Message";
-    const errorMessage = "Error Message";
+  test("Correctly rendering success messages", async () => {
+    const action = () => {
+      return Promise.resolve({
+        data: {
+          success_message: successMessage,
+        },
+      });
+    };
+
+    render(<Mentionable action={action} setValue={setValue} />);
+
+    // Sanity check
+    expect(
+      screen.queryByText(`Successfully saved. ${successMessage}`)
+    ).toBeNull();
+
+    // Type into text box and hit enter
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents{enter}");
+    });
+
+    // Confirm success message shows
+    expect(
+      screen.getByText(`Successfully saved. ${successMessage}`)
+    ).toBeVisible();
+  });
+
+  test("Correctly rendering success message when nothing returned", async () => {
+    const action = () => {
+      return Promise.resolve();
+    };
+
+    render(<Mentionable action={action} setValue={setValue} />);
+
+    // Sanity check
+    expect(screen.queryByText("Successfully saved.")).toBeNull();
+
+    // Type into text box and hit enter
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents{enter}");
+    });
+
+    // Confirm success message shows
+    expect(screen.getByText("Successfully saved.")).toBeVisible();
+  });
+
+  test("Correctly rendering error messages", async () => {
+    const action = () => {
+      return Promise.reject({
+        response: {
+          data: [errorMessage],
+        },
+      });
+    };
+
+    render(<Mentionable action={action} setValue={setValue} />);
+
+    // Sanity check
+    expect(screen.queryByText(errorMessage)).toBeNull();
+
+    // Type into text box and hit enter
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents{enter}");
+    });
+
+    // Confirm error message shows
+    expect(screen.getByText(errorMessage)).toBeVisible();
+  });
+
+  test("Responding to clearOnSubmit correctly", async () => {
+    const action = () => {
+      return Promise.resolve();
+    };
 
     render(
       <Mentionable
-        successMessage={successMessage}
-        errorMessage={errorMessage}
+        action={action}
+        value={value}
+        setValue={setValue}
+        clearOnSubmit
       />
     );
 
-    expect(screen.getByText("Success Message")).toBeVisible();
-    expect(screen.getByText("Error Message")).toBeVisible();
+    // Sanity check
+    expect(value).toBe("");
+
+    // Type into text box
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents");
+    });
+
+    // Confirm content is added
+    expect(value).not.toBe("");
+
+    // Submit data
+    await act(async () => {
+      userEvent.type(textField, "{enter}");
+    });
+
+    // Confirm value is cleared
+    expect(value).toBe("");
+  });
+
+  test("Responding to clearOnCancel correctly", async () => {
+    const action = () => {
+      return Promise.resolve();
+    };
+
+    render(
+      <Mentionable
+        action={action}
+        value={value}
+        setValue={setValue}
+        clearOnCancel
+      />
+    );
+
+    // Sanity check
+    expect(value).toBe("");
+
+    // Type into text box
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents");
+    });
+
+    // Confirm content is added
+    expect(value).not.toBe("");
+
+    // Submit data
+    await act(async () => {
+      userEvent.type(textField, "{esc}");
+    });
+
+    // Confirm value is cleared
+    expect(value).toBe("");
   });
 
   test("Formatting mentions correctly", () => {

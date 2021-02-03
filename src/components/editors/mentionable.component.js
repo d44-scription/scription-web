@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import { MentionsInput, Mention } from "react-mentions";
 import NotableDataService from "../../services/notable.service";
 import "../../scss/mentionable.scss";
@@ -7,6 +7,12 @@ import Messages from "./messages.component";
 function Mentionable(props) {
   // Store reference to the input field
   const inputRef = useRef(null);
+
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
+  const action = props.action;
+  const setValue = props.setValue;
 
   // Data retrieval function for when a trigger character is typed
   const fetchNotables = useCallback(
@@ -24,32 +30,62 @@ function Mentionable(props) {
     [props.notebookId]
   );
 
+  // Send request
+  const saveAndExit = useCallback(() => {
+    action()
+      .then((response) => {
+        inputRef.current.blur();
+
+        if (props.clearOnSubmit) {
+          setValue("");
+        }
+
+        setError(null);
+        setSuccess(
+          `Successfully saved. ${response && response.data.success_message ? response.data.success_message : ""}`
+        );
+      })
+      .catch((e) => {
+        setError(e.response.data.join(", "));
+      });
+  }, [setError, setSuccess, action, setValue, props.clearOnSubmit]);
+
   // Event to cancel input - removes focus, clears text box
   const cancel = useCallback(() => {
     inputRef.current.blur();
 
+    setSuccess("");
+    setError("");
+
     if (props.clearOnCancel) {
-      props.setValue("");
+      setValue("");
     }
-  }, [props, inputRef]);
+  }, [setValue, props.clearOnCancel, inputRef]);
 
   // Keydown event handler for enter and escape actions
   const onKeyDown = useCallback(
     (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        props.onSubmit();
+        saveAndExit();
       } else if (e.key === "Escape") {
         cancel();
       }
     },
-    [props, cancel]
+    [saveAndExit, cancel]
   );
 
   // Standard function to update state when user types
   const onChange = (e) => {
-    props.setValue(e.target.value);
+    setValue(e.target.value);
   };
+
+  // When value is changed away from null state, reset error message
+  useEffect(() => {
+    if (props.value !== "") {
+      setSuccess("");
+    }
+  }, [props.value]);
 
   return (
     <div>
@@ -93,9 +129,9 @@ function Mentionable(props) {
       {/* TODO: Make help text render when element has focus */}
       <Messages
         help="Use @ to reference a character, : to reference an item, and # to reference a location"
-        success={props.successMessage}
-        error={props.errorMessage}
-        saveAction={props.onSubmit}
+        success={success}
+        error={error}
+        saveAction={saveAndExit}
         cancelAction={cancel}
       />
     </div>

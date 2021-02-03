@@ -12,7 +12,7 @@ function InlineEditor(props) {
   // Define callbacks for GETting and SETting the cached value & error message
   // The error appears below the component when a request fails
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState("");
 
   // The cache value stores the "value to return to" when a request is cancelled
   const [cacheValue, setCacheValue] = useState("");
@@ -20,14 +20,18 @@ function InlineEditor(props) {
   // Store reference to the input field
   const inputRef = useRef(null);
 
+  // Destructure props that don't change
+  const action = props.action;
+  const onSubmitAction = props.onSubmitAction;
+  const setValue = props.setValue;
+
   // Function to submit data & return to rest state
   const saveAndExit = useCallback(() => {
     setAtRest(true);
     setIsBusy(true);
 
     // Carry out submit action
-    props
-      .action()
+    action()
       .then((response) => {
         // If response is successful return to rest state
         setIsBusy(false);
@@ -36,8 +40,8 @@ function InlineEditor(props) {
         setCacheValue(props.value);
 
         // If any additional actions need to be carried out, carry them out
-        if (props.onSubmitAction) {
-          props.onSubmitAction(response);
+        if (onSubmitAction) {
+          onSubmitAction(response);
         }
       })
       .catch((e) => {
@@ -46,17 +50,17 @@ function InlineEditor(props) {
         setError(e.response.data.join(", "));
         setSuccess("");
       });
-  }, [props, setIsBusy, setError, setSuccess, setCacheValue]);
+  }, [props.value, action, onSubmitAction, setIsBusy, setError, setSuccess, setCacheValue]);
 
   const exitWithoutSaving = useCallback(() => {
     setAtRest(true);
     setSuccess("");
-    props.setValue(cacheValue);
-  }, [setAtRest, props, cacheValue]);
+    setValue(cacheValue);
+  }, [setAtRest, setValue, cacheValue]);
 
   // Callback(/event handler) for when text is changed
   const onChange = (e) => {
-    props.setValue(e.target.value);
+    setValue(e.target.value);
   };
 
   // If component is at rest and span has focus, enter/space should simulate clicking the span

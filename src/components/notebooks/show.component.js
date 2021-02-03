@@ -17,9 +17,6 @@ function Show(props) {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-
   const history = useHistory();
 
   // Callback to update the displayed notebook
@@ -38,28 +35,9 @@ function Show(props) {
     retrieveNotebook();
   }, [retrieveNotebook]);
 
-  // When content is changed away from null state, reset error message
-  useEffect(() => {
-    if (content !== "") {
-      setSuccessMessage(null);
-    }
-  }, [content]);
-
   // Send POST request
-  const submitNote = (response) => {
-    NoteDataService.create(content, id)
-      .then((response) => {
-        // Empty text box when note added and display success message
-        setContent("");
-
-        setErrorMessage(null);
-        setSuccessMessage(
-          `Your note has been added. ${response.data.success_message}`
-        );
-      })
-      .catch((e) => {
-        setErrorMessage(e.response.data.join(", "));
-      });
+  const submitNote = () => {
+    return NoteDataService.create(content, id);
   };
 
   // Programmatically handle navigation to support accessible buttons
@@ -76,11 +54,10 @@ function Show(props) {
           value={content}
           setValue={setContent}
           notebookId={id}
-          onSubmit={submitNote}
-          successMessage={successMessage}
-          errorMessage={errorMessage}
+          action={submitNote}
           placeholder="Click here to add a note"
           clearOnCancel
+          clearOnSubmit
         />
       </div>
 
