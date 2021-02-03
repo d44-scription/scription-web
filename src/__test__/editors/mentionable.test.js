@@ -139,6 +139,27 @@ describe("Mentionable component", () => {
     ).toBeVisible();
   });
 
+  test("Correctly rendering success message when nothing returned", async () => {
+    const action = () => {
+      return Promise.resolve();
+    };
+
+    render(<Mentionable action={action} setValue={setValue} />);
+
+    // Sanity check
+    expect(screen.queryByText("Successfully saved.")).toBeNull();
+
+    // Type into text box and hit enter
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents{enter}");
+    });
+
+    // Confirm success message shows
+    expect(screen.getByText("Successfully saved.")).toBeVisible();
+  });
+
   test("Correctly rendering error messages", async () => {
     const action = () => {
       return Promise.reject({
@@ -164,9 +185,77 @@ describe("Mentionable component", () => {
     expect(screen.getByText(errorMessage)).toBeVisible();
   });
 
-  test("Responding to clearOnSubmit correctly", async () => {});
+  test("Responding to clearOnSubmit correctly", async () => {
+    const action = () => {
+      return Promise.resolve();
+    };
 
-  test("Responding to clearOnCancel correctly", async () => {});
+    render(
+      <Mentionable
+        action={action}
+        value={value}
+        setValue={setValue}
+        clearOnSubmit
+      />
+    );
+
+    // Sanity check
+    expect(value).toBe("");
+
+    // Type into text box
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents");
+    });
+
+    // Confirm content is added
+    expect(value).not.toBe("");
+
+    // Submit data
+    await act(async () => {
+      userEvent.type(textField, "{enter}");
+    });
+
+    // Confirm value is cleared
+    expect(value).toBe("");
+  });
+
+  test("Responding to clearOnCancel correctly", async () => {
+    const action = () => {
+      return Promise.resolve();
+    };
+
+    render(
+      <Mentionable
+        action={action}
+        value={value}
+        setValue={setValue}
+        clearOnCancel
+      />
+    );
+
+    // Sanity check
+    expect(value).toBe("");
+
+    // Type into text box
+    const textField = screen.getByPlaceholderText("No content");
+
+    await act(async () => {
+      userEvent.type(textField, "Note contents");
+    });
+
+    // Confirm content is added
+    expect(value).not.toBe("");
+
+    // Submit data
+    await act(async () => {
+      userEvent.type(textField, "{esc}");
+    });
+
+    // Confirm value is cleared
+    expect(value).toBe("");
+  });
 
   test("Formatting mentions correctly", () => {
     render(

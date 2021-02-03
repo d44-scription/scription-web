@@ -41,7 +41,9 @@ function Mentionable(props) {
         }
 
         setError(null);
-        setSuccess(`Successfully saved. ${response.data.success_message || ""}`);
+        setSuccess(
+          `Successfully saved. ${response ? response.data.success_message : ""}`
+        );
       })
       .catch((e) => {
         setError(e.response.data.join(", "));
