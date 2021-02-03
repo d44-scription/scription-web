@@ -4,11 +4,11 @@ import userEvent from "@testing-library/user-event";
 
 describe("Modal component", () => {
   test("changing visibility status", () => {
-    const { rerender } = render(<ConfirmModal visible={false}></ConfirmModal>);
+    const { rerender } = render(<ConfirmModal visible={false} />);
 
     expect(screen.queryByText("Are you sure?")).not.toBeInTheDocument();
 
-    rerender(<ConfirmModal visible={true}></ConfirmModal>);
+    rerender(<ConfirmModal visible={true} />);
 
     expect(screen.getByText("Are you sure?")).toBeInTheDocument();
   });
@@ -19,7 +19,7 @@ describe("Modal component", () => {
         visible={true}
         title="Test Modal Title"
         text="Test Modal Text"
-      ></ConfirmModal>
+      />
     );
 
     expect(screen.getByText("Test Modal Title")).toBeInTheDocument();
@@ -30,10 +30,7 @@ describe("Modal component", () => {
     let testVal = false;
 
     render(
-      <ConfirmModal
-        visible={true}
-        closeAction={() => (testVal = true)}
-      ></ConfirmModal>
+      <ConfirmModal visible={true} closeAction={() => (testVal = true)} />
     );
 
     // Sanity check
@@ -48,10 +45,7 @@ describe("Modal component", () => {
     let testVal = false;
 
     render(
-      <ConfirmModal
-        visible={true}
-        confirmAction={() => (testVal = true)}
-      ></ConfirmModal>
+      <ConfirmModal visible={true} confirmAction={() => (testVal = true)} />
     );
 
     // Sanity check

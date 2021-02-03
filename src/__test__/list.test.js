@@ -3,7 +3,7 @@ import List from "../components/list.component";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 
-describe("Text component", () => {
+describe("List component", () => {
   var currentId = -1;
   const setCurrentId = (val) => {
     currentId = val;
@@ -14,16 +14,19 @@ describe("Text component", () => {
       id: 1,
       name: "Item 1",
       label: "Label 1",
+      longValue: "1".repeat(199),
     },
     {
       id: 2,
       name: "Item 2",
       label: "Label 2",
+      longValue: "2".repeat(201),
     },
     {
       id: 3,
       name: "Item 3",
       label: "Label 3",
+      longValue: "3".repeat(250),
     },
   ];
 
@@ -43,6 +46,31 @@ describe("Text component", () => {
       expect(screen.getByText("Label 1")).toBeInTheDocument();
       expect(screen.getByText("Label 2")).toBeInTheDocument();
       expect(screen.getByText("Label 3")).toBeInTheDocument();
+    });
+  });
+
+  describe("when using long labels", () => {
+    beforeEach(() => {
+      render(
+        <List
+          items={items}
+          currentId={currentId}
+          setCurrentId={setCurrentId}
+          label="longValue"
+        />
+      );
+    });
+
+    test("truncating items longer than 200 chars", () => {
+      // Items shorter than 200 chars are not truncated
+      expect(screen.getByText("1".repeat(199))).toBeInTheDocument();
+
+      // Items longer than 200 chars are truncated and given a "..."
+      expect(screen.queryByText("2".repeat(201))).toBeNull();
+      expect(screen.getByText(`${"2".repeat(200)}...`)).toBeInTheDocument();
+
+      expect(screen.queryByText("3".repeat(250))).toBeNull();
+      expect(screen.getByText(`${"3".repeat(200)}...`)).toBeInTheDocument();
     });
   });
 
@@ -92,16 +120,11 @@ describe("Text component", () => {
     });
 
     test("responding to tab with space", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list...");
       const listItem1 = screen.getByText("Item 1").closest("li");
       const listItem2 = screen.getByText("Item 2").closest("li");
       const listItem3 = screen.getByText("Item 3").closest("li");
 
       expect(currentId).toBe(-1);
-
-      // Navigate to search bar
-      userEvent.tab();
-      expect(searchBar).toHaveFocus();
 
       // Press tab
       userEvent.tab();
@@ -129,16 +152,11 @@ describe("Text component", () => {
     });
 
     test("responding to tab with enter", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list...");
       const listItem1 = screen.getByText("Item 1").closest("li");
       const listItem2 = screen.getByText("Item 2").closest("li");
       const listItem3 = screen.getByText("Item 3").closest("li");
 
       expect(currentId).toBe(-1);
-
-      // Navigate to search bar
-      userEvent.tab();
-      expect(searchBar).toHaveFocus();
 
       // Press tab
       userEvent.tab();
@@ -163,52 +181,6 @@ describe("Text component", () => {
       // Press enter
       userEvent.type(listItem3, "{enter}", { skipClick: true });
       expect(currentId).toBe("3");
-    });
-
-    test("searching list", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list...");
-
-      // Confirm all items shown in un-searched list
-      expect(screen.getByText("Item 1")).toBeVisible();
-      expect(screen.getByText("Item 2")).toBeVisible();
-      expect(screen.getByText("Item 3")).toBeVisible();
-      expect(screen.queryByText("No search results found")).not.toBeVisible();
-
-      // Type "Item" into search bar
-      userEvent.type(searchBar, "item");
-
-      // Confirm all matching items shown
-      expect(screen.getByText("Item 1")).toBeVisible();
-      expect(screen.getByText("Item 2")).toBeVisible();
-      expect(screen.getByText("Item 3")).toBeVisible();
-      expect(screen.queryByText("No search results found")).not.toBeVisible();
-
-      // Type "Item 1" into search bar
-      userEvent.type(searchBar, " 1");
-
-      // Confirm only matching items shown
-      expect(screen.getByText("Item 1")).toBeVisible();
-      expect(screen.queryByText("Item 2")).toBeNull();
-      expect(screen.queryByText("Item 3")).toBeNull();
-      expect(screen.queryByText("No search results found")).not.toBeVisible();
-
-      // Type "Item 1-----" into search bar
-      userEvent.type(searchBar, "-----");
-
-      // Confirm only error message is shown
-      expect(screen.queryByText("Item 1")).toBeNull();
-      expect(screen.queryByText("Item 2")).toBeNull();
-      expect(screen.queryByText("Item 3")).toBeNull();
-      expect(screen.getByText("No search results found")).toBeVisible();
-
-      // Clear search bar
-      userEvent.type(searchBar, "{selectall}{backspace}");
-
-      // Confirm returned to un-searched state
-      expect(screen.getByText("Item 1")).toBeVisible();
-      expect(screen.getByText("Item 2")).toBeVisible();
-      expect(screen.getByText("Item 3")).toBeVisible();
-      expect(screen.queryByText("No search results found")).not.toBeVisible();
     });
   });
 });

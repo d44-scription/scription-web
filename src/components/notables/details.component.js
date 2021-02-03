@@ -1,6 +1,6 @@
 import React from "react";
-import Edit from "./edit.component";
 import New from "./new.component";
+import Edit from "./edit.component";
 
 // Middle-man component to assess state of index page and decide which sub-component to show
 function Details(props) {
@@ -9,20 +9,25 @@ function Details(props) {
   // Decide which panel to show
   if (props.id) {
     return (
-      // If a notebook has been selected, show the notebook
+      // If a notable has been selected, show the notable
       <div className="col-md-6">
-        <h2>Edit Notebook</h2>
-        <Edit id={props.id} retrieveNotebooks={props.retrieveNotebooks} />
+        <Edit
+          notebookId={props.notebookId}
+          retrieveNotables={props.retrieveNotables}
+          id={props.id}
+          type={props.type}
+        />
       </div>
     );
   } else if (props.newRecord) {
     return (
-      // Otherwise, if the user has clicked the "Add Notebook" button, render the new notebook form
+      // Otherwise, if the user has clicked the "Add notable" button, render the new notable form
       <div className="col-md-6">
-        <h2>Name notebook</h2>
         <New
           setNewRecord={setNewRecord}
-          retrieveNotebooks={props.retrieveNotebooks}
+          retrieveNotables={props.retrieveNotables}
+          notebookId={props.notebookId}
+          type={props.type}
         />
       </div>
     );

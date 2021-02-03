@@ -6,73 +6,169 @@ import http from "../../http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Index component", () => {
-  const fakeNotebooks = [
-    {
-      name: "Notebook 1",
-      id: 1,
-    },
-    {
-      name: "Notebook 2",
-      id: 2,
-    },
-  ];
+  describe("With notebooks", () => {
+    const fakeNotebooks = [
+      {
+        name: "Notebook 1",
+        id: 1,
+      },
+      {
+        name: "Notebook 2",
+        id: 2,
+      },
+    ];
 
-  beforeEach(async () => {
-    jest.spyOn(http, "get").mockImplementation(() =>
-      Promise.resolve({
-        data: fakeNotebooks,
-      })
-    );
-
-    await act(async () => {
-      render(
-        <BrowserRouter>
-          <Index />
-        </BrowserRouter>
+    beforeEach(async () => {
+      jest.spyOn(http, "get").mockImplementation(() =>
+        Promise.resolve({
+          data: fakeNotebooks,
+        })
       );
+
+      await act(async () => {
+        render(
+          <BrowserRouter>
+            <Index />
+          </BrowserRouter>
+        );
+      });
+    });
+
+    afterEach(() => {
+      http.get.mockRestore();
+    });
+
+    test("rendering a list of notebooks", async () => {
+      const searchBar = screen.getByPlaceholderText("Search list...");
+      const listItem1 = screen.getByText("Notebook 1").closest("li");
+      const listItem2 = screen.getByText("Notebook 2").closest("li");
+
+      // Confirm all list elements are rendered
+      expect(searchBar).toBeInTheDocument();
+      expect(listItem1).toBeInTheDocument();
+      expect(listItem2).toBeInTheDocument();
+
+      // Confirm that, by default, no list items are selected
+      expect(listItem1).not.toHaveClass("active");
+      expect(listItem2).not.toHaveClass("active");
+
+      // Click first list item
+      await act(async () => {
+        userEvent.click(listItem1);
+      });
+
+      // When clicked, only target element should be active
+      expect(listItem1).toHaveClass("active");
+      expect(listItem2).not.toHaveClass("active");
+
+      // Confirm notebook component is shown
+      expect(screen.getByText("No name saved")).toBeInTheDocument();
+      expect(screen.getByText("No summary saved")).toBeInTheDocument();
+
+      // Click first list item again
+      await act(async () => {
+        userEvent.click(listItem1);
+      });
+
+      // When confirm item has been deselected
+      expect(listItem1).not.toHaveClass("active");
+      expect(listItem2).not.toHaveClass("active");
+
+      // Confirm notebook component is shown
+      expect(screen.queryByText("No name saved")).toBeNull();
+      expect(screen.queryByText("No summary saved")).toBeNull();
+    });
+
+    test("navigating between new and rest pages", async () => {
+      const addButton = screen.getByText("Add Notebook");
+
+      // Confirm new fields are not shown
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("Open Notebook")).toBeNull();
+      expect(screen.queryByText("Delete Notebook")).toBeNull();
+
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("Open Notebook")).toBeNull();
+      expect(screen.queryByText("Delete Notebook")).toBeNull();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Notebook")).toBeVisible();
+
+      userEvent.click(screen.getByText("Cancel"));
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("Open Notebook")).toBeNull();
+      expect(screen.queryByText("Delete Notebook")).toBeNull();
+
+      // Click first list item
+      await act(async () => {
+        userEvent.click(screen.getByText("Notebook 1").closest("li"));
+      });
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is shown
+      expect(screen.getByText("Open Notebook")).toBeVisible();
+      expect(screen.getByText("Delete Notebook")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Notebook")).toBeVisible();
+
+      // Return to new page
+      userEvent.click(addButton);
+
+      // Confirm new fields are shown
+      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Cancel")).toBeVisible();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("Open Notebook")).toBeNull();
+      expect(screen.queryByText("Delete Notebook")).toBeNull();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Notebook")).toBeVisible();
     });
   });
 
-  afterEach(() => {
-    http.get.mockRestore();
-  });
+  describe("Without notebooks", () => {
+    beforeEach(async () => {
+      jest.spyOn(http, "get").mockImplementation(() =>
+        Promise.resolve({
+          data: [],
+        })
+      );
 
-  test("rendering a list of notebooks", async () => {
-    const listItem1 = screen.getByText("Notebook 1").closest("li");
-    const listItem2 = screen.getByText("Notebook 2").closest("li");
-
-    // Confirm all list elements are rendered
-    expect(listItem1).toBeInTheDocument();
-    expect(listItem2).toBeInTheDocument();
-
-    // Confirm that, by default, no list items are selected
-    expect(listItem1).not.toHaveClass("active");
-    expect(listItem2).not.toHaveClass("active");
-
-    // Click first list item
-    await act(async () => {
-      userEvent.click(listItem1);
+      await act(async () => {
+        render(
+          <BrowserRouter>
+            <Index />
+          </BrowserRouter>
+        );
+      });
     });
 
-    // When clicked, only target element should be active
-    expect(listItem1).toHaveClass("active");
-    expect(listItem2).not.toHaveClass("active");
-
-    // Confirm notebook component is shown
-    expect(screen.getByText("No name saved")).toBeInTheDocument();
-    expect(screen.getByText("No summary saved")).toBeInTheDocument();
-
-    // Click first list item again
-    await act(async () => {
-      userEvent.click(listItem1);
+    afterEach(() => {
+      http.get.mockRestore();
     });
 
-    // When confirm item has been deselected
-    expect(listItem1).not.toHaveClass("active");
-    expect(listItem2).not.toHaveClass("active");
-
-    // Confirm notebook component is shown
-    expect(screen.queryByText("No name saved")).toBeNull();
-    expect(screen.queryByText("No summary saved")).toBeNull();
+    test("does not render search bar", async () => {
+      const searchBar = screen.queryByPlaceholderText("Search list...");
+      expect(searchBar).toBeNull();
+    });
   });
 });

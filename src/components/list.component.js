@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import Form from "react-bootstrap/Form";
+import MentionableReadonly from "./editors/mentionable_readonly.component";
 import "../scss/list.scss";
 
 function List(props) {
-  const [queriedItems, setQueriedItems] = useState([]);
-  const [query, setQuery] = useState("");
-
   // Callback triggered when list items are clicked
   const setActiveItem = useCallback(
     (id) => {
@@ -26,43 +23,20 @@ function List(props) {
     }
   };
 
-  // When search query changes, update the queriedItems prop with filtered items
-  useEffect(() => {
-    var searchedItems = props.items;
-
-    if (query !== "") {
-      searchedItems = searchedItems.filter((item) => {
-        return item[props.label || "name"]
-          .toLowerCase()
-          .includes(query.toLowerCase());
-      });
+  // Shorten long text
+  const truncate = (text) => {
+    if (text.length > 200) {
+      return `${text.substr(0, 200)}...`;
+    } else {
+      return text;
     }
-
-    setQueriedItems(searchedItems);
-  }, [query, props.items, props.label]);
-
-  const onChange = (e) => {
-    setQuery(e.target.value);
   };
 
   return (
     <div>
-      <span className="w-100 d-inline-flex align-items-start">
-        <Form.Control
-          placeholder="Search list..."
-          className="search-field"
-          value={query}
-          onChange={onChange}
-        />
-      </span>
-
-      <p hidden={queriedItems.length > 0 || query === ""}>
-        No search results found
-      </p>
-
       <ListGroup as="ul">
-        {queriedItems &&
-          queriedItems.map((item) => (
+        {props.items &&
+          props.items.map((item) => (
             <ListGroup.Item
               as="li"
               variant="primary"
@@ -73,7 +47,15 @@ function List(props) {
               tabIndex="0"
               listid={item.id}
             >
-              <p style={{ margin: "0.75rem" }}>{item[props.label || "name"]}</p>
+              {props.mentionable ? (
+                <MentionableReadonly
+                  value={truncate(item[props.label || "name"])}
+                />
+              ) : (
+                <p style={{ margin: "0.75rem" }}>
+                  {truncate(item[props.label || "name"])}
+                </p>
+              )}
             </ListGroup.Item>
           ))}
       </ListGroup>

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import InlineEditor from "../components/inline_editor.component";
+import InlineEditor from "../../components/editors/inline_editor.component";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 
@@ -66,6 +66,11 @@ describe("Inline editor component", () => {
       // When text clicked, exit rest state
       confirmActiveState();
 
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
+
       // Press `enter`
       await act(async () => {
         userEvent.type(screen.getByRole("textbox"), "{enter}");
@@ -73,6 +78,11 @@ describe("Inline editor component", () => {
 
       // Confirm that we have returned to rest state
       confirmRestState();
+
+      // Confirm success text shows
+      expect(
+        screen.getByText("Changes have been saved successfully")
+      ).toBeVisible();
 
       // Click span, press escape
       userEvent.click(screen.getByText(value));
@@ -83,23 +93,38 @@ describe("Inline editor component", () => {
 
       // Confirm that we have returned to rest state
       confirmRestState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
     });
 
     test("responding to tab using enter", async () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
       // Confirm we are in rest state
       confirmRestState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
 
       // Press enter on focused element
       userEvent.type(span, "{enter}", { skipClick: true });
 
       // Confirm that we have left rest state
       confirmActiveState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
 
       // Return to rest state
       userEvent.type(span, "{esc}", { skipClick: true });
@@ -109,11 +134,16 @@ describe("Inline editor component", () => {
       userEvent.tab();
 
       // Confirm that span has focus
-      const span = screen.getByText(value);
+      const span = screen.getByRole("switch");
       expect(span).toHaveFocus();
 
       // Confirm we are in rest state
       confirmRestState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
 
       // Press space on focused element
       userEvent.type(span, "{space}", { skipClick: true });
@@ -133,6 +163,11 @@ describe("Inline editor component", () => {
       // Confirm saving svg does not show
       expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
 
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
+
       // Return to rest state
       userEvent.type(span, "{esc}", { skipClick: true });
     });
@@ -141,11 +176,21 @@ describe("Inline editor component", () => {
       // By default, should be in rest state
       confirmRestState();
 
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
+
       // Click span
       userEvent.click(screen.getByText(value));
 
       // When text clicked, exit rest state
       confirmActiveState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
 
       // Press `enter`
       await act(async () => {
@@ -154,17 +199,32 @@ describe("Inline editor component", () => {
 
       // Confirm that we have returned to rest state
       confirmRestState();
+
+      // Confirm success text shows
+      expect(
+        screen.getByText("Changes have been saved successfully")
+      ).toBeVisible();
     });
 
     test("cancelling via help text", async () => {
       // By default, should be in rest state
       confirmRestState();
 
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
+
       // Click span
       userEvent.click(screen.getByText(value));
 
       // When text clicked, exit rest state
       confirmActiveState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
 
       // Press `enter`
       await act(async () => {
@@ -173,6 +233,11 @@ describe("Inline editor component", () => {
 
       // Confirm that we have returned to rest state
       confirmRestState();
+
+      // Confirm success text is hidden
+      expect(
+        screen.queryByText("Changes have been saved successfully")
+      ).toBeNull();
     });
   });
 
@@ -261,9 +326,7 @@ describe("Inline editor component", () => {
 
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
-          render(
-            <InlineEditor value={value} fontSize={fontSize}></InlineEditor>
-          );
+          render(<InlineEditor value={value} fontSize={fontSize} />);
         });
 
         // Confirm span has correct font size
@@ -283,7 +346,7 @@ describe("Inline editor component", () => {
       test("with a default font size", async () => {
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
-          render(<InlineEditor value={value}></InlineEditor>);
+          render(<InlineEditor value={value} />);
         });
         // Confirm span has correct font size
         expect(
@@ -330,7 +393,7 @@ describe("Inline editor component", () => {
       test("with a default font size", async () => {
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
-          render(<InlineEditor value={value} type="textarea"></InlineEditor>);
+          render(<InlineEditor value={value} type="textarea" />);
         });
 
         // Confirm span has correct font size

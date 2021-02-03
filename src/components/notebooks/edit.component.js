@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "../../services/notebook.service";
-import InlineEditor from "../inline_editor.component";
+import InlineEditor from "../editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
 import ConfirmModal from "../modal.component";
 import { Link } from "react-router-dom";
@@ -62,7 +62,7 @@ function Edit(props) {
         action={saveName}
         placeholder="No name saved"
         fontSize="2rem"
-      ></InlineEditor>
+      />
 
       <InlineEditor
         value={summary}
@@ -71,11 +71,11 @@ function Edit(props) {
         action={saveSummary}
         placeholder="No summary saved"
         helpText="Use shift+enter to add a new line"
-      ></InlineEditor>
+      />
 
       <Link to={`/notebooks/${props.id}`} tabIndex="-1">
         <Button variant="primary" className="mt-5 w-100">
-          Open notebook
+          Open Notebook
         </Button>
       </Link>
 
@@ -86,7 +86,7 @@ function Edit(props) {
           setIsModalVisible(true);
         }}
       >
-        Delete notebook
+        Delete Notebook
       </Button>
 
       <ConfirmModal
@@ -95,7 +95,7 @@ function Edit(props) {
         text={`This will delete ${name} and all associated notes. Are you sure you wish to continue?`}
         confirmAction={deleteNotebook}
         closeAction={() => setIsModalVisible(false)}
-      ></ConfirmModal>
+      />
     </div>
   );
 }

@@ -1,39 +1,97 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import Search from "../search.component";
 import List from "../list.component";
 import NotableDataService from "../../services/notable.service";
+import Details from "./details.component";
+import Button from "react-bootstrap/Button";
+import Helper from "../../helpers/notable_helper";
 
-function Show(props) {
+function Index(props) {
   const { notebookId } = useParams();
 
   const [notables, setNotables] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
+  // Manage state of new page
+  const [newRecord, setNewRecord] = useState(false);
+
+  // Filtered notables
+  const [queriedNotables, setQueriedNotables] = useState([]);
+
+  const retrieveNotables = useCallback(
+    (id) => {
+      NotableDataService.index(notebookId, props.type)
+        .then((response) => {
+          setNotables(response.data);
+          setCurrentId(id || null);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    [setNotables, notebookId, props.type]
+  );
+
+  // Conditionally render search bar
+  const renderSearch = () => {
+    if (notables.length) {
+      return (
+        <Search
+          items={notables}
+          queriedItems={queriedNotables}
+          setQueriedItems={setQueriedNotables}
+        />
+      );
+    }
+  };
+
+  // Event handler for switching to "New" page
+  const showNew = () => {
+    setNewRecord(true);
+    setCurrentId(null);
+  };
+
+  // Set current ID & reset new page view
+  const showItem = (id) => {
+    setNewRecord(false);
+    setCurrentId(id);
+  };
+
   // Callback to update the list of chars
   useEffect(() => {
-    NotableDataService.index(notebookId, props.type)
-      .then((response) => {
-        setNotables(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [setNotables, notebookId, props.type]);
+    retrieveNotables();
+  }, [retrieveNotables]);
 
   return (
     <div className="list row">
       <div className="col-md-6">
         <h2 className="capitalise">{props.type}</h2>
 
+        {renderSearch()}
+
+        <Button onClick={showNew} className="w-100 mb-3">
+          Add {Helper.singular(props.type)}
+        </Button>
+
         <List
           currentId={currentId}
-          setCurrentId={setCurrentId}
-          items={notables}
+          setCurrentId={showItem}
+          items={queriedNotables}
           label="name"
         />
       </div>
+
+      <Details
+        id={currentId}
+        retrieveNotables={retrieveNotables}
+        type={props.type}
+        notebookId={notebookId}
+        newRecord={newRecord}
+        setNewRecord={setNewRecord}
+      />
     </div>
   );
 }
 
-export default Show;
+export default Index;

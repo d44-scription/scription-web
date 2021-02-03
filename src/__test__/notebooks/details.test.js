@@ -6,78 +6,75 @@ import userEvent from "@testing-library/user-event";
 import http from "../../http-common";
 
 describe("Details component", () => {
-  const confirmRestState = () => {
-    // Confirm default button is shown
-    expect(screen.getByText("Add new notebook")).toBeInTheDocument();
+  let newRecord = false;
+  let setNewRecord = (val) => {
+    newRecord = val;
+  };
 
+  const confirmRestState = () => {
     // Confirm new notebook fields are not shown
-    expect(screen.queryByText("Name notebook")).toBeNull();
+    expect(screen.queryByText("Enter Name")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
-    expect(screen.queryByText("Open notebook")).toBeNull();
-    expect(screen.queryByText("Delete notebook")).toBeNull();
+    expect(screen.queryByText("Open Notebook")).toBeNull();
+    expect(screen.queryByText("Delete Notebook")).toBeNull();
   };
 
   const confirmNewNotebookState = () => {
-    // Confirm default button is not shown
-    expect(screen.queryByText("Add new notebook")).not.toBeInTheDocument();
-
     // Confirm new notebook fields are shown
-    expect(screen.getByText("Name notebook")).toBeInTheDocument();
+    expect(screen.getByText("Enter Name")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
 
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
-    expect(screen.queryByText("Open notebook")).toBeNull();
-    expect(screen.queryByText("Delete notebook")).toBeNull();
+    expect(screen.queryByText("Open Notebook")).toBeNull();
+    expect(screen.queryByText("Delete Notebook")).toBeNull();
   };
 
   const confirmViewNotebookState = () => {
-    // Confirm default button is not shown
-    expect(screen.queryByText("Add new notebook")).not.toBeInTheDocument();
-
     // Confirm new notebook fields are not shown
-    expect(screen.queryByText("Name notebook")).toBeNull();
+    expect(screen.queryByText("Enter Name")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm view notebook fields are shown
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
-    expect(screen.getByText("Open notebook")).toBeInTheDocument();
-    expect(screen.getByText("Delete notebook")).toBeInTheDocument();
+    expect(screen.getByText("Open Notebook")).toBeInTheDocument();
+    expect(screen.getByText("Delete Notebook")).toBeInTheDocument();
   };
 
   test("rendering details pane when no ID given", async () => {
-    await act(async () => {
-      render(
-        <BrowserRouter>
-          <Details />
-        </BrowserRouter>
-      );
-    });
+    const { rerender } = render(
+      <BrowserRouter>
+        <Details newRecord={newRecord} setNewRecord={setNewRecord} />
+      </BrowserRouter>
+    );
 
     // Confirm we start at rest state
     confirmRestState();
 
-    // Click "Add notebook" button
-    await act(async () => {
-      userEvent.click(screen.getByText("Add new notebook"));
-    });
+    // Update "new Record" prop
+    setNewRecord(true)
+
+    // Simulate clicking "add new"
+    rerender(
+      <BrowserRouter>
+        <Details newRecord={true} setNewRecord={setNewRecord} />
+      </BrowserRouter>
+    );
 
     // Confirm we navigate to "New notebook" page
     confirmNewNotebookState();
 
     // Click "Cancel" button
-    await act(async () => {
-      userEvent.click(screen.getByText("Cancel"));
-    });
+    userEvent.click(screen.getByText("Cancel"));
 
-    // Confirm we return to rest state
-    confirmRestState();
+    // Confirm we would return to rest state
+    expect(newRecord).toBe(false)
   });
 
   describe("When given an ID", () => {
