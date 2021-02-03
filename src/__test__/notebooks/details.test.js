@@ -19,8 +19,8 @@ describe("Details component", () => {
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
-    expect(screen.queryByText("Open notebook")).toBeNull();
-    expect(screen.queryByText("Delete notebook")).toBeNull();
+    expect(screen.queryByText("Open Notebook")).toBeNull();
+    expect(screen.queryByText("Delete Notebook")).toBeNull();
   };
 
   const confirmNewNotebookState = () => {
@@ -31,8 +31,8 @@ describe("Details component", () => {
     // Confirm view notebook fields are not shown
     expect(screen.queryByText("Notebook 1")).toBeNull();
     expect(screen.queryByText("Mock summary")).toBeNull();
-    expect(screen.queryByText("Open notebook")).toBeNull();
-    expect(screen.queryByText("Delete notebook")).toBeNull();
+    expect(screen.queryByText("Open Notebook")).toBeNull();
+    expect(screen.queryByText("Delete Notebook")).toBeNull();
   };
 
   const confirmViewNotebookState = () => {
@@ -43,8 +43,8 @@ describe("Details component", () => {
     // Confirm view notebook fields are shown
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
-    expect(screen.getByText("Open notebook")).toBeInTheDocument();
-    expect(screen.getByText("Delete notebook")).toBeInTheDocument();
+    expect(screen.getByText("Open Notebook")).toBeInTheDocument();
+    expect(screen.getByText("Delete Notebook")).toBeInTheDocument();
   };
 
   test("rendering details pane when no ID given", async () => {

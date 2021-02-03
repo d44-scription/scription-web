@@ -38,12 +38,12 @@ describe("Edit component", () => {
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
 
-    expect(screen.getByText("Open notebook")).toBeInTheDocument();
-    expect(screen.getByText("Delete notebook")).toBeInTheDocument();
+    expect(screen.getByText("Open Notebook")).toBeInTheDocument();
+    expect(screen.getByText("Delete Notebook")).toBeInTheDocument();
 
     // Click delete button for first item
     await act(async () => {
-      userEvent.click(screen.getByText("Delete notebook"));
+      userEvent.click(screen.getByText("Delete Notebook"));
     });
 
     // Confirm modal is shown
@@ -57,7 +57,7 @@ describe("Edit component", () => {
   });
 
   test("responding to tab", () => {
-    const deleteButton = screen.getByText("Delete notebook");
+    const deleteButton = screen.getByText("Delete Notebook");
 
     // Confirm that delete button gains focus from tab
     userEvent.tab({ shift: true });

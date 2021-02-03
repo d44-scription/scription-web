@@ -79,7 +79,7 @@ describe("Index component", () => {
       expect(screen.queryByText("No summary saved")).toBeNull();
     });
 
-    test("navigating between new and rest pages", () => {
+    test("navigating between new and rest pages", async () => {
       const addButton = screen.getByText("Add Notebook");
 
       // Confirm new fields are not shown
@@ -92,6 +92,10 @@ describe("Index component", () => {
       expect(screen.getByText("Enter Name")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("Open Notebook")).toBeNull();
+      expect(screen.queryByText("Delete Notebook")).toBeNull();
+
       // Confirm add button is persistent
       expect(screen.getByText("Add Notebook")).toBeVisible();
 
@@ -100,6 +104,26 @@ describe("Index component", () => {
       // Confirm new fields are hidden
       expect(screen.queryByText("Enter Name")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("Open Notebook")).toBeNull();
+      expect(screen.queryByText("Delete Notebook")).toBeNull();
+
+      // Click first list item
+      await act(async () => {
+        userEvent.click(screen.getByText("Notebook 1").closest("li"));
+      });
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is shown
+      expect(screen.getByText("Open Notebook")).toBeVisible();
+      expect(screen.getByText("Delete Notebook")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Notebook")).toBeVisible();
     });
   });
 

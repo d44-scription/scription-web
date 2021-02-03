@@ -90,7 +90,7 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
     });
 
-    test("navigating between new and rest pages", () => {
+    test("navigating between new, edit, and rest pages", async() => {
       const addButton = screen.getByText("Add Character");
 
       // Confirm new fields are not shown
@@ -103,6 +103,10 @@ describe("Index component", () => {
       expect(screen.getByText("Enter Name")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
       // Confirm add button is persistent
       expect(screen.getByText("Add Character")).toBeVisible();
 
@@ -111,6 +115,26 @@ describe("Index component", () => {
       // Confirm new fields are hidden
       expect(screen.queryByText("Enter Name")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is hidden
+      expect(screen.queryByText("View Character")).toBeNull();
+      expect(screen.queryByText("Delete Character")).toBeNull();
+
+      // Click first list item
+      await act(async () => {
+        userEvent.click(screen.getByText("Notable 1").closest("li"));
+      });
+
+      // Confirm new fields are hidden
+      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Cancel")).toBeNull();
+
+      // Confirm Edit page is shown
+      expect(screen.getByText("View Character")).toBeVisible();
+      expect(screen.getByText("Delete Character")).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(screen.getByText("Add Character")).toBeVisible();
     });
   });
 
