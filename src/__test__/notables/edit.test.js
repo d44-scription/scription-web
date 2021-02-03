@@ -14,7 +14,7 @@ describe("Edit component", () => {
   const fakeNotable = {
     name: "Character 1",
     id: 1,
-    description: "Mock description",
+    description: "Mock description referencing @[Wheaty](@1)",
   };
 
   const successfulResponse = {
@@ -62,7 +62,7 @@ describe("Edit component", () => {
   test("rendering information for a given notable", async () => {
     // Confirm data is retrieved and displayed correctly
     expect(screen.getByText("Character 1")).toBeInTheDocument();
-    expect(screen.getAllByText("Mock description")[0]).toBeInTheDocument();
+    expect(screen.getByText("Mock description referencing Wheaty")).toBeInTheDocument();
 
     expect(screen.getByText("View Character")).toBeInTheDocument();
     expect(screen.getByText("Delete Character")).toBeInTheDocument();
@@ -150,13 +150,14 @@ describe("Edit component", () => {
     ).toBeInTheDocument();
   });
 
-  test("Rendering success messages correctly", async () => {
+  describe("Rendering success messages correctly", () => {
+    test("when editing title", async () => {
     const textField = screen.getByText("Character 1");
 
     // Submit message
     await act(async () => {
       userEvent.click(textField);
-      userEvent.click(screen.getAllByText("enter")[0])
+      userEvent.click(screen.getAllByText("enter")[0]);
     });
 
     expect(http.put).toHaveBeenCalledWith(
@@ -170,7 +171,32 @@ describe("Edit component", () => {
     expect(
       screen.getByText("Changes have been saved successfully")
     ).toBeVisible();
-  });
+    });
 
-  test("Rendering mentioned notables in description correctly", () => {});
+    test("when editing description", async () => {
+      const textField = screen.getByText(
+        "Mock description referencing Wheaty"
+      );
+
+      // Submit message
+      await act(async () => {
+        userEvent.click(textField);
+        userEvent.click(screen.getAllByText("enter")[1]);
+      });
+
+      expect(http.put).toHaveBeenCalledWith(
+        `/notebooks/${notebookId}/notables/${notableId}.json`,
+        {
+          notable: {
+            description: "Mock description referencing @[Wheaty](@1)",
+          },
+        }
+      );
+
+      // Confirm success message shows
+      expect(
+        screen.getByText(`Successfully saved. ${successMessage}`)
+      ).toBeVisible();
+    });
+  });
 });

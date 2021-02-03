@@ -77,6 +77,7 @@ function Edit(props) {
         setValue={setDescription}
         notebookId={props.notebookId}
         action={saveDescription}
+        placeholder="No description saved"
       />
 
       <Link
