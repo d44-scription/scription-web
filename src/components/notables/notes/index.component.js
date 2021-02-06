@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import List from "../list.component";
-import Search from "../search.component";
-import NotableDataService from "../../services/notable.service";
-import Edit from "./notes/edit.component";
+import List from "../../list.component";
+import Search from "../../search.component";
+import NotableDataService from "../../../services/notable.service";
+import Edit from "./edit.component";
 import Button from "react-bootstrap/Button";
 
 function Show(props) {
@@ -11,6 +11,7 @@ function Show(props) {
 
   const [notes, setNotes] = useState([]);
   const [currentId, setCurrentId] = useState(null);
+  const [newRecord, setNewRecord] = useState(false);
 
   // Filtered notes
   const [queriedNotes, setQueriedNotes] = useState([]);
@@ -42,6 +43,11 @@ function Show(props) {
     }
   };
 
+  const showNew = () => {
+    setNewRecord(true);
+    setCurrentId(null);
+  };
+
   // Callback to update the list of chars
   useEffect(() => {
     retrieveNotes();
@@ -53,6 +59,10 @@ function Show(props) {
         <h2 className="capitalise">Notes</h2>
 
         {renderSearch()}
+
+        <Button onClick={showNew} className="w-100 mb-3">
+          Add Note
+        </Button>
 
         <List
           currentId={currentId}
