@@ -58,7 +58,7 @@ describe("Details component", () => {
     confirmRestState();
 
     // Update "new Record" prop
-    setNewRecord(true)
+    setNewRecord(true);
 
     // Simulate clicking "add new"
     rerender(
@@ -74,7 +74,7 @@ describe("Details component", () => {
     userEvent.click(screen.getByText("Cancel"));
 
     // Confirm we would return to rest state
-    expect(newRecord).toBe(false)
+    expect(newRecord).toBe(false);
   });
 
   describe("When given an ID", () => {

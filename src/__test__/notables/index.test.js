@@ -90,7 +90,7 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
     });
 
-    test("navigating between new, edit, and rest pages", async() => {
+    test("navigating between new, edit, and rest pages", async () => {
       const addButton = screen.getByText("Add Character");
 
       // Confirm new fields are not shown

@@ -50,7 +50,15 @@ function InlineEditor(props) {
         setError(e.response.data.join(", "));
         setSuccess("");
       });
-  }, [props.value, action, onSubmitAction, setIsBusy, setError, setSuccess, setCacheValue]);
+  }, [
+    props.value,
+    action,
+    onSubmitAction,
+    setIsBusy,
+    setError,
+    setSuccess,
+    setCacheValue,
+  ]);
 
   const exitWithoutSaving = useCallback(() => {
     setAtRest(true);
