@@ -37,7 +37,7 @@ function Show(props) {
 
   // Send POST request
   const submitNote = () => {
-    return NoteDataService.create(content, id);
+    return NoteDataService.create(id, content);
   };
 
   // Programmatically handle navigation to support accessible buttons

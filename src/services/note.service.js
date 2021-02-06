@@ -5,7 +5,7 @@ class NoteDataService {
     return http.get(`/notebooks/${notebookId}/notes/${id}.json`);
   }
 
-  create(value, notebookId) {
+  create(notebookId, value) {
     let params = {};
     params["note"] = {};
     params["note"]["content"] = value;
