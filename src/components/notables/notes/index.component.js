@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import List from "../../list.component";
 import Search from "../../search.component";
 import NotableDataService from "../../../services/notable.service";
-import Edit from "./edit.component";
 import Button from "react-bootstrap/Button";
+import Details from "./details.component";
 
 function Show(props) {
   const { notebookId, id } = useParams();
@@ -73,15 +73,13 @@ function Show(props) {
         />
       </div>
 
-      {currentId ? (
-        <Edit
-          id={currentId}
-          notebookId={notebookId}
-          retrieveNotes={retrieveNotes}
-        />
-      ) : (
-        <p>No note selected</p>
-      )}
+      <Details
+        id={currentId}
+        notebookId={notebookId}
+        retrieveNotes={retrieveNotes}
+        newRecord={newRecord}
+        setNewRecord={setNewRecord}
+      />
     </div>
   );
 }
