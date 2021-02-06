@@ -4,6 +4,7 @@ import List from "../list.component";
 import Search from "../search.component";
 import NotableDataService from "../../services/notable.service";
 import Edit from "./notes/edit.component";
+import Button from "react-bootstrap/Button";
 
 function Show(props) {
   const { notebookId, id } = useParams();

@@ -62,7 +62,9 @@ describe("Edit component", () => {
   test("rendering information for a given notable", async () => {
     // Confirm data is retrieved and displayed correctly
     expect(screen.getByText("Character 1")).toBeInTheDocument();
-    expect(screen.getByText("Mock description referencing Wheaty")).toBeInTheDocument();
+    expect(
+      screen.getByText("Mock description referencing Wheaty")
+    ).toBeInTheDocument();
 
     expect(screen.getByText("View Character")).toBeInTheDocument();
     expect(screen.getByText("Delete Character")).toBeInTheDocument();
@@ -152,31 +154,29 @@ describe("Edit component", () => {
 
   describe("Rendering success messages correctly", () => {
     test("when editing title", async () => {
-    const textField = screen.getByText("Character 1");
+      const textField = screen.getByText("Character 1");
 
-    // Submit message
-    await act(async () => {
-      userEvent.click(textField);
-      userEvent.click(screen.getAllByText("enter")[0]);
-    });
+      // Submit message
+      await act(async () => {
+        userEvent.click(textField);
+        userEvent.click(screen.getAllByText("enter")[0]);
+      });
 
-    expect(http.put).toHaveBeenCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}.json`,
-      {
-        notable: { name: "Character 1" },
-      }
-    );
+      expect(http.put).toHaveBeenCalledWith(
+        `/notebooks/${notebookId}/notables/${notableId}.json`,
+        {
+          notable: { name: "Character 1" },
+        }
+      );
 
-    // Confirm success message shows
-    expect(
-      screen.getByText("Changes have been saved successfully")
-    ).toBeVisible();
+      // Confirm success message shows
+      expect(
+        screen.getByText("Changes have been saved successfully")
+      ).toBeVisible();
     });
 
     test("when editing description", async () => {
-      const textField = screen.getByText(
-        "Mock description referencing Wheaty"
-      );
+      const textField = screen.getByText("Mock description referencing Wheaty");
 
       // Submit message
       await act(async () => {

@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import "../../scss/messages.scss";
 
 function Messages(props) {
-  return(
+  return (
     <div>
       <p className="help-text" hidden={props.hideHelpText}>
         Press{" "}

@@ -43,7 +43,7 @@ describe("Edit component", () => {
     await act(async () => {
       render(
         <BrowserRouter>
-          <Edit id="1" retrieveNotebooks={() => {}}/>
+          <Edit id="1" retrieveNotebooks={() => {}} />
         </BrowserRouter>
       );
     });

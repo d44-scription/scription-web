@@ -48,13 +48,13 @@ function Index(props) {
   const showNew = () => {
     setNewRecord(true);
     setCurrentId(null);
-  }
+  };
 
   // Set current ID & reset new page view
   const showItem = (id) => {
-    setNewRecord(false)
-    setCurrentId(id)
-  }
+    setNewRecord(false);
+    setCurrentId(id);
+  };
 
   // Fetch list of notebooks on load
   useEffect(() => {
@@ -68,10 +68,7 @@ function Index(props) {
 
         {renderSearch()}
 
-        <Button
-          onClick={showNew}
-          className="w-100 mb-3"
-        >
+        <Button onClick={showNew} className="w-100 mb-3">
           Add Notebook
         </Button>
 

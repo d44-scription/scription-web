@@ -26,7 +26,12 @@ function Edit(props) {
 
   // Send PUT request
   const submitNote = useCallback(() => {
-    return NoteDataService.update(props.notebookId, props.id, "content", content)
+    return NoteDataService.update(
+      props.notebookId,
+      props.id,
+      "content",
+      content
+    );
   }, [content, props.id, props.notebookId]);
 
   // Send DELETE request

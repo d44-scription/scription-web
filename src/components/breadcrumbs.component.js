@@ -16,7 +16,7 @@ function Breadcrumbs(props) {
     if (e.key === " " || e.key === "Enter") {
       history.push(e.target.pathname);
     }
-  }
+  };
 
   const crumbs = paths.map((path, index) => {
     // Replace first path ('') with root link & branding
