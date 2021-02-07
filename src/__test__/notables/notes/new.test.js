@@ -40,7 +40,7 @@ describe("New component", () => {
       screen.getByPlaceholderText("Click here to add a note")
     ).toBeVisible();
     // Confirm text code is automatically added to text field
-    expect(screen.getAllByText("Wheaty")[0]).toBeVisible()
+    expect(screen.getAllByText("Wheaty")[0]).toBeVisible();
     expect(
       screen.getByText(
         "Use @ to reference a character, : to reference an item, and # to reference a location"

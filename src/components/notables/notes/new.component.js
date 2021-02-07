@@ -9,15 +9,15 @@ function New(props) {
   const [content, setContent] = useState("");
 
   // Onload retrieve notable from API to allow use of text code
-  useEffect(()=> {
+  useEffect(() => {
     NotableDataService.get(props.notebookId, props.notableId)
-    .then((response) => {
-      setContent(`${response.data.text_code} `)
-    })
-    .catch((e) => {
-      console.log(e);
-    })
-  }, [props.notebookId, props.notableId])
+      .then((response) => {
+        setContent(`${response.data.text_code} `);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [props.notebookId, props.notableId]);
 
   const submitNote = () => {
     return NoteDataService.create(props.notebookId, content);
