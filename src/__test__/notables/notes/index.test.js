@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "../../../http-common";
 import { MemoryRouter, Route } from "react-router-dom";
-import Show from "../../components/notables/notes/index.component";
+import Index from "../../../components/notables/notes/index.component";
 import userEvent from "@testing-library/user-event";
 
-describe("Show component", () => {
+describe("Index component", () => {
   const notebookId = 1;
   const notableId = 2;
 
@@ -48,7 +48,7 @@ describe("Show component", () => {
             ]}
           >
             <Route path="/notebooks/:notebookId/characters/:id">
-              <Show />
+              <Index />
             </Route>
           </MemoryRouter>
         );
@@ -112,7 +112,7 @@ describe("Show component", () => {
       expect(listItem2).not.toHaveClass("active");
       expect(listItem3).not.toHaveClass("active");
 
-      // Edit page not shown when no items selected
+      // Edit page not Indexn when no items selected
       expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
       expect(screen.queryByText(helpText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
@@ -137,7 +137,7 @@ describe("Show component", () => {
             ]}
           >
             <Route path="/notebooks/:notebookId/characters/:id">
-              <Show />
+              <Index />
             </Route>
           </MemoryRouter>
         );
