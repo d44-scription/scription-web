@@ -26,6 +26,7 @@ function Details(props) {
           setNewRecord={setNewRecord}
           retrieveNotes={props.retrieveNotes}
           notebookId={props.notebookId}
+          notableId={props.notableId}
         />
       </div>
     );

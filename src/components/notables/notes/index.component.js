@@ -81,6 +81,7 @@ function Show(props) {
       <Details
         id={currentId}
         notebookId={notebookId}
+        notableId={id}
         retrieveNotes={retrieveNotes}
         newRecord={newRecord}
         setNewRecord={setNewRecord}

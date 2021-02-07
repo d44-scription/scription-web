@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Mentionable from "../../editors/mentionable.component";
 import Button from "react-bootstrap/Button";
 import NoteDataService from "../../../services/note.service";
+import NotableDataService from "../../../services/notable.service";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component
   const [content, setContent] = useState("");
+
+  // Onload retrieve notable from API to allow use of text code
+  useEffect(()=> {
+    NotableDataService.get(props.notebookId, props.notableId)
+    .then((response) => {
+      setContent(`${response.data.text_code} `)
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+  }, [props.notebookId, props.notableId])
 
   const submitNote = () => {
     return NoteDataService.create(props.notebookId, content);
