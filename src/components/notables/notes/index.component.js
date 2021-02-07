@@ -48,6 +48,11 @@ function Show(props) {
     setCurrentId(null);
   };
 
+  const showNote = (id) => {
+    setNewRecord(false);
+    setCurrentId(id);
+  };
+
   // Callback to update the list of chars
   useEffect(() => {
     retrieveNotes();
@@ -66,7 +71,7 @@ function Show(props) {
 
         <List
           currentId={currentId}
-          setCurrentId={setCurrentId}
+          setCurrentId={showNote}
           items={queriedNotes}
           label="content"
           mentionable

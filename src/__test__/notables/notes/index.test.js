@@ -10,10 +10,12 @@ describe("Index component", () => {
   const notableId = 2;
 
   describe("With notes", () => {
-    const placeholderText = "No content";
+    const editPlaceholderText = "No content";
+    const newPlaceholderText = "Click here to add a note";
     const helpText =
       "Use @ to reference a character, : to reference an item, and # to reference a location";
     const deleteText = "Delete Note";
+    const cancelText = "Cancel"
 
     const notes = [
       {
@@ -61,6 +63,8 @@ describe("Index component", () => {
     });
 
     test("rendering full list of notes", async () => {
+      const addButton = screen.getByText("Add Note");
+
       // Confirm elements with mentions are rendered in a user-friendly format
       const listItem1 = screen
         .getByText("Note 1 mentions Wheaty")
@@ -83,9 +87,61 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
 
       // Edit page not shown when no items selected
-      expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
-      expect(screen.queryByText(helpText)).toBeNull();
+      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
+
+      // New page not shown before "Add" button is clicked
+      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByText(cancelText)).toBeNull();
+
+      // Confirm help text is only visible when on new or edit pages
+      expect(screen.queryByText(helpText)).toBeNull();
+
+      // Confirm add button is persistent
+      expect(addButton).toBeVisible();
+
+      // Click add button
+      await act(async () => {
+        userEvent.click(addButton);
+      });
+
+      // Edit page not shown when no items selected
+      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
+      expect(screen.queryByText(deleteText)).toBeNull();
+
+      // New page shown
+      expect(screen.getByPlaceholderText(newPlaceholderText)).toBeVisible();
+      expect(screen.getByText(cancelText)).toBeVisible();
+
+      // Confirm help text is only visible when on new or edit pages
+      expect(screen.getByText(helpText)).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(addButton).toBeVisible();
+
+      // Click cancel button, confirm return to rest state
+      await act(async () => {
+        userEvent.click(screen.getByText(cancelText));
+      });
+
+      // Edit page not shown when no items selected
+      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
+      expect(screen.queryByText(deleteText)).toBeNull();
+
+      // New page not shown
+      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByText(cancelText)).toBeNull();
+
+      // Confirm help text is only visible when on new or edit pages
+      expect(screen.queryByText(helpText)).toBeNull();
+
+      // Confirm add button is persistent
+      expect(addButton).toBeVisible();
+
+      // Click add button
+      await act(async () => {
+        userEvent.click(addButton);
+      });
 
       // Click first list item
       await act(async () => {
@@ -98,9 +154,18 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
 
       // Edit page shows
-      expect(screen.getByPlaceholderText(placeholderText)).toBeVisible();
-      expect(screen.getByText(helpText)).toBeVisible();
+      expect(screen.getByPlaceholderText(editPlaceholderText)).toBeVisible();
       expect(screen.getByText(deleteText)).toBeVisible();
+
+      // New page not shown before "Add" button is clicked
+      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByText(cancelText)).toBeNull();
+
+      // Confirm help text is visible on new or edit pages
+      expect(screen.getByText(helpText)).toBeVisible();
+
+      // Confirm add button is persistent
+      expect(addButton).toBeVisible();
 
       // Click first list item again
       await act(async () => {
@@ -112,10 +177,19 @@ describe("Index component", () => {
       expect(listItem2).not.toHaveClass("active");
       expect(listItem3).not.toHaveClass("active");
 
-      // Edit page not Indexn when no items selected
-      expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
-      expect(screen.queryByText(helpText)).toBeNull();
+      // Edit page not shown when no items selected
+      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
+
+      // New page not shown
+      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByText(cancelText)).toBeNull();
+
+      // Confirm help text is only visible when on new or edit pages
+      expect(screen.queryByText(helpText)).toBeNull();
+
+      // Confirm add button is persistent
+      expect(addButton).toBeVisible();
     });
   });
 
