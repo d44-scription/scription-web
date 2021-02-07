@@ -222,13 +222,8 @@ describe("Mentionable component", () => {
   });
 
   test("Responding to clearOnCancel correctly", async () => {
-    const action = () => {
-      return Promise.resolve();
-    };
-
     render(
       <Mentionable
-        action={action}
         value={value}
         setValue={setValue}
         clearOnCancel
@@ -248,7 +243,7 @@ describe("Mentionable component", () => {
     // Confirm content is added
     expect(value).not.toBe("");
 
-    // Submit data
+    // Cancel submission
     await act(async () => {
       userEvent.type(textField, "{esc}");
     });
@@ -256,6 +251,41 @@ describe("Mentionable component", () => {
     // Confirm value is cleared
     expect(value).toBe("");
   });
+
+  test("Running postSubmitAction correctly", async () => {
+    let testVal = false;
+
+    const action = () => {
+      return Promise.resolve();
+    };
+
+    const postSubmitAction = () => {
+      testVal = true;
+    }
+
+    render(
+      <Mentionable
+        action={action}
+        value={value}
+        setValue={setValue}
+        postSubmitAction={postSubmitAction}
+      />
+    );
+
+    // Sanity check
+    expect(testVal).toBe(false);
+
+    // Type into text box
+    const textField = screen.getByPlaceholderText("No content");
+
+    // Submit data
+    await act(async () => {
+      userEvent.type(textField, "Note contents{enter}");
+    });
+
+    // Confirm value is cleared
+    expect(testVal).toBe(true);
+  })
 
   test("Formatting mentions correctly", () => {
     render(
