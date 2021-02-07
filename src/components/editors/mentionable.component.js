@@ -13,6 +13,7 @@ function Mentionable(props) {
 
   const action = props.action;
   const setValue = props.setValue;
+  const postSubmitAction = props.postSubmitAction;
 
   // Data retrieval function for when a trigger character is typed
   const fetchNotables = useCallback(
@@ -36,10 +37,6 @@ function Mentionable(props) {
       .then((response) => {
         inputRef.current.blur();
 
-        if (props.clearOnSubmit) {
-          setValue("");
-        }
-
         setError(null);
         setSuccess(
           `Successfully saved. ${
@@ -48,11 +45,19 @@ function Mentionable(props) {
               : ""
           }`
         );
+
+        if (props.clearOnSubmit) {
+          setValue("");
+        }
+
+        if (postSubmitAction !== undefined) {
+          postSubmitAction(response);
+        }
       })
       .catch((e) => {
         setError(e.response.data.join(", "));
       });
-  }, [setError, setSuccess, action, setValue, props.clearOnSubmit]);
+  }, [setError, setSuccess, action, setValue, postSubmitAction, props.clearOnSubmit]);
 
   // Event to cancel input - removes focus, clears text box
   const cancel = useCallback(() => {

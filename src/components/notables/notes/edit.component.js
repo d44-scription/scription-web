@@ -47,7 +47,7 @@ function Edit(props) {
   }, [props, setIsModalVisible]);
 
   return (
-    <div className="col-md-6">
+    <div>
       <Mentionable
         value={content}
         setValue={setContent}

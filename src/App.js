@@ -1,9 +1,9 @@
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
 import Notebooks from "./components/notebooks/index.component";
-import NotebookShow from "./components/notebooks/show.component";
+import Notebook from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
-import NotableShow from "./components/notables/show.component";
+import Notes from "./components/notables/notes/index.component";
 import Breadcrumbs from "./components/breadcrumbs.component";
 
 const notableTypes = ["characters", "locations", "items"];
@@ -20,7 +20,7 @@ function App() {
           {notableTypes.map((type, index) => (
             <Route
               path={`/notebooks/:notebookId/${type}/:id`}
-              children={<NotableShow />}
+              children={<Notes />}
               key={index}
             />
           ))}
@@ -33,7 +33,7 @@ function App() {
             />
           ))}
 
-          <Route path="/notebooks/:id" children={<NotebookShow />} />
+          <Route path="/notebooks/:id" children={<Notebook />} />
         </Switch>
       </div>
     </div>
