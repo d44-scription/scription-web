@@ -261,7 +261,7 @@ describe("Mentionable component", () => {
 
     const postSubmitAction = () => {
       testVal = true;
-    }
+    };
 
     render(
       <Mentionable
@@ -278,12 +278,20 @@ describe("Mentionable component", () => {
     // Type into text box
     const textField = screen.getByPlaceholderText("No content");
 
+    // Cancel data
+    await act(async () => {
+      userEvent.type(textField, "Note contents{esc}");
+    });
+
+    // Confirm action is not run
+    expect(testVal).toBe(false);
+
     // Submit data
     await act(async () => {
       userEvent.type(textField, "Note contents{enter}");
     });
 
-    // Confirm value is cleared
+    // Confirm action is run
     expect(testVal).toBe(true);
   })
 
