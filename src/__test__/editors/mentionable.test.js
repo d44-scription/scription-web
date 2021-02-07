@@ -222,13 +222,7 @@ describe("Mentionable component", () => {
   });
 
   test("Responding to clearOnCancel correctly", async () => {
-    render(
-      <Mentionable
-        value={value}
-        setValue={setValue}
-        clearOnCancel
-      />
-    );
+    render(<Mentionable value={value} setValue={setValue} clearOnCancel />);
 
     // Sanity check
     expect(value).toBe("");
@@ -293,7 +287,7 @@ describe("Mentionable component", () => {
 
     // Confirm action is run
     expect(testVal).toBe(true);
-  })
+  });
 
   test("Formatting mentions correctly", () => {
     render(

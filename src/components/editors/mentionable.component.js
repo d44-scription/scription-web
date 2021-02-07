@@ -57,7 +57,14 @@ function Mentionable(props) {
       .catch((e) => {
         setError(e.response.data.join(", "));
       });
-  }, [setError, setSuccess, action, setValue, postSubmitAction, props.clearOnSubmit]);
+  }, [
+    setError,
+    setSuccess,
+    action,
+    setValue,
+    postSubmitAction,
+    props.clearOnSubmit,
+  ]);
 
   // Event to cancel input - removes focus, clears text box
   const cancel = useCallback(() => {

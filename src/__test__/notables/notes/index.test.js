@@ -15,7 +15,7 @@ describe("Index component", () => {
     const helpText =
       "Use @ to reference a character, : to reference an item, and # to reference a location";
     const deleteText = "Delete Note";
-    const cancelText = "Cancel"
+    const cancelText = "Cancel";
 
     const notes = [
       {
