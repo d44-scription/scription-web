@@ -1,8 +1,9 @@
 import http from "../http-common";
+import authenticationHeader from "./helpers/authentication-header";
 
 class NotebookDataService {
   index() {
-    return http.get("/notebooks.json");
+    return http.get("/notebooks.json", { headers: authenticationHeader() });
   }
 
   get(id) {

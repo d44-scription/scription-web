@@ -3,7 +3,7 @@ export default function authenticationHeader() {
 
   if (user && user.token) {
     // JWT format
-    return { "Authorization": `Token ${user.token}` };
+    return { Authorization: `Token ${user.token}` };
   } else {
     return {};
   }

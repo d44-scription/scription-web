@@ -8,14 +8,12 @@ class AuthenticationDataService {
     params["user"]["email"] = email;
     params["user"]["password"] = password;
 
-    http
-      .post("/api/v1/users/login", params)
+    return http
+      .post("/users/login", params)
       .then((response) => {
         if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
-
-        return response.data;
       })
       .catch((e) => {
         // Handle errors
