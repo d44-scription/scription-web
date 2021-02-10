@@ -1,5 +1,6 @@
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
+import Login from "./components/authentication/login.component";
 import Notebooks from "./components/notebooks/index.component";
 import Notebook from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
@@ -15,7 +16,8 @@ function App() {
 
       <div className="container mt-3">
         <Switch>
-          <Route exact path={["/", "/notebooks"]} component={Notebooks} />
+          <Route exact path="/" component={Login} />
+          <Route exact path="/notebooks" component={Notebooks} />
 
           {notableTypes.map((type, index) => (
             <Route
