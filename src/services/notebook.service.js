@@ -7,7 +7,9 @@ class NotebookDataService {
   }
 
   get(id) {
-    return http.get(`/notebooks/${id}.json`);
+    return http.get(`/notebooks/${id}.json`, {
+      headers: authenticationHeader(),
+    });
   }
 
   create(param, value) {
@@ -15,7 +17,9 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.post(`/notebooks.json`, params);
+    return http.post(`/notebooks.json`, params, {
+      headers: authenticationHeader(),
+    });
   }
 
   update(id, param, value) {
@@ -23,11 +27,15 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.put(`/notebooks/${id}.json`, params);
+    return http.put(`/notebooks/${id}.json`, params, {
+      headers: authenticationHeader(),
+    });
   }
 
   delete(id) {
-    return http.delete(`/notebooks/${id}.json`);
+    return http.delete(`/notebooks/${id}.json`, {
+      headers: authenticationHeader(),
+    });
   }
 }
 
