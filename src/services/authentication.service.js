@@ -31,8 +31,12 @@ class AuthenticationDataService {
     return http.post("/api/v1/users", params);
   }
 
-  getCurrentUser() {
+  currentUser() {
     return JSON.parse(localStorage.getItem("user"));
+  }
+
+  signedIn() {
+    return (localStorage.getItem("user") !== null)
   }
 }
 
