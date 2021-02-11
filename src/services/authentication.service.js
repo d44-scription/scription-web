@@ -35,7 +35,7 @@ class AuthenticationDataService {
     return JSON.parse(localStorage.getItem("user"));
   }
 
-  signedIn() {
+  loggedIn() {
     return (localStorage.getItem("user") !== null)
   }
 }
