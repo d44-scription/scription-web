@@ -8,16 +8,11 @@ class AuthenticationDataService {
     params["user"]["email"] = email;
     params["user"]["password"] = password;
 
-    return http
-      .post("/users/login", params)
-      .then((response) => {
-        if (response.data.token) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-      })
-      .catch((e) => {
-        // Handle errors
-      });
+    return http.post("/users/login", params).then((response) => {
+      if (response.data.token) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+    });
   }
 
   logout() {

@@ -8,6 +8,8 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState("");
+
   const history = useHistory();
 
   const onSubmit = useCallback(
@@ -16,6 +18,9 @@ function Login(props) {
 
       AuthenticationDataService.login(email, password).then(() => {
         history.push("/notebooks");
+      })
+      .catch((e) => {
+        setError(e.response.data.errors)
       });
     },
     [email, password, history]
@@ -30,10 +35,18 @@ function Login(props) {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form
+      onSubmit={onSubmit}
+      className="col-md-6 ml-auto mr-auto mt-5 text-center"
+    >
+      <h1 className="fs-0">Scription</h1>
+
+      <p className="error-text mb-2 fs-5">{error}</p>
+
       <Form.Control
         type="email"
         placeholder="Email"
+        className="mb-3 text-center"
         value={email}
         onChange={emailChanged}
       />
@@ -41,12 +54,13 @@ function Login(props) {
       <Form.Control
         type="password"
         placeholder="Password"
+        className="mb-3 text-center"
         value={password}
         onChange={passwordChanged}
       />
 
-      <Button variant="primary" type="submit">
-        Submit
+      <Button variant="primary" className="w-75 ml-auto mr-auto" type="submit">
+        Log in
       </Button>
     </Form>
   );

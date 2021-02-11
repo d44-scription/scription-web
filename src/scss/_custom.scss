@@ -25,6 +25,18 @@ link {
 
 // Global scss
 
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.fs-0 {
+  font-size: 6rem;
+}
+
 .breadcrumb {
   background-color: $primary;
   font-size: 1.85rem;
