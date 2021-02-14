@@ -1,15 +1,12 @@
 import http from "../http-common";
-import authenticationHeader from "./helpers/authentication-header";
 
 class NotebookDataService {
   index() {
-    return http.get("/notebooks.json", { headers: authenticationHeader() });
+    return http.get("/notebooks.json", { withCredentials: true });
   }
 
   get(id) {
-    return http.get(`/notebooks/${id}.json`, {
-      headers: authenticationHeader(),
-    });
+    return http.get(`/notebooks/${id}.json`, { withCredentials: true });
   }
 
   create(param, value) {
@@ -17,9 +14,7 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.post(`/notebooks.json`, params, {
-      headers: authenticationHeader(),
-    });
+    return http.post(`/notebooks.json`, { withCredentials: true });
   }
 
   update(id, param, value) {
@@ -27,15 +22,11 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.put(`/notebooks/${id}.json`, params, {
-      headers: authenticationHeader(),
-    });
+    return http.put(`/notebooks/${id}.json`, { withCredentials: true });
   }
 
   delete(id) {
-    return http.delete(`/notebooks/${id}.json`, {
-      headers: authenticationHeader(),
-    });
+    return http.delete(`/notebooks/${id}.json`, { withCredentials: true });
   }
 }
 

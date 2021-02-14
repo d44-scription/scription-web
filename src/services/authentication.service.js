@@ -1,5 +1,4 @@
 import http from "../http-common";
-
 class AuthenticationDataService {
   login(email, password) {
     let params = {};
@@ -8,15 +7,11 @@ class AuthenticationDataService {
     params["user"]["email"] = email;
     params["user"]["password"] = password;
 
-    return http.post("/users/login", params).then((response) => {
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-    });
+    return http.post("/users/login", params, { withCredentials: true });
   }
 
   logout() {
-    localStorage.removeItem("user");
+    return http.delete("/users/logout", { withCredentials: true });
   }
 
   register(displayName, email, password, passwordConfirmation) {
@@ -28,15 +23,7 @@ class AuthenticationDataService {
     params["user"]["password"] = password;
     params["user"]["password_confirmation"] = passwordConfirmation;
 
-    return http.post("/api/v1/users", params);
-  }
-
-  currentUser() {
-    return JSON.parse(localStorage.getItem("user"));
-  }
-
-  loggedIn() {
-    return (localStorage.getItem("user") !== null)
+    return http.post("/users", params);
   }
 }
 
