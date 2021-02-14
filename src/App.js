@@ -5,14 +5,14 @@ import Notebooks from "./components/notebooks/index.component";
 import Notebook from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
 import Notes from "./components/notables/notes/index.component";
-import Breadcrumbs from "./components/breadcrumbs.component";
+import Navigation from "./components/navigation.component";
 
 const notableTypes = ["characters", "locations", "items"];
 
 function App() {
   return (
     <div>
-      <Breadcrumbs />
+      <Navigation />
 
       <div className="container mt-3">
         <Switch>

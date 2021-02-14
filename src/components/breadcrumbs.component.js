@@ -1,8 +1,6 @@
 import React from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
-import Nav from "react-bootstrap/Nav";
-import AuthenticationDataService from "../services/authentication.service";
 
 function Breadcrumbs(props) {
   const location = useLocation();
@@ -38,13 +36,7 @@ function Breadcrumbs(props) {
     );
   });
 
-  return (
-    <Nav className="bg-primary">
-      <Breadcrumb>{crumbs}</Breadcrumb>
-
-      {AuthenticationDataService.loggedIn() ? <p className="text-dark">Signed in</p> : <p className="text-dark">Signed out</p>}
-    </Nav>
-  );
+  return <Breadcrumb>{crumbs}</Breadcrumb>;
 }
 
 export default Breadcrumbs;
