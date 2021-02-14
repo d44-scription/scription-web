@@ -6,7 +6,9 @@ import { useHistory, Link } from "react-router-dom";
 
 function Login(props) {
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const [error, setError] = useState("");
 
@@ -16,16 +18,20 @@ function Login(props) {
     (e) => {
       e.preventDefault();
 
-      AuthenticationDataService.login(email, password)
+      AuthenticationDataService.register(displayName, email, password, passwordConfirmation)
         .then(() => {
-          history.push("/notebooks");
+          history.push("/");
         })
         .catch((e) => {
-          setError(e.response.data.errors);
+          setError(JSON.stringify(e.response.data.errors))
         });
     },
-    [email, password, history]
+    [displayName, email, password, passwordConfirmation, history]
   );
+
+  const displayNameChanged = (e) => {
+    setDisplayName(e.target.value);
+  };
 
   const emailChanged = (e) => {
     setEmail(e.target.value);
@@ -35,14 +41,23 @@ function Login(props) {
     setPassword(e.target.value);
   };
 
+  const passwordConfirmationChanged = (e) => {
+    setPasswordConfirmation(e.target.value);
+  };
+
   return (
     <Form
       onSubmit={onSubmit}
       className="col-md-6 ml-auto mr-auto mt-5 text-center"
     >
-      <h1 className="fs-0">Scription</h1>
-
       <p className="error-text mb-2 fs-5">{error}</p>
+
+      <Form.Control
+        placeholder="Display Name"
+        className="mb-3 text-center"
+        value={displayName}
+        onChange={displayNameChanged}
+      />
 
       <Form.Control
         type="email"
@@ -60,13 +75,21 @@ function Login(props) {
         onChange={passwordChanged}
       />
 
+      <Form.Control
+        type="password"
+        placeholder="Confirm Password"
+        className="mb-3 text-center"
+        value={passwordConfirmation}
+        onChange={passwordConfirmationChanged}
+      />
+
       <Button variant="primary" className="w-75 ml-auto mr-auto" type="submit">
-        Log in
+        Register
       </Button>
 
-      <Link to="/register" tabIndex="-1">
+      <Link to="/" tabIndex="-1">
         <Button variant="secondary" className="mt-1 w-75 ml-auto mr-auto">
-          Register
+          Cancel
         </Button>
       </Link>
     </Form>
