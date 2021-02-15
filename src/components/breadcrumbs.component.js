@@ -25,7 +25,7 @@ function Breadcrumbs(props) {
 
     return (
       <Breadcrumb.Item
-        className="capitalise"
+        className="capitalise mb-0"
         href={url}
         key={index}
         active={index + 1 === paths.length}

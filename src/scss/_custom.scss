@@ -40,6 +40,8 @@ link {
 .breadcrumb {
   background-color: $primary;
   font-size: 1.85rem;
+  margin: auto auto 0 1rem;
+
   .breadcrumb-item {
     color: $dark;
     a {

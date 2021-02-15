@@ -9,18 +9,19 @@ function Navigation(props) {
   const history = useHistory();
 
   const logout = () => {
-    AuthenticationDataService.logout()
-    history.push("/")
-  }
+    AuthenticationDataService.logout();
+    history.push("/");
+  };
 
   return (
-    <Nav className="bg-primary">
+    <Nav className="bg-primary w-100 d-inline-flex justify-content-between">
       <Breadcrumbs />
 
-      {/* TODO: Figure out conditional rendering */}
-      <Button onClick={logout}>
-        Log out
-      </Button>
+      {AuthenticationDataService.loggedIn() ? (
+        <Button onClick={logout}>Log out</Button>
+      ) : (
+        <Button onClick={() => history.push("/")}>Log in</Button>
+      )}
     </Nav>
   );
 }
