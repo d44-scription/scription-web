@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import AuthenticationDataService from "../../services/authentication.service";
 import { useHistory, Link } from "react-router-dom";
 
-function Login(props) {
+function Register(props) {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
@@ -96,4 +96,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Register;

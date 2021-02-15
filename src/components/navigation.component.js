@@ -20,7 +20,11 @@ function Navigation(props) {
 
       {AuthenticationDataService.loggedIn() ? (
         <span className="d-inline-flex">
-          <Button onClick={() => {}}>
+          <Button
+            onClick={() => {
+              history.push("/account");
+            }}
+          >
             <Person
               title="Account settings"
               size={36}
