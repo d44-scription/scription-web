@@ -7,11 +7,20 @@ class AuthenticationDataService {
     params["user"]["email"] = email;
     params["user"]["password"] = password;
 
-    return http.post("/users/login", params, { withCredentials: true });
+    return http
+      .post("/users/login", params, { withCredentials: true })
+      .then((response) => {
+        localStorage.setItem("id", response.data["id"]);
+      });
   }
 
   logout() {
+    localStorage.removeItem("id");
     return http.delete("/users/logout", { withCredentials: true });
+  }
+
+  loggedIn() {
+    return localStorage.getItem("id") !== null;
   }
 
   register(displayName, email, password, passwordConfirmation) {
