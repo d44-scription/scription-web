@@ -5,8 +5,8 @@ function House(props) {
     <section>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={props.width || "96"}
-        height={props.height || "96"}
+        width={props.size || "96"}
+        height={props.size || "96"}
         fill="currentColor"
         className="notable-link bi bi-house-door"
         viewBox="0 0 16 16"
@@ -22,7 +22,7 @@ function House(props) {
         />
       </svg>
 
-      <h3>Locations</h3>
+      <h3 className={props.hideTitle ? "d-none" : ""}>Locations</h3>
     </section>
   );
 }
