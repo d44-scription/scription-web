@@ -18,7 +18,9 @@ function Person(props) {
         />
       </svg>
 
-      <h3 className={props.hideTitle ? "d-none" : ""}>Characters</h3>
+      <h3 style={{ display: props.hideTitle ? "none" : "inherit" }}>
+        Characters
+      </h3>
     </section>
   );
 }
