@@ -111,7 +111,7 @@ describe("Edit component", () => {
     });
 
     expect(http.delete).toHaveBeenCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`
+      `/notebooks/${notebookId}/notes/${noteId}`
     );
 
     // Confirm modal is hidden
@@ -153,7 +153,7 @@ describe("Edit component", () => {
     });
 
     expect(http.put).toHaveBeenCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`,
+      `/notebooks/${notebookId}/notes/${noteId}`,
       {
         note: { content: "Note that mentions @[Wheaty](@1)." },
       }

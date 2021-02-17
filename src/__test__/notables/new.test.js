@@ -65,7 +65,7 @@ describe("New component", () => {
     expect(setNewRecordTestValue).toBe(true);
     expect(retrieveNotablesTestValue).toBe(true);
 
-    expect(http.post).toBeCalledWith("/notebooks/1/notables.json", {
+    expect(http.post).toBeCalledWith("/notebooks/1/notables", {
       notable: { name: "Notable", type: "Character" },
     });
   });

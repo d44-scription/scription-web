@@ -83,7 +83,7 @@ describe("New component", () => {
     expect(setNewRecordTestValue).toBe(true);
     expect(retrieveNotesTestValue).toBe(true);
 
-    expect(http.post).toBeCalledWith("/notebooks/1/notes.json", {
+    expect(http.post).toBeCalledWith("/notebooks/1/notes", {
       note: { content: "@[Wheaty](@1) Note" },
     });
   });

@@ -107,7 +107,7 @@ describe("Edit component", () => {
       userEvent.click(screen.getByText("OK"));
     });
 
-    expect(http.delete).toHaveBeenCalledWith(`/notebooks/${id}.json`);
+    expect(http.delete).toHaveBeenCalledWith(`/notebooks/${id}`);
 
     // Confirm modal is hidden
     expect(screen.queryByText("Delete Notebook?")).toBeNull();
@@ -149,7 +149,7 @@ describe("Edit component", () => {
         userEvent.click(screen.getAllByText("enter")[0]);
       });
 
-      expect(http.put).toHaveBeenCalledWith(`/notebooks/${id}.json`, {
+      expect(http.put).toHaveBeenCalledWith(`/notebooks/${id}`, {
         notebook: { name: "Notebook 1" },
       });
 
@@ -168,7 +168,7 @@ describe("Edit component", () => {
         userEvent.click(screen.getAllByText("enter")[1]);
       });
 
-      expect(http.put).toHaveBeenCalledWith(`/notebooks/${id}.json`, {
+      expect(http.put).toHaveBeenCalledWith(`/notebooks/${id}`, {
         notebook: { summary: "Mock summary" },
       });
 

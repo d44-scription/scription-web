@@ -316,6 +316,6 @@ describe("Mentionable component", () => {
       userEvent.type(textField, "@");
     });
 
-    // expect(http.get).toBeCalledWith("/notebooks/1/characters.json");
+    // expect(http.get).toBeCalledWith("/notebooks/1/characters");
   });
 });
