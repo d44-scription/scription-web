@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import Edit from "../../../components/notables/notes/edit.component";
+import Edit from "components/notables/notes/edit.component";
 import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import http from "../../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Edit component", () => {

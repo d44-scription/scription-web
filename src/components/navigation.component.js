@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Breadcrumbs from "./breadcrumbs.component";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
-import AuthenticationDataService from "../services/authentication.service";
+import AuthenticationDataService from "services/authentication.service";
 import Person from "./icons/person.component";
 
 function Navigation(props) {

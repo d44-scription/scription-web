@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import InlineEditor from "./editors/inline_editor.component";
-import UserDataService from "../services/user.service";
+import UserDataService from "services/user.service";
 
 function Account(props) {
   const [displayName, setDisplayName] = useState("");

@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { MentionsInput, Mention } from "react-mentions";
-import NotableDataService from "../../services/notable.service";
-import "../../scss/mentionable.scss";
+import NotableDataService from "services/notable.service";
+import "scss/mentionable.scss";
 import Messages from "./messages.component";
 
 function Mentionable(props) {

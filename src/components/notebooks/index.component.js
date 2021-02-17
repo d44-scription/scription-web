@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import NotebookDataService from "../../services/notebook.service";
+import NotebookDataService from "services/notebook.service";
 import Details from "./details.component";
-import List from "../list.component";
-import Search from "../search.component";
+import List from "components/list.component";
+import Search from "components/search.component";
 import Button from "react-bootstrap/Button";
 
 function Index(props) {

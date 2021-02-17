@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
-import "../../scss/inline-editor.scss";
+import "scss/inline-editor.scss";
 import Messages from "./messages.component";
 
 function InlineEditor(props) {

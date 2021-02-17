@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Mentionable from "../../editors/mentionable.component";
+import Mentionable from "components/editors/mentionable.component";
 import Button from "react-bootstrap/Button";
-import NoteDataService from "../../../services/note.service";
-import NotableDataService from "../../../services/notable.service";
+import NoteDataService from "services/note.service";
+import NotableDataService from "services/notable.service";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component

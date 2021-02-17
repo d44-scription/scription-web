@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import NotebookDataService from "../../services/notebook.service";
-import InlineEditor from "../editors/inline_editor.component";
+import NotebookDataService from "services/notebook.service";
+import InlineEditor from "components/editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "../modal.component";
+import ConfirmModal from "components/modal.component";
 import { Link } from "react-router-dom";
 
 function Edit(props) {

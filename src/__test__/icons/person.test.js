@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Person from "../../components/icons/person.component";
+import Person from "components/icons/person.component";
 
 describe("Person icon", () => {
   test("default rendering", () => {

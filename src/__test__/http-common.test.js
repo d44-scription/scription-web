@@ -1,4 +1,4 @@
-import http from "../http-common";
+import http from "http-common";
 
 describe("http-common module", () => {
   test("intercepting forbidden requests", () => {

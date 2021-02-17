@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import MentionableReadonly from "./editors/mentionable_readonly.component";
-import "../scss/list.scss";
+import "scss/list.scss";
 
 function List(props) {
   // Callback triggered when list items are clicked

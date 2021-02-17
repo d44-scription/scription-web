@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import Show from "../../components/notebooks/show.component";
+import Show from "components/notebooks/show.component";
 import { MemoryRouter, Route } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Show component", () => {

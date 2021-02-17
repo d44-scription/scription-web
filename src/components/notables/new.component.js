@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import InlineEditor from "../editors/inline_editor.component";
+import InlineEditor from "components/editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
-import NotableDataService from "../../services/notable.service";
-import Helper from "../../helpers/notable_helper";
+import NotableDataService from "services/notable.service";
+import Helper from "helpers/notable_helper";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Breadcrumbs from "../components/breadcrumbs.component";
+import Breadcrumbs from "components/breadcrumbs.component";
 import { MemoryRouter, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 

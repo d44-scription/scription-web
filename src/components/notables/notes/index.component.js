@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import List from "../../list.component";
-import Search from "../../search.component";
-import NotableDataService from "../../../services/notable.service";
+import List from "components/list.component";
+import Search from "components/search.component";
+import NotableDataService from "services/notable.service";
 import Button from "react-bootstrap/Button";
 import Details from "./details.component";
 
