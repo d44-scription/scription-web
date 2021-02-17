@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import "../../scss/messages.scss";
+import "scss/messages.scss";
 
 function Messages(props) {
   return (

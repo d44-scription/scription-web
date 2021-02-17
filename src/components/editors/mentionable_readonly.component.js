@@ -1,6 +1,6 @@
 import React from "react";
 import { MentionsInput, Mention } from "react-mentions";
-import "../../scss/mentionable.scss";
+import "scss/mentionable.scss";
 
 function MentionableReadonly(props) {
   return (
