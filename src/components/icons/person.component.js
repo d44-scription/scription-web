@@ -5,10 +5,10 @@ function Person(props) {
     <section>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={props.width || "96"}
-        height={props.height || "96"}
+        width={props.size || "96"}
+        height={props.size || "96"}
         fill="currentColor"
-        className="notable-link bi bi-person"
+        className={`notable-link bi bi-person ${props.class}`}
         viewBox="0 0 16 16"
       >
         <title>{props.title || "Picture of a person"}</title>
@@ -18,7 +18,9 @@ function Person(props) {
         />
       </svg>
 
-      <h3>Characters</h3>
+      <h3 style={{ display: props.hideTitle ? "none" : "inherit" }}>
+        Characters
+      </h3>
     </section>
   );
 }

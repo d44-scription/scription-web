@@ -5,8 +5,8 @@ function Gem(props) {
     <section>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={props.width || "96"}
-        height={props.height || "96"}
+        width={props.size || "96"}
+        height={props.size || "96"}
         fill="currentColor"
         className="notable-link bi bi-gem"
         viewBox="0 0 16 16"
@@ -18,7 +18,7 @@ function Gem(props) {
         />
       </svg>
 
-      <h3>Items</h3>
+      <h3 style={{ display: props.hideTitle ? "none" : "inherit" }}>Items</h3>
     </section>
   );
 }
