@@ -14,6 +14,8 @@ http.interceptors.response.use(
     if (err.response.status === 401) {
       localStorage.removeItem("id");
       window.location.href = "/";
+    } else {
+      return Promise.reject(err);
     }
   }
 );

@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import Login from "./components/authentication/login.component";
 import Register from "./components/authentication/register.component";
 import Account from "./components/account.component";
