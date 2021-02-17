@@ -119,7 +119,7 @@ describe("Edit component", () => {
     });
 
     expect(http.delete).toHaveBeenCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}.json`
+      `/notebooks/${notebookId}/notables/${notableId}`
     );
 
     // Confirm modal is hidden
@@ -163,7 +163,7 @@ describe("Edit component", () => {
       });
 
       expect(http.put).toHaveBeenCalledWith(
-        `/notebooks/${notebookId}/notables/${notableId}.json`,
+        `/notebooks/${notebookId}/notables/${notableId}`,
         {
           notable: { name: "Character 1" },
         }
@@ -185,7 +185,7 @@ describe("Edit component", () => {
       });
 
       expect(http.put).toHaveBeenCalledWith(
-        `/notebooks/${notebookId}/notables/${notableId}.json`,
+        `/notebooks/${notebookId}/notables/${notableId}`,
         {
           notable: {
             description: "Mock description referencing @[Wheaty](@1)",

@@ -46,7 +46,7 @@ describe("Notebook service", () => {
   test("index", () => {
     NotebookDataService.index();
 
-    expect(http.get).toBeCalledWith("/notebooks.json");
+    expect(http.get).toBeCalledWith("/notebooks");
 
     expect(http.get).toBeCalledTimes(1);
     expect(http.post).toBeCalledTimes(0);
@@ -57,9 +57,7 @@ describe("Notebook service", () => {
   test("get", () => {
     NotebookDataService.get(notebookId);
 
-    expect(http.get).toBeCalledWith(
-      `/notebooks/${notebookId}.json`
-    );
+    expect(http.get).toBeCalledWith(`/notebooks/${notebookId}`);
 
     expect(http.get).toBeCalledTimes(1);
     expect(http.post).toBeCalledTimes(0);
@@ -70,12 +68,9 @@ describe("Notebook service", () => {
   test("create", () => {
     NotebookDataService.create(name);
 
-    expect(http.post).toBeCalledWith(
-      `/notebooks.json`,
-      {
-        notebook: { name: name },
-      }
-    );
+    expect(http.post).toBeCalledWith(`/notebooks`, {
+      notebook: { name: name },
+    });
 
     expect(http.get).toBeCalledTimes(0);
     expect(http.post).toBeCalledTimes(1);
@@ -86,12 +81,9 @@ describe("Notebook service", () => {
   test("update", () => {
     NotebookDataService.update(notebookId, param, name);
 
-    expect(http.put).toBeCalledWith(
-      `/notebooks/${notebookId}.json`,
-      {
-        notebook: { attribute: name },
-      }
-    );
+    expect(http.put).toBeCalledWith(`/notebooks/${notebookId}`, {
+      notebook: { attribute: name },
+    });
 
     expect(http.get).toBeCalledTimes(0);
     expect(http.post).toBeCalledTimes(0);
@@ -102,9 +94,7 @@ describe("Notebook service", () => {
   test("delete", () => {
     NotebookDataService.delete(notebookId);
 
-    expect(http.delete).toBeCalledWith(
-      `/notebooks/${notebookId}.json`
-    );
+    expect(http.delete).toBeCalledWith(`/notebooks/${notebookId}`);
 
     expect(http.get).toBeCalledTimes(0);
     expect(http.post).toBeCalledTimes(0);

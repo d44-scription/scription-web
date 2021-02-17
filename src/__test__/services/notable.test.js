@@ -49,7 +49,7 @@ describe("Notable service", () => {
     test("without a query", () => {
       NotableDataService.index(notebookId, type);
 
-      expect(http.get).toBeCalledWith(`/notebooks/${notebookId}/${type}.json`);
+      expect(http.get).toBeCalledWith(`/notebooks/${notebookId}/${type}`);
 
       expect(http.get).toBeCalledTimes(1);
       expect(http.post).toBeCalledTimes(0);
@@ -61,7 +61,7 @@ describe("Notable service", () => {
       NotableDataService.index(notebookId, type, "Test Query");
 
       expect(http.get).toBeCalledWith(
-        `/notebooks/${notebookId}/${type}.json?q=Test Query`
+        `/notebooks/${notebookId}/${type}?q=Test Query`
       );
 
       expect(http.get).toBeCalledTimes(1);
@@ -75,7 +75,7 @@ describe("Notable service", () => {
     NotableDataService.notes(notebookId, notableId);
 
     expect(http.get).toBeCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}/notes.json`
+      `/notebooks/${notebookId}/notables/${notableId}/notes`
     );
 
     expect(http.get).toBeCalledTimes(1);
@@ -88,7 +88,7 @@ describe("Notable service", () => {
     NotableDataService.get(notebookId, notableId);
 
     expect(http.get).toBeCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}.json`
+      `/notebooks/${notebookId}/notables/${notableId}`
     );
 
     expect(http.get).toBeCalledTimes(1);
@@ -100,7 +100,7 @@ describe("Notable service", () => {
   test("create", () => {
     NotableDataService.create(notebookId, name, type);
 
-    expect(http.post).toBeCalledWith(`/notebooks/${notebookId}/notables.json`, {
+    expect(http.post).toBeCalledWith(`/notebooks/${notebookId}/notables`, {
       notable: { name: name, type: type },
     });
 
@@ -114,7 +114,7 @@ describe("Notable service", () => {
     NotableDataService.update(notebookId, notableId, param, name);
 
     expect(http.put).toBeCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}.json`,
+      `/notebooks/${notebookId}/notables/${notableId}`,
       {
         notable: { attribute: name },
       }
@@ -130,7 +130,7 @@ describe("Notable service", () => {
     NotableDataService.delete(notebookId, notableId);
 
     expect(http.delete).toBeCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}.json`
+      `/notebooks/${notebookId}/notables/${notableId}`
     );
 
     expect(http.get).toBeCalledTimes(0);

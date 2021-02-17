@@ -2,11 +2,11 @@ import http from "http-common";
 
 class NotebookDataService {
   index() {
-    return http.get("/notebooks.json");
+    return http.get("/notebooks");
   }
 
   get(id) {
-    return http.get(`/notebooks/${id}.json`);
+    return http.get(`/notebooks/${id}`);
   }
 
   create(value) {
@@ -14,7 +14,7 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"]["name"] = value;
 
-    return http.post(`/notebooks.json`, params);
+    return http.post(`/notebooks`, params);
   }
 
   update(id, param, value) {
@@ -22,11 +22,11 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.put(`/notebooks/${id}.json`, params);
+    return http.put(`/notebooks/${id}`, params);
   }
 
   delete(id) {
-    return http.delete(`/notebooks/${id}.json`);
+    return http.delete(`/notebooks/${id}`);
   }
 }
 

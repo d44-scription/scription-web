@@ -47,9 +47,7 @@ describe("Note service", () => {
   test("get", () => {
     NoteDataService.get(notebookId, noteId);
 
-    expect(http.get).toBeCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`
-    );
+    expect(http.get).toBeCalledWith(`/notebooks/${notebookId}/notes/${noteId}`);
 
     expect(http.get).toBeCalledTimes(1);
     expect(http.post).toBeCalledTimes(0);
@@ -60,7 +58,7 @@ describe("Note service", () => {
   test("create", () => {
     NoteDataService.create(notebookId, content);
 
-    expect(http.post).toBeCalledWith(`/notebooks/${notebookId}/notes.json`, {
+    expect(http.post).toBeCalledWith(`/notebooks/${notebookId}/notes`, {
       note: { content: content },
     });
 
@@ -74,7 +72,7 @@ describe("Note service", () => {
     NoteDataService.update(notebookId, noteId, param, content);
 
     expect(http.put).toBeCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`,
+      `/notebooks/${notebookId}/notes/${noteId}`,
       {
         note: { attribute: content },
       }
@@ -90,7 +88,7 @@ describe("Note service", () => {
     NoteDataService.delete(notebookId, noteId);
 
     expect(http.delete).toBeCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`
+      `/notebooks/${notebookId}/notes/${noteId}`
     );
 
     expect(http.get).toBeCalledTimes(0);

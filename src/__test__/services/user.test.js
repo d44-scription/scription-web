@@ -32,9 +32,7 @@ describe("User service", () => {
   test("get", () => {
     UserDataService.get(userId);
 
-    expect(http.get).toBeCalledWith(
-      `/users/${userId}`
-    );
+    expect(http.get).toBeCalledWith(`/users/${userId}`);
 
     expect(http.get).toBeCalledTimes(1);
     expect(http.put).toBeCalledTimes(0);
@@ -43,12 +41,9 @@ describe("User service", () => {
   test("update", () => {
     UserDataService.update(userId, param, name);
 
-    expect(http.put).toBeCalledWith(
-      `/users/${userId}`,
-      {
-        user: { attribute: name },
-      }
-    );
+    expect(http.put).toBeCalledWith(`/users/${userId}`, {
+      user: { attribute: name },
+    });
 
     expect(http.get).toBeCalledTimes(0);
     expect(http.put).toBeCalledTimes(1);
