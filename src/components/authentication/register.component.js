@@ -23,7 +23,7 @@ function Register(props) {
           history.push("/");
         })
         .catch((e) => {
-          setError(JSON.stringify(e.response.data.errors))
+          setError(e.response.data.errors)
         });
     },
     [displayName, email, password, passwordConfirmation, history]
