@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 import InlineEditor from "./editors/inline_editor.component";
 import UserDataService from "../services/user.service";
 
@@ -41,6 +43,12 @@ function Account(props) {
         placeholder="Please enter an email"
         fontSize="2rem"
       />
+
+      <Link to="/notebooks" tabIndex="-1">
+        <Button variant="secondary" className="mt-1 w-100">
+          Return
+        </Button>
+      </Link>
     </div>
   );
 }
