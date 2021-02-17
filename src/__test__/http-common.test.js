@@ -18,11 +18,13 @@ describe("http-common module", () => {
     localStorage.setItem("id", 1);
     expect(localStorage.getItem("id")).toBe("1");
 
-    http.interceptors.response.handlers[0].rejected({
-      response: {
-        status: 404,
-      },
-    });
+    http.interceptors.response.handlers[0]
+      .rejected({
+        response: {
+          status: 404,
+        },
+      })
+      .catch(() => {});
 
     expect(localStorage.getItem("id")).toBe("1");
   });
