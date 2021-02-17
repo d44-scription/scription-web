@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Mentionable from "../../components/editors/mentionable.component";
-import http from "../../http-common";
+import Mentionable from "components/editors/mentionable.component";
+import http from "http-common";
 
 describe("Mentionable component", () => {
   const successMessage = "Success Message";

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Gem from "../../components/icons/gem.component";
+import Gem from "components/icons/gem.component";
 
 describe("Gem icon", () => {
   test("default rendering", () => {

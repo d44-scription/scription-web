@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import New from "../../components/notables/new.component";
+import New from "components/notables/new.component";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("New component", () => {

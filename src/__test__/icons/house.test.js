@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import House from "../../components/icons/house.component";
+import House from "components/icons/house.component";
 
 describe("House icon", () => {
   test("default rendering", () => {

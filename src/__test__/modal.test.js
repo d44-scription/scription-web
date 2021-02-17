@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ConfirmModal from "../components/modal.component";
+import ConfirmModal from "components/modal.component";
 import userEvent from "@testing-library/user-event";
 
 describe("Modal component", () => {

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import Login from "../../components/authentication/login.component";
+import Login from "components/authentication/login.component";
 import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Login component", () => {

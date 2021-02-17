@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import Navigation from "../components/navigation.component";
+import Navigation from "components/navigation.component";
 import { BrowserRouter } from "react-router-dom";
-import http from "../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Navigation component", () => {
