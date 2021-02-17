@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import Search from "../search.component";
-import List from "../list.component";
-import NotableDataService from "../../services/notable.service";
+import Search from "components/search.component";
+import List from "components/list.component";
+import NotableDataService from "services/notable.service";
 import Details from "./details.component";
 import Button from "react-bootstrap/Button";
-import Helper from "../../helpers/notable_helper";
+import Helper from "helpers/notable_helper";
 
 function Index(props) {
   const { notebookId } = useParams();
