@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import AuthenticationDataService from "../../services/authentication.service";
+import AuthenticationDataService from "services/authentication.service";
 
 function PublicRoute({ component: Component, ...rest }) {
   return (

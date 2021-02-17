@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import AuthenticationDataService from "../../services/authentication.service";
+import AuthenticationDataService from "services/authentication.service";
 import { useHistory, Link } from "react-router-dom";
 
 function Register(props) {
