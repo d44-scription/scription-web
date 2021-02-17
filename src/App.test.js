@@ -10,6 +10,6 @@ describe("App component", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Scription")).toBeInTheDocument();
+    expect(screen.getAllByText("Scription")[0]).toBeVisible();
   });
 });
