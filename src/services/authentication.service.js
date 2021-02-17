@@ -8,7 +8,7 @@ class AuthenticationDataService {
     params["user"]["password"] = password;
 
     return http
-      .post("/users/login", params, { withCredentials: true })
+      .post("/users/login", params)
       .then((response) => {
         localStorage.setItem("id", response.data["id"]);
       });
@@ -16,7 +16,7 @@ class AuthenticationDataService {
 
   logout() {
     localStorage.removeItem("id");
-    return http.delete("/users/logout", { withCredentials: true });
+    return http.delete("/users/logout");
   }
 
   loggedIn() {

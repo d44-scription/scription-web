@@ -2,11 +2,11 @@ import http from "../http-common";
 
 class NotebookDataService {
   index() {
-    return http.get("/notebooks.json", { withCredentials: true });
+    return http.get("/notebooks.json");
   }
 
   get(id) {
-    return http.get(`/notebooks/${id}.json`, { withCredentials: true });
+    return http.get(`/notebooks/${id}.json`);
   }
 
   create(param, value) {
@@ -14,7 +14,7 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.post(`/notebooks.json`, { withCredentials: true });
+    return http.post(`/notebooks.json`, params);
   }
 
   update(id, param, value) {
@@ -22,11 +22,11 @@ class NotebookDataService {
     params["notebook"] = {};
     params["notebook"][param] = value;
 
-    return http.put(`/notebooks/${id}.json`, { withCredentials: true });
+    return http.put(`/notebooks/${id}.json`, params);
   }
 
   delete(id) {
-    return http.delete(`/notebooks/${id}.json`, { withCredentials: true });
+    return http.delete(`/notebooks/${id}.json`);
   }
 }
 

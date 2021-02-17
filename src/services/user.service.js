@@ -2,7 +2,7 @@ import http from "../http-common";
 
 class UserDataService {
   get(id) {
-    return http.get(`/users/${id}`, { withCredentials: true });
+    return http.get(`/users/${id}`);
   }
 
   update(id, param, value) {
@@ -10,7 +10,7 @@ class UserDataService {
     params["user"] = {};
     params["user"][param] = value;
 
-    return http.put(`/users/${id}`, params, { withCredentials: true });
+    return http.put(`/users/${id}`, params);
   }
 }
 
