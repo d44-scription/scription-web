@@ -85,8 +85,8 @@ describe("Register component", () => {
       const passwordField = screen.getByPlaceholderText("Password");
       const confirmField = screen.getByPlaceholderText("Confirm Password");
 
-      const registerButton = screen.getByText("Register")
-      const cancelButton = screen.getByText("Cancel")
+      const registerButton = screen.getByText("Register");
+      const cancelButton = screen.getByText("Cancel");
 
       userEvent.tab();
       expect(displayField).toHaveFocus();

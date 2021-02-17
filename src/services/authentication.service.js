@@ -7,11 +7,9 @@ class AuthenticationDataService {
     params["user"]["email"] = email;
     params["user"]["password"] = password;
 
-    return http
-      .post("/users/login", params)
-      .then((response) => {
-        localStorage.setItem("id", response.data["id"]);
-      });
+    return http.post("/users/login", params).then((response) => {
+      localStorage.setItem("id", response.data["id"]);
+    });
   }
 
   logout() {

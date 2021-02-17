@@ -11,12 +11,11 @@ function Account(props) {
   const id = localStorage.getItem("id");
 
   useEffect(() => {
-    UserDataService.get(id)
-    .then((response) => {
-      setEmail(response.data.email)
-      setDisplayName(response.data.display_name)
-    })
-  }, [id])
+    UserDataService.get(id).then((response) => {
+      setEmail(response.data.email);
+      setDisplayName(response.data.display_name);
+    });
+  }, [id]);
 
   const saveDisplayName = () => {
     return UserDataService.update(id, "display_name", displayName);

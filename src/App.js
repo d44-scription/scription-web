@@ -8,8 +8,8 @@ import Notebook from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
 import Notes from "./components/notables/notes/index.component";
 import Navigation from "./components/navigation.component";
-import SecureRoute from "./components/authentication/secure-route.component"
-import PublicRoute from "./components/authentication/public-route.component"
+import SecureRoute from "./components/authentication/secure-route.component";
+import PublicRoute from "./components/authentication/public-route.component";
 
 const notableTypes = ["characters", "locations", "items"];
 

@@ -18,12 +18,17 @@ function Register(props) {
     (e) => {
       e.preventDefault();
 
-      AuthenticationDataService.register(displayName, email, password, passwordConfirmation)
+      AuthenticationDataService.register(
+        displayName,
+        email,
+        password,
+        passwordConfirmation
+      )
         .then(() => {
           history.push("/");
         })
         .catch((e) => {
-          setError(e.response.data.errors)
+          setError(e.response.data.errors);
         });
     },
     [displayName, email, password, passwordConfirmation, history]
