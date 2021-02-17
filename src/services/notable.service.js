@@ -11,9 +11,9 @@ class NotableDataService {
     return http.get(url);
   }
 
-  notes(notebookId, notableId) {
+  notes(notebookId, id) {
     return http.get(
-      `/notebooks/${notebookId}/notables/${notableId}/notes.json`
+      `/notebooks/${notebookId}/notables/${id}/notes.json`
     );
   }
 

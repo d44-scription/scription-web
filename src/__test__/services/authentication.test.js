@@ -1,7 +1,7 @@
 import http from "http-common";
 import AuthenticationDataService from "services/authentication.service";
 
-describe("Account component", () => {
+describe("Authentication service", () => {
   const successfulResponse = {
     code: 200,
   };
