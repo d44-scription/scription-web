@@ -9,10 +9,10 @@ class NotebookDataService {
     return http.get(`/notebooks/${id}.json`);
   }
 
-  create(param, value) {
+  create(value) {
     let params = {};
     params["notebook"] = {};
-    params["notebook"][param] = value;
+    params["notebook"]["name"] = value;
 
     return http.post(`/notebooks.json`, params);
   }

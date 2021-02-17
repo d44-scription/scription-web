@@ -8,7 +8,7 @@ function New(props) {
   const [name, setName] = useState("");
 
   const saveNotebook = () => {
-    return NotebookDataService.create("name", name);
+    return NotebookDataService.create(name);
   };
   // OnCreateAction - Set state in parent props to reflect new addition
   const updatePage = (response) => {
