@@ -9,6 +9,7 @@ import Notables from "./components/notables/index.component";
 import Notes from "./components/notables/notes/index.component";
 import Navigation from "./components/navigation.component";
 import SecureRoute from "./components/authentication/secure-route.component"
+import PublicRoute from "./components/authentication/public-route.component"
 
 const notableTypes = ["characters", "locations", "items"];
 
@@ -19,8 +20,8 @@ function App() {
 
       <div className="container mt-3">
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/register" component={Register} />
+          <PublicRoute exact path="/" component={Login} />
+          <PublicRoute exact path="/register" component={Register} />
           <SecureRoute exact path="/account" component={Account} />
           <SecureRoute exact path="/notebooks" component={Notebooks} />
 
