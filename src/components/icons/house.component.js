@@ -22,7 +22,9 @@ function House(props) {
         />
       </svg>
 
-      <h3 className={props.hideTitle ? "d-none" : ""}>Locations</h3>
+      <h3 style={{ display: props.hideTitle ? "none" : "inherit" }}>
+        Locations
+      </h3>
     </section>
   );
 }
