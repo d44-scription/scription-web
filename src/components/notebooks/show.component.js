@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import NotebookDataService from "../../services/notebook.service";
+import NotebookDataService from "services/notebook.service";
 import Button from "react-bootstrap/Button";
-import NoteDataService from "../../services/note.service";
-import Person from "../icons/person.component";
-import House from "../icons/house.component";
-import Gem from "../icons/gem.component";
-import "../../scss/show.scss";
-import Mentionable from "../editors/mentionable.component";
+import NoteDataService from "services/note.service";
+import Person from "components/icons/person.component";
+import House from "components/icons/house.component";
+import Gem from "components/icons/gem.component";
+import "scss/show.scss";
+import Mentionable from "components/editors/mentionable.component";
 
 function Show(props) {
   // ID of notebook to show, taken from params

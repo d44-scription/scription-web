@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import InlineEditor from "../editors/inline_editor.component";
+import InlineEditor from "components/editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
-import NotebookDataService from "../../services/notebook.service";
+import NotebookDataService from "services/notebook.service";
 
 function New(props) {
   // Define callbacks for GETting and SETting the values used by component
