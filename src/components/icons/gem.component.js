@@ -18,7 +18,7 @@ function Gem(props) {
         />
       </svg>
 
-      <h3 className={props.hideTitle ? "d-none" : ""}>Items</h3>
+      <h3 style={{ display: props.hideTitle ? "none" : "inherit" }}>Items</h3>
     </section>
   );
 }
