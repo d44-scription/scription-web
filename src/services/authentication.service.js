@@ -1,4 +1,4 @@
-import http from "../http-common";
+import http from "http-common";
 class AuthenticationDataService {
   login(email, password) {
     let params = {};
