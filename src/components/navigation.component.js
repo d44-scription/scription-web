@@ -26,7 +26,7 @@ function Navigation(props) {
             }}
           >
             <Person
-              title="Account settings"
+              title="Account Settings"
               size={36}
               class="text-dark"
               hideTitle
