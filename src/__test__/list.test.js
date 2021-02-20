@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import List from "../components/list.component";
+import List from "components/list.component";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 

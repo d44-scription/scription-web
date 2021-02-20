@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import New from "../../components/notables/new.component";
+import New from "components/notables/new.component";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("New component", () => {
@@ -65,7 +65,7 @@ describe("New component", () => {
     expect(setNewRecordTestValue).toBe(true);
     expect(retrieveNotablesTestValue).toBe(true);
 
-    expect(http.post).toBeCalledWith("/notebooks/1/notables.json", {
+    expect(http.post).toBeCalledWith("/notebooks/1/notables", {
       notable: { name: "Notable", type: "Character" },
     });
   });

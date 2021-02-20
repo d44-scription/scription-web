@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import New from "../../components/notebooks/new.component";
+import New from "components/notebooks/new.component";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("New component", () => {
@@ -63,7 +63,7 @@ describe("New component", () => {
     expect(setNewRecordTestValue).toBe(true);
     expect(retrieveNotebooksTestValue).toBe(true);
 
-    expect(http.post).toBeCalledWith("/notebooks.json", {
+    expect(http.post).toBeCalledWith("/notebooks", {
       notebook: { name: "Notebook" },
     });
   });

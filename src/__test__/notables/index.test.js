@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import { MemoryRouter, Route } from "react-router-dom";
-import Index from "../../components/notables/index.component";
+import Index from "components/notables/index.component";
 import userEvent from "@testing-library/user-event";
 
 describe("Index component", () => {
@@ -90,7 +90,7 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
     });
 
-    test("navigating between new, edit, and rest pages", async() => {
+    test("navigating between new, edit, and rest pages", async () => {
       const addButton = screen.getByText("Add Character");
 
       // Confirm new fields are not shown

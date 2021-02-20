@@ -1,16 +1,24 @@
 import { render, screen } from "@testing-library/react";
-import Edit from "../../components/notebooks/edit.component";
+import Edit from "components/notebooks/edit.component";
 import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import http from "../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Edit component", () => {
+  const successMessage = "Success message";
+  const id = 1;
+
   const fakeNotebook = {
     name: "Notebook 1",
-    id: 1,
+    id: id,
     summary: "Mock summary",
     order_index: 0,
+  };
+
+  const successfulResponse = {
+    code: 200,
+    success_message: successMessage,
   };
 
   beforeEach(async () => {
@@ -20,10 +28,22 @@ describe("Edit component", () => {
       })
     );
 
+    jest.spyOn(http, "put").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
+    jest.spyOn(http, "delete").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
     await act(async () => {
       render(
         <BrowserRouter>
-          <Edit id="1" />
+          <Edit id="1" retrieveNotebooks={() => {}} />
         </BrowserRouter>
       );
     });
@@ -33,27 +53,70 @@ describe("Edit component", () => {
     http.get.mockRestore();
   });
 
-  test("rendering information for a given notebook", async () => {
+  test("rendering information for a given notable", async () => {
     // Confirm data is retrieved and displayed correctly
     expect(screen.getByText("Notebook 1")).toBeInTheDocument();
     expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
 
-    expect(screen.getByText("Open Notebook")).toBeInTheDocument();
-    expect(screen.getByText("Delete Notebook")).toBeInTheDocument();
-
-    // Click delete button for first item
+    // Click delete button
     await act(async () => {
       userEvent.click(screen.getByText("Delete Notebook"));
     });
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete notebook?")).toBeInTheDocument();
+    expect(screen.getByText("Delete Notebook?")).toBeVisible();
 
     expect(
       screen.getByText(
         "This will delete Notebook 1 and all associated notes. Are you sure you wish to continue?"
       )
-    ).toBeInTheDocument();
+    ).toBeVisible();
+
+    // Cancel delete
+    await act(async () => {
+      userEvent.click(screen.getByText("Cancel"));
+    });
+
+    expect(http.delete).not.toHaveBeenCalled();
+
+    // Confirm modal is hidden
+    expect(screen.queryByText("Delete Notebook?")).toBeNull();
+
+    expect(
+      screen.queryByText(
+        "This will delete Notebook 1 and all associated notes. Are you sure you wish to continue?"
+      )
+    ).toBeNull();
+
+    // Click delete button
+    await act(async () => {
+      userEvent.click(screen.getByText("Delete Notebook"));
+    });
+
+    // Confirm modal is shown
+    expect(screen.getByText("Delete Notebook?")).toBeVisible();
+
+    expect(
+      screen.getByText(
+        "This will delete Notebook 1 and all associated notes. Are you sure you wish to continue?"
+      )
+    ).toBeVisible();
+
+    // Confirm delete
+    await act(async () => {
+      userEvent.click(screen.getByText("OK"));
+    });
+
+    expect(http.delete).toHaveBeenCalledWith(`/notebooks/${id}`);
+
+    // Confirm modal is hidden
+    expect(screen.queryByText("Delete Notebook?")).toBeNull();
+
+    expect(
+      screen.queryByText(
+        "This will delete Notebook 1 and all associated notes. Are you sure you wish to continue?"
+      )
+    ).toBeNull();
   });
 
   test("responding to tab", () => {
@@ -67,12 +130,52 @@ describe("Edit component", () => {
     userEvent.type(deleteButton, "{space}");
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete notebook?")).toBeInTheDocument();
+    expect(screen.getByText("Delete Notebook?")).toBeInTheDocument();
 
     expect(
       screen.getByText(
         "This will delete Notebook 1 and all associated notes. Are you sure you wish to continue?"
       )
     ).toBeInTheDocument();
+  });
+
+  describe("Rendering success messages correctly", () => {
+    test("when editing title", async () => {
+      const textField = screen.getByText("Notebook 1");
+
+      // Submit message
+      await act(async () => {
+        userEvent.click(textField);
+        userEvent.click(screen.getAllByText("enter")[0]);
+      });
+
+      expect(http.put).toHaveBeenCalledWith(`/notebooks/${id}`, {
+        notebook: { name: "Notebook 1" },
+      });
+
+      // Confirm success message shows
+      expect(
+        screen.getByText("Changes have been saved successfully")
+      ).toBeVisible();
+    });
+
+    test("when editing summary", async () => {
+      const textField = screen.getAllByText("Mock summary")[1];
+
+      // Submit message
+      await act(async () => {
+        userEvent.click(textField);
+        userEvent.click(screen.getAllByText("enter")[1]);
+      });
+
+      expect(http.put).toHaveBeenCalledWith(`/notebooks/${id}`, {
+        notebook: { summary: "Mock summary" },
+      });
+
+      // Confirm success message shows
+      expect(
+        screen.getByText("Changes have been saved successfully")
+      ).toBeVisible();
+    });
   });
 });

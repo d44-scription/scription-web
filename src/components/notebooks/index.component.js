@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import NotebookDataService from "../../services/notebook.service";
+import NotebookDataService from "services/notebook.service";
 import Details from "./details.component";
-import List from "../list.component";
-import Search from "../search.component";
+import List from "components/list.component";
+import Search from "components/search.component";
 import Button from "react-bootstrap/Button";
 
 function Index(props) {
@@ -48,13 +48,13 @@ function Index(props) {
   const showNew = () => {
     setNewRecord(true);
     setCurrentId(null);
-  }
+  };
 
   // Set current ID & reset new page view
   const showItem = (id) => {
-    setNewRecord(false)
-    setCurrentId(id)
-  }
+    setNewRecord(false);
+    setCurrentId(id);
+  };
 
   // Fetch list of notebooks on load
   useEffect(() => {
@@ -68,10 +68,7 @@ function Index(props) {
 
         {renderSearch()}
 
-        <Button
-          onClick={showNew}
-          className="w-100 mb-3"
-        >
+        <Button onClick={showNew} className="w-100 mb-3">
           Add Notebook
         </Button>
 

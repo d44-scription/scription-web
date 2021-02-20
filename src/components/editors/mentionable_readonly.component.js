@@ -1,15 +1,11 @@
 import React from "react";
 import { MentionsInput, Mention } from "react-mentions";
-import "../../scss/mentionable.scss";
+import "scss/mentionable.scss";
 
 function MentionableReadonly(props) {
   return (
     <div>
-      <MentionsInput
-        value={props.value}
-        className="mentions-readonly"
-        readOnly
-      >
+      <MentionsInput value={props.value} className="mentions-readonly" readOnly>
         <Mention
           trigger="@"
           markup="@[__display__](@__id__)"

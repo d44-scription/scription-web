@@ -1,6 +1,7 @@
 @import "./_variables.scss";
 
-li:focus, li:focus-within {
+li:focus,
+li:focus-within {
   @include tabbable;
 
   section {

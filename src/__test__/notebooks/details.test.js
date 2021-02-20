@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import Details from "../../components/notebooks/details.component";
+import Details from "components/notebooks/details.component";
 import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
-import http from "../../http-common";
+import http from "http-common";
 
 describe("Details component", () => {
   let newRecord = false;
@@ -58,7 +58,7 @@ describe("Details component", () => {
     confirmRestState();
 
     // Update "new Record" prop
-    setNewRecord(true)
+    setNewRecord(true);
 
     // Simulate clicking "add new"
     rerender(
@@ -74,7 +74,7 @@ describe("Details component", () => {
     userEvent.click(screen.getByText("Cancel"));
 
     // Confirm we would return to rest state
-    expect(newRecord).toBe(false)
+    expect(newRecord).toBe(false);
   });
 
   describe("When given an ID", () => {

@@ -1,15 +1,16 @@
 import React, { useCallback, useState, useEffect } from "react";
-import NotableDataService from "../../services/notable.service";
-import InlineEditor from "../editors/inline_editor.component";
+import NotableDataService from "services/notable.service";
+import InlineEditor from "components/editors/inline_editor.component";
+import Mentionable from "components/editors/mentionable.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "../modal.component";
-import Helper from "../../helpers/notable_helper";
+import ConfirmModal from "components/modal.component";
+import Helper from "helpers/notable_helper";
 import { Link } from "react-router-dom";
 
 function Edit(props) {
   // State management for name & description fields for target notable
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -21,7 +22,7 @@ function Edit(props) {
           const notable = response.data;
 
           setName(notable.name);
-          setDescription(notable.description);
+          setDescription(notable.description || "");
         })
         .catch((e) => {
           console.log(e);
@@ -71,13 +72,12 @@ function Edit(props) {
         fontSize="2rem"
       />
 
-      <InlineEditor
+      <Mentionable
         value={description}
-        type="textarea"
         setValue={setDescription}
+        notebookId={props.notebookId}
         action={saveDescription}
         placeholder="No description saved"
-        helpText="Use shift+enter to add a new line"
       />
 
       <Link

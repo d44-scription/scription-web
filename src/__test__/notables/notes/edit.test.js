@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import Edit from "../../../components/notables/notes/edit.component";
+import Edit from "components/notables/notes/edit.component";
 import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import http from "../../../http-common";
+import http from "http-common";
 import userEvent from "@testing-library/user-event";
 
 describe("Edit component", () => {
@@ -55,7 +55,7 @@ describe("Edit component", () => {
     http.get.mockRestore();
   });
 
-  test("rendering information for a given notable", async () => {
+  test("rendering information for a given note", async () => {
     // Confirm data is retrieved and displayed correctly
     expect(screen.getByText("Note that mentions Wheaty.")).toBeVisible();
     expect(screen.getByText(helpText)).toBeVisible();
@@ -111,7 +111,7 @@ describe("Edit component", () => {
     });
 
     expect(http.delete).toHaveBeenCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`
+      `/notebooks/${notebookId}/notes/${noteId}`
     );
 
     // Confirm modal is hidden
@@ -153,7 +153,7 @@ describe("Edit component", () => {
     });
 
     expect(http.put).toHaveBeenCalledWith(
-      `/notebooks/${notebookId}/notes/${noteId}.json`,
+      `/notebooks/${notebookId}/notes/${noteId}`,
       {
         note: { content: "Note that mentions @[Wheaty](@1)." },
       }
@@ -161,7 +161,7 @@ describe("Edit component", () => {
 
     // Confirm success message shows
     expect(
-      screen.getByText(`Note has been updated. ${successMessage}`)
+      screen.getByText(`Successfully saved. ${successMessage}`)
     ).toBeVisible();
   });
 });

@@ -1,8 +1,8 @@
-import http from "../http-common";
+import http from "http-common";
 
 class NotableDataService {
   index(notebookId, notableType, query) {
-    let url = `/notebooks/${notebookId}/${notableType}.json`;
+    let url = `/notebooks/${notebookId}/${notableType}`;
 
     if (query !== undefined) {
       url = `${url}?q=${query}`;
@@ -11,12 +11,12 @@ class NotableDataService {
     return http.get(url);
   }
 
-  notes(notebookId, notableId) {
-    return http.get(`/notebooks/${notebookId}/notables/${notableId}/notes.json`);
+  notes(notebookId, id) {
+    return http.get(`/notebooks/${notebookId}/notables/${id}/notes`);
   }
 
   get(notebookId, id) {
-    return http.get(`/notebooks/${notebookId}/notables/${id}.json`);
+    return http.get(`/notebooks/${notebookId}/notables/${id}`);
   }
 
   create(notebookId, name, type) {
@@ -25,7 +25,7 @@ class NotableDataService {
     params["notable"]["name"] = name;
     params["notable"]["type"] = type;
 
-    return http.post(`/notebooks/${notebookId}/notables.json`, params);
+    return http.post(`/notebooks/${notebookId}/notables`, params);
   }
 
   update(notebookId, id, param, value) {
@@ -33,11 +33,11 @@ class NotableDataService {
     params["notable"] = {};
     params["notable"][param] = value;
 
-    return http.put(`/notebooks/${notebookId}/notables/${id}.json`, params);
+    return http.put(`/notebooks/${notebookId}/notables/${id}`, params);
   }
 
   delete(notebookId, id) {
-    return http.delete(`/notebooks/${notebookId}/notables/${id}.json`);
+    return http.delete(`/notebooks/${notebookId}/notables/${id}`);
   }
 }
 

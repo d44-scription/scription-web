@@ -1,15 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
-import NoteDataService from "../../../services/note.service";
-import Mentionable from "../../editors/mentionable.component";
+import NoteDataService from "services/note.service";
+import Mentionable from "components/editors/mentionable.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "../../modal.component";
+import ConfirmModal from "components/modal.component";
 
 function Edit(props) {
   const [content, setContent] = useState("");
-
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Callback to update the displayed note
@@ -30,16 +26,12 @@ function Edit(props) {
 
   // Send PUT request
   const submitNote = useCallback(() => {
-    NoteDataService.update(props.notebookId, props.id, "content", content)
-      .then((response) => {
-        setErrorMessage(null);
-        setSuccessMessage(
-          `Note has been updated. ${response.data.success_message}`
-        );
-      })
-      .catch((e) => {
-        setErrorMessage(e.response.data.join(", "));
-      });
+    return NoteDataService.update(
+      props.notebookId,
+      props.id,
+      "content",
+      content
+    );
   }, [content, props.id, props.notebookId]);
 
   // Send DELETE request
@@ -54,20 +46,13 @@ function Edit(props) {
       });
   }, [props, setIsModalVisible]);
 
-  // When content is changed, reset success message
-  useEffect(() => {
-    setSuccessMessage(null);
-  }, [content]);
-
   return (
-    <div className="col-md-6">
+    <div>
       <Mentionable
         value={content}
         setValue={setContent}
         notebookId={props.notebookId}
-        onSubmit={submitNote}
-        successMessage={successMessage}
-        errorMessage={errorMessage}
+        action={submitNote}
       />
 
       <Button

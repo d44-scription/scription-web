@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import NotebookDataService from "../../services/notebook.service";
+import NotebookDataService from "services/notebook.service";
 import Button from "react-bootstrap/Button";
-import NoteDataService from "../../services/note.service";
-import Person from "../icons/person.component";
-import House from "../icons/house.component";
-import Gem from "../icons/gem.component";
-import "../../scss/show.scss";
-import Mentionable from "../editors/mentionable.component";
+import NoteDataService from "services/note.service";
+import Person from "components/icons/person.component";
+import House from "components/icons/house.component";
+import Gem from "components/icons/gem.component";
+import "scss/show.scss";
+import Mentionable from "components/editors/mentionable.component";
 
 function Show(props) {
   // ID of notebook to show, taken from params
@@ -16,9 +16,6 @@ function Show(props) {
   // Define callbacks for GETting and SETting the component state
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
 
   const history = useHistory();
 
@@ -38,28 +35,9 @@ function Show(props) {
     retrieveNotebook();
   }, [retrieveNotebook]);
 
-  // When content is changed away from null state, reset error message
-  useEffect(() => {
-    if (content !== "") {
-      setSuccessMessage(null);
-    }
-  }, [content]);
-
   // Send POST request
-  const submitNote = (response) => {
-    NoteDataService.create(content, id)
-      .then((response) => {
-        // Empty text box when note added and display success message
-        setContent("");
-
-        setErrorMessage(null);
-        setSuccessMessage(
-          `Your note has been added. ${response.data.success_message}`
-        );
-      })
-      .catch((e) => {
-        setErrorMessage(e.response.data.join(", "));
-      });
+  const submitNote = () => {
+    return NoteDataService.create(id, content);
   };
 
   // Programmatically handle navigation to support accessible buttons
@@ -76,11 +54,10 @@ function Show(props) {
           value={content}
           setValue={setContent}
           notebookId={id}
-          onSubmit={submitNote}
-          successMessage={successMessage}
-          errorMessage={errorMessage}
+          action={submitNote}
           placeholder="Click here to add a note"
           clearOnCancel
+          clearOnSubmit
         />
       </div>
 
