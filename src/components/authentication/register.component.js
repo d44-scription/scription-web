@@ -28,7 +28,7 @@ function Register(props) {
           history.push("/");
         })
         .catch((e) => {
-          setError(e.response.data.errors);
+          setError(e.response.data.join(". "));
         });
     },
     [displayName, email, password, passwordConfirmation, history]

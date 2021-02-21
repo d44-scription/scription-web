@@ -11,9 +11,7 @@ describe("Register component", () => {
   };
 
   const unsuccessfulResponse = {
-    data: {
-      errors: ["Error message"],
-    },
+    data: ["Error message 1", "Error message 2"],
   };
 
   const confirmRestState = () => {
@@ -140,7 +138,7 @@ describe("Register component", () => {
         },
       });
 
-      expect(screen.getByText("Error message")).toBeVisible();
+      expect(screen.getByText("Error message 1. Error message 2")).toBeVisible();
     });
   });
 });
