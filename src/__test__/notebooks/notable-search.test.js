@@ -46,7 +46,7 @@ describe("Notable search component", () => {
     expect(screen.queryByText("Notable 3")).toBeNull();
 
     await act(async () => {
-      userEvent.type(textField, "X")
+      userEvent.type(textField, "X");
     });
 
     expect(http.get).toBeCalledWith(`/notebooks/${notebookId}/notables?q=X`);
