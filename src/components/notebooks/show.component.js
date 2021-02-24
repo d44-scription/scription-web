@@ -42,15 +42,21 @@ function Show(props) {
     return NoteDataService.create(id, content);
   };
 
+  // Send PUT request
+  const updatePreview = () => {
+    return NoteDataService.update(id, previewId, "content", preview);
+  };
+
   // Programmatically handle navigation to support accessible buttons
   const viewNotables = (type) => {
     history.push(`/notebooks/${id}/${type}`);
   };
 
+  // After note is added, update state to show it in the preview
   const onSubmitAction = (response) => {
-    setPreviewId(response.data.id)
-    setPreview(response.data.content)
-  }
+    setPreviewId(response.data.id);
+    setPreview(response.data.content);
+  };
 
   return (
     <div className="list row">
@@ -68,13 +74,14 @@ function Show(props) {
           clearOnSubmit
         />
 
-        <section className={`mt-5 ${preview ? "" : "d-none"}`}>
+        <section className={`mt-5 ${previewId ? "" : "d-none"}`}>
           <h2>Recently Added</h2>
 
           <Mentionable
             value={preview}
             setValue={setPreview}
             notebookId={id}
+            action={updatePreview}
             placeholder="No content to show"
           />
         </section>
