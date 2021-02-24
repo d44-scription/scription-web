@@ -74,8 +74,11 @@ function Show(props) {
           clearOnSubmit
         />
 
-        <section className={`mt-5 ${previewId ? "" : "d-none"}`}>
-          <h2>Recently Added</h2>
+        <section
+          className="mt-5"
+          style={{ display: previewId ? "inherit" : "none" }}
+        >
+          <h3>Recently Added</h3>
 
           <Mentionable
             value={preview}

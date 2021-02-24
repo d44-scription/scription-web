@@ -18,6 +18,7 @@ describe("Show component", () => {
   const successfulResponse = {
     code: 200,
     success_message: successMessage,
+    id: id,
   };
 
   beforeEach(async () => {
@@ -28,6 +29,12 @@ describe("Show component", () => {
     );
 
     jest.spyOn(http, "post").mockImplementation(() =>
+      Promise.resolve({
+        data: successfulResponse,
+      })
+    );
+
+    jest.spyOn(http, "put").mockImplementation(() =>
       Promise.resolve({
         data: successfulResponse,
       })
@@ -47,15 +54,16 @@ describe("Show component", () => {
   afterEach(() => {
     http.get.mockRestore();
     http.post.mockRestore();
+    http.put.mockRestore();
   });
 
   const confirmRestState = () => {
     expect(screen.getByText("Notebook 1")).toBeVisible();
     expect(screen.getByPlaceholderText(placeholder)).toBeVisible();
     expect(
-      screen.getByText(
+      screen.getAllByText(
         "Use @ to reference a character, : to reference an item, and # to reference a location"
-      )
+      )[0]
     ).toBeVisible();
 
     expect(
@@ -73,28 +81,36 @@ describe("Show component", () => {
     // Confirm we start at rest state
     confirmRestState();
 
+    const addNoteField = screen.getAllByRole("textbox")[0];
+
     // Add a new note
-    userEvent.click(screen.getByPlaceholderText(placeholder));
     await act(async () => {
-      userEvent.type(screen.getByRole("textbox"), "{enter}");
+      userEvent.type(addNoteField, "{enter}");
     });
 
     // Confirm we have returned to rest state with a success message
     expect(
       screen.getByText(`Successfully saved. ${successMessage}`)
     ).toBeVisible();
+
+    expect(http.post).toBeCalledTimes(1);
+    expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
+      note: { content: "" },
+    });
+
     confirmRestState();
 
     // Type another note
-    userEvent.click(screen.getByPlaceholderText(placeholder));
     await act(async () => {
-      userEvent.type(screen.getByRole("textbox"), "A");
+      userEvent.type(addNoteField, "A");
     });
 
     // Confirm success message disappears
     expect(
       screen.queryByText(`Successfully saved. ${successMessage}`)
     ).toBeNull();
+
+    expect(http.post).toBeCalledTimes(1);
   });
 
   test("notable links respond to tab correctly", () => {
@@ -113,18 +129,53 @@ describe("Show component", () => {
       .getByTitle("View items for Notebook 1")
       .closest("button");
 
-    // Skip note editor, this is tested at src/__test__/editors/inline_editor.test.js
-    for (let i = 0; i < 4; i++) {
+    // Skip note editors, this is tested at src/__test__/editors/inline_editor.test.js
+    for (let i = 0; i < 7; i++) {
       userEvent.tab();
     }
 
     // Confirm SVG buttons are focusable
     expect(charButton).toHaveFocus();
+    userEvent.type(charButton, "{enter}", { skipClick: true });
 
     userEvent.tab();
     expect(locationButton).toHaveFocus();
+    userEvent.type(locationButton, "{enter}", { skipClick: true });
 
     userEvent.tab();
     expect(itemButton).toHaveFocus();
+    userEvent.type(itemButton, "{enter}", { skipClick: true });
+  });
+
+  test("previewing recently added notes", async () => {
+    const addNoteField = screen.getByRole("textbox");
+
+    expect(addNoteField).toBeVisible();
+
+    // Add a new note
+    await act(async () => {
+      userEvent.type(addNoteField, "{enter}");
+    });
+
+    expect(http.post).toBeCalledTimes(1);
+    expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
+      note: { content: "" },
+    });
+
+    const editPreviewField = screen.getAllByRole("textbox")[1];
+    expect(editPreviewField).toBeVisible();
+
+    expect(screen.getByText("Recently Added")).toBeVisible();
+
+    // Edit note preview
+    await act(async () => {
+      userEvent.type(editPreviewField, "{enter}");
+    });
+
+    expect(http.post).toBeCalledTimes(1);
+    expect(http.put).toBeCalledTimes(1);
+    expect(http.put).toBeCalledWith(`/notebooks/${id}/notes/${id}`, {
+      note: { content: undefined },
+    });
   });
 });
