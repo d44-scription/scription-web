@@ -4,16 +4,28 @@ import MentionableReadonly from "./editors/mentionable_readonly.component";
 import "scss/list.scss";
 
 function List(props) {
+  const setCurrentId = props.setCurrentId;
+  const doubleClickAction = props.doubleClickAction;
+
   // Callback triggered when list items are clicked
   const setActiveItem = useCallback(
     (id) => {
       if (props.currentId === id) {
-        props.setCurrentId(null);
+        setCurrentId(null);
       } else {
-        props.setCurrentId(id);
+        setCurrentId(id);
       }
     },
-    [props]
+    [props.currentId, setCurrentId]
+  );
+
+  const navigateToItem = useCallback(
+    (id) => {
+      if (doubleClickAction) {
+        doubleClickAction(id);
+      }
+    },
+    [doubleClickAction]
   );
 
   // Sets active id from focussed item
@@ -43,6 +55,7 @@ function List(props) {
               key={item.id}
               active={item.id === props.currentId}
               onClick={() => setActiveItem(item.id)}
+              onDoubleClick={() => navigateToItem(item.id)}
               onKeyDown={onKeyDown}
               tabIndex="0"
               listid={item.id}

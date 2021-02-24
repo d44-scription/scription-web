@@ -28,7 +28,7 @@ function App() {
           {notableTypes.map((type, index) => (
             <SecureRoute
               path={`/notebooks/:notebookId/${type}/:id`}
-              children={<Notes />}
+              component={Notes}
               key={index}
             />
           ))}
@@ -41,7 +41,7 @@ function App() {
             />
           ))}
 
-          <SecureRoute path="/notebooks/:id" children={<Notebook />} />
+          <SecureRoute path="/notebooks/:id" component={Notebook} />
         </Switch>
       </div>
     </div>

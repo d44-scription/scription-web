@@ -183,4 +183,53 @@ describe("List component", () => {
       expect(currentId).toBe("3");
     });
   });
+
+  describe("when given a doubleClick action", () => {
+    let testVal = -1;
+    const doubleClickAction = (id) => {
+      testVal = id;
+    };
+
+    beforeEach(() => {});
+
+    afterEach(() => {
+      testVal = -1;
+      setCurrentId(-1);
+    });
+
+    test("responding to double click", async () => {
+      render(
+        <List
+          items={items}
+          currentId={currentId}
+          setCurrentId={setCurrentId}
+          doubleClickAction={doubleClickAction}
+        />
+      );
+
+      expect(currentId).toBe(-1);
+      expect(testVal).toBe(-1);
+
+      // Double click list item
+      userEvent.dblClick(screen.getByText("Item 2"));
+
+      // Confirm double click action has been called
+      expect(testVal).toBe(2);
+    });
+
+    test("ignoring double clicks when no action provided", () => {
+      render(
+        <List items={items} currentId={currentId} setCurrentId={setCurrentId} />
+      );
+
+      expect(currentId).toBe(-1);
+      expect(testVal).toBe(-1);
+
+      // Double click list item
+      userEvent.dblClick(screen.getByText("Item 2"));
+
+      // Confirm double click action has not been called
+      expect(testVal).toBe(-1);
+    });
+  });
 });
