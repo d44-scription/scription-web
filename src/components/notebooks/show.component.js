@@ -96,7 +96,7 @@ function Show(props) {
 
         <NotableSearch notebookId={id} />
 
-        <section className="d-inline-flex justify-content-between w-100">
+        <section className="d-inline-flex justify-content-between w-100 mt-3">
           <Button
             variant="link"
             onClick={() => {
