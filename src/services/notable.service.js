@@ -1,28 +1,14 @@
 import http from "http-common";
 
 class NotableDataService {
-  index(notebookId, notableType, query) {
-    let url = `/notebooks/${notebookId}/${notableType}`;
+  index(notebookId, type, query) {
+    let url = `/notebooks/${notebookId}/${type}`;
 
     if (query !== undefined) {
       url = `${url}?q=${query}`;
     }
 
     return http.get(url);
-  }
-
-  async optionIndex(notebookId, query) {
-    // TODO: Retrieve all notables one notable route accepts query
-    let url = `/notebooks/${notebookId}/characters`;
-
-    if (query !== undefined) {
-      url = `${url}?q=${query}`;
-    }
-
-    const response = await http.get(url);
-    return response.data.map((item) => {
-      return { label: item.name, value: item.id };
-    });
   }
 
   notes(notebookId, id) {
