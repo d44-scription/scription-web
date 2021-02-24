@@ -8,6 +8,8 @@ function Edit(props) {
   const [content, setContent] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const retrieveNotes = props.retrieveNotes;
+
   // Callback to update the displayed note
   const retrieveNote = useCallback(() => {
     NoteDataService.get(props.notebookId, props.id)
@@ -39,12 +41,17 @@ function Edit(props) {
     NoteDataService.delete(props.notebookId, props.id)
       .then(() => {
         setIsModalVisible(false);
-        props.retrieveNotes();
+        retrieveNotes();
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [props, setIsModalVisible]);
+  }, [props.notebookId, props.id, retrieveNotes, setIsModalVisible]);
+
+  // Sync list of notes after edit
+  const syncList = () => {
+    retrieveNotes(props.id);
+  };
 
   return (
     <div>
@@ -53,6 +60,7 @@ function Edit(props) {
         setValue={setContent}
         notebookId={props.notebookId}
         action={submitNote}
+        onSubmitAction={syncList}
       />
 
       <Button
