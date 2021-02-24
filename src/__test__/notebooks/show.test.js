@@ -28,18 +28,6 @@ describe("Show component", () => {
       })
     );
 
-    jest.spyOn(http, "post").mockImplementation(() =>
-      Promise.resolve({
-        data: successfulResponse,
-      })
-    );
-
-    jest.spyOn(http, "put").mockImplementation(() =>
-      Promise.resolve({
-        data: successfulResponse,
-      })
-    );
-
     await act(async () => {
       render(
         <MemoryRouter initialEntries={[`/notebooks/${id}`]}>
@@ -53,8 +41,6 @@ describe("Show component", () => {
 
   afterEach(() => {
     http.get.mockRestore();
-    http.post.mockRestore();
-    http.put.mockRestore();
   });
 
   const confirmRestState = () => {
@@ -76,42 +62,6 @@ describe("Show component", () => {
 
     expect(screen.getByTitle("View items for Notebook 1")).toBeInTheDocument();
   };
-
-  test("displaying success messages", async () => {
-    // Confirm we start at rest state
-    confirmRestState();
-
-    const addNoteField = screen.getAllByRole("textbox")[0];
-
-    // Add a new note
-    await act(async () => {
-      userEvent.type(addNoteField, "{enter}");
-    });
-
-    // Confirm we have returned to rest state with a success message
-    expect(
-      screen.getByText(`Successfully saved. ${successMessage}`)
-    ).toBeVisible();
-
-    expect(http.post).toBeCalledTimes(1);
-    expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
-      note: { content: "" },
-    });
-
-    confirmRestState();
-
-    // Type another note
-    await act(async () => {
-      userEvent.type(addNoteField, "A");
-    });
-
-    // Confirm success message disappears
-    expect(
-      screen.queryByText(`Successfully saved. ${successMessage}`)
-    ).toBeNull();
-
-    expect(http.post).toBeCalledTimes(1);
-  });
 
   test("notable links respond to tab correctly", () => {
     // Confirm we start at rest state
@@ -147,35 +97,92 @@ describe("Show component", () => {
     userEvent.type(itemButton, "{enter}", { skipClick: true });
   });
 
-  test("previewing recently added notes", async () => {
-    const addNoteField = screen.getByRole("textbox");
+  describe("when succesfully adding note", () => {
+    beforeEach(async () => {
+      jest.spyOn(http, "post").mockImplementation(() =>
+        Promise.resolve({
+          data: successfulResponse,
+        })
+      );
 
-    expect(addNoteField).toBeVisible();
-
-    // Add a new note
-    await act(async () => {
-      userEvent.type(addNoteField, "{enter}");
+      jest.spyOn(http, "put").mockImplementation(() =>
+        Promise.resolve({
+          data: successfulResponse,
+        })
+      );
     });
 
-    expect(http.post).toBeCalledTimes(1);
-    expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
-      note: { content: "" },
+    afterEach(() => {
+      http.post.mockRestore();
+      http.put.mockRestore();
     });
 
-    const editPreviewField = screen.getAllByRole("textbox")[1];
-    expect(editPreviewField).toBeVisible();
+    test("displaying success messages", async () => {
+      // Confirm we start at rest state
+      confirmRestState();
 
-    expect(screen.getByText("Recently Added")).toBeVisible();
+      const addNoteField = screen.getAllByRole("textbox")[0];
 
-    // Edit note preview
-    await act(async () => {
-      userEvent.type(editPreviewField, "{enter}");
+      // Add a new note
+      await act(async () => {
+        userEvent.type(addNoteField, "{enter}");
+      });
+
+      // Confirm we have returned to rest state with a success message
+      expect(
+        screen.getByText(`Successfully saved. ${successMessage}`)
+      ).toBeVisible();
+
+      expect(http.post).toBeCalledTimes(1);
+      expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
+        note: { content: "" },
+      });
+
+      confirmRestState();
+
+      // Type another note
+      await act(async () => {
+        userEvent.type(addNoteField, "A");
+      });
+
+      // Confirm success message disappears
+      expect(
+        screen.queryByText(`Successfully saved. ${successMessage}`)
+      ).toBeNull();
+
+      expect(http.post).toBeCalledTimes(1);
     });
 
-    expect(http.post).toBeCalledTimes(1);
-    expect(http.put).toBeCalledTimes(1);
-    expect(http.put).toBeCalledWith(`/notebooks/${id}/notes/${id}`, {
-      note: { content: undefined },
+    test("previewing recently added notes", async () => {
+      const addNoteField = screen.getByRole("textbox");
+
+      expect(addNoteField).toBeVisible();
+
+      // Add a new note
+      await act(async () => {
+        userEvent.type(addNoteField, "{enter}");
+      });
+
+      expect(http.post).toBeCalledTimes(1);
+      expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
+        note: { content: "" },
+      });
+
+      const editPreviewField = screen.getAllByRole("textbox")[1];
+      expect(editPreviewField).toBeVisible();
+
+      expect(screen.getByText("Recently Added")).toBeVisible();
+
+      // Edit note preview
+      await act(async () => {
+        userEvent.type(editPreviewField, "{enter}");
+      });
+
+      expect(http.post).toBeCalledTimes(1);
+      expect(http.put).toBeCalledTimes(1);
+      expect(http.put).toBeCalledWith(`/notebooks/${id}/notes/${id}`, {
+        note: { content: undefined },
+      });
     });
   });
 });
