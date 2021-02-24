@@ -12,6 +12,8 @@ function Edit(props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
+  const retrieveNotables = props.retrieveNotables;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Function to retrieve target notable
@@ -36,12 +38,12 @@ function Edit(props) {
     NotableDataService.delete(props.notebookId, props.id)
       .then(() => {
         setIsModalVisible(false);
-        props.retrieveNotables();
+        retrieveNotables();
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [props, setIsModalVisible]);
+  }, [props.notebookId, props.id, retrieveNotables, setIsModalVisible]);
 
   // Update notable when the given id prop changes
   useEffect(() => {
