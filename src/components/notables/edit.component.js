@@ -53,6 +53,11 @@ function Edit(props) {
     return NotableDataService.update(props.notebookId, props.id, "name", name);
   };
 
+  // Sync list of notes after edit
+  const syncList = () => {
+    props.retrieveNotables(props.id);
+  };
+
   const saveDescription = () => {
     return NotableDataService.update(
       props.notebookId,
@@ -68,6 +73,7 @@ function Edit(props) {
         value={name}
         setValue={setName}
         action={saveName}
+        onSubmitAction={syncList}
         placeholder="No name saved"
         fontSize="2rem"
       />

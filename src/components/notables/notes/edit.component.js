@@ -46,6 +46,11 @@ function Edit(props) {
       });
   }, [props, setIsModalVisible]);
 
+  // Sync list of notes after edit
+  const syncList = () => {
+    props.retrieveNotes(props.id);
+  };
+
   return (
     <div>
       <Mentionable
@@ -53,6 +58,7 @@ function Edit(props) {
         setValue={setContent}
         notebookId={props.notebookId}
         action={submitNote}
+        onSubmitAction={syncList}
       />
 
       <Button

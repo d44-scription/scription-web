@@ -41,6 +41,11 @@ function Edit(props) {
       });
   }, [props, setIsModalVisible]);
 
+  // Sync list of notes after edit
+  const syncList = () => {
+    props.retrieveNotebooks(props.id);
+  };
+
   // Update notebook when the given id prop changes
   useEffect(() => {
     retrieveNotebook(props.id);
@@ -60,6 +65,7 @@ function Edit(props) {
         value={name}
         setValue={setName}
         action={saveName}
+        onSubmitAction={syncList}
         placeholder="No name saved"
         fontSize="2rem"
       />
