@@ -21,6 +21,10 @@ describe("Show component", () => {
     id: id,
   };
 
+  const unsuccessfulResponse = {
+    response: { data: ["Error message"] },
+  };
+
   beforeEach(async () => {
     jest.spyOn(http, "get").mockImplementation(() =>
       Promise.resolve({
@@ -97,7 +101,7 @@ describe("Show component", () => {
     userEvent.type(itemButton, "{enter}", { skipClick: true });
   });
 
-  describe("when succesfully adding note", () => {
+  describe("when successfully adding note", () => {
     beforeEach(async () => {
       jest.spyOn(http, "post").mockImplementation(() =>
         Promise.resolve({
@@ -183,6 +187,38 @@ describe("Show component", () => {
       expect(http.put).toBeCalledWith(`/notebooks/${id}/notes/${id}`, {
         note: { content: undefined },
       });
+    });
+  });
+
+  describe("when unsuccessfully adding note", () => {
+    beforeEach(async () => {
+      jest
+        .spyOn(http, "post")
+        .mockImplementation(() => Promise.reject(unsuccessfulResponse));
+    });
+
+    afterEach(() => {
+      http.post.mockRestore();
+    });
+
+    test("previewing does not show", async () => {
+      const addNoteField = screen.getByRole("textbox");
+
+      expect(addNoteField).toBeVisible();
+
+      // Add a new note
+      await act(async () => {
+        userEvent.type(addNoteField, "{enter}");
+      });
+
+      expect(http.post).toBeCalledTimes(1);
+      expect(http.post).toBeCalledWith(`/notebooks/${id}/notes`, {
+        note: { content: "" },
+      });
+
+      // Confirm only one editor field shown
+      expect(screen.getAllByRole("textbox").length).toBe(1);
+      expect(screen.getByText("Recently Added")).not.toBeVisible();
     });
   });
 });
