@@ -38,7 +38,7 @@ function New(props) {
         setValue={setContent}
         notebookId={props.notebookId}
         action={submitNote}
-        postSubmitAction={updatePage}
+        onSubmitAction={updatePage}
         placeholder="Click here to add a note"
         clearOnCancel
       />
