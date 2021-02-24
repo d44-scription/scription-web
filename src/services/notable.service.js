@@ -11,6 +11,20 @@ class NotableDataService {
     return http.get(url);
   }
 
+  async optionIndex(notebookId, query) {
+    // TODO: Retrieve all notables one notable route accepts query
+    let url = `/notebooks/${notebookId}/characters`;
+
+    if (query !== undefined) {
+      url = `${url}?q=${query}`;
+    }
+
+    const response = await http.get(url);
+    return response.data.map((item) => {
+      return { label: item.name, value: item.id };
+    });
+  }
+
   notes(notebookId, id) {
     return http.get(`/notebooks/${notebookId}/notables/${id}/notes`);
   }

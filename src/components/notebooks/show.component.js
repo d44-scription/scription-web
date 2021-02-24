@@ -1,8 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import Select from "react-select/async";
 import NotebookDataService from "services/notebook.service";
 import Button from "react-bootstrap/Button";
 import NoteDataService from "services/note.service";
+import NotableDataService from "services/notable.service";
 import Person from "components/icons/person.component";
 import House from "components/icons/house.component";
 import Gem from "components/icons/gem.component";
@@ -58,6 +60,11 @@ function Show(props) {
     setPreview(response.data.content);
   };
 
+  // Function to retrieve notables for this notebook for the select
+  const fetchNotables = (query) => {
+    return NotableDataService.optionIndex(id, query)
+  }
+
   return (
     <div className="list row">
       <div className="col-md-6">
@@ -92,6 +99,11 @@ function Show(props) {
 
       <div className="col-md-6">
         <h2>Notables</h2>
+
+        <Select
+          loadOptions={fetchNotables}
+          placeholder="Search notables"
+        />
 
         <section className="d-inline-flex justify-content-between w-100">
           <Button
