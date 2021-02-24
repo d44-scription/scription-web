@@ -79,7 +79,9 @@ function Index(props) {
           currentId={currentId}
           setCurrentId={showItem}
           items={queriedNotebooks}
-          doubleClickAction={(id) => { history.push(`/notebooks/${id}`); }}
+          doubleClickAction={(id) => {
+            history.push(`/notebooks/${id}`);
+          }}
         />
       </div>
 

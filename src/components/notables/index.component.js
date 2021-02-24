@@ -80,9 +80,7 @@ function Index(props) {
           setCurrentId={showItem}
           items={queriedNotables}
           doubleClickAction={(id) => {
-            history.push(
-              `/notebooks/${notebookId}/${props.type}/${id}`
-            );
+            history.push(`/notebooks/${notebookId}/${props.type}/${id}`);
           }}
         />
       </div>

@@ -13,7 +13,7 @@ function Mentionable(props) {
 
   const action = props.action;
   const setValue = props.setValue;
-  const postSubmitAction = props.postSubmitAction;
+  const onSubmitAction = props.onSubmitAction;
 
   // Data retrieval function for when a trigger character is typed
   const fetchNotables = useCallback(
@@ -50,8 +50,8 @@ function Mentionable(props) {
           setValue("");
         }
 
-        if (postSubmitAction !== undefined) {
-          postSubmitAction(response);
+        if (onSubmitAction) {
+          onSubmitAction(response);
         }
       })
       .catch((e) => {
@@ -62,7 +62,7 @@ function Mentionable(props) {
     setSuccess,
     action,
     setValue,
-    postSubmitAction,
+    onSubmitAction,
     props.clearOnSubmit,
   ]);
 
