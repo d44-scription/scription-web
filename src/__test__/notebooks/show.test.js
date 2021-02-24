@@ -56,6 +56,8 @@ describe("Show component", () => {
       )[0]
     ).toBeVisible();
 
+    expect(screen.getByText("Search notables")).toBeVisible();
+
     expect(
       screen.getByTitle("View characters for Notebook 1")
     ).toBeInTheDocument();
@@ -84,7 +86,7 @@ describe("Show component", () => {
       .closest("button");
 
     // Skip note editors, this is tested at src/__test__/editors/inline_editor.test.js
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       userEvent.tab();
     }
 
@@ -158,7 +160,7 @@ describe("Show component", () => {
     });
 
     test("previewing recently added notes", async () => {
-      const addNoteField = screen.getByRole("textbox");
+      const addNoteField = screen.getAllByRole("textbox")[0];
 
       expect(addNoteField).toBeVisible();
 
@@ -202,7 +204,7 @@ describe("Show component", () => {
     });
 
     test("previewing does not show", async () => {
-      const addNoteField = screen.getByRole("textbox");
+      const addNoteField = screen.getAllByRole("textbox")[0];
 
       expect(addNoteField).toBeVisible();
 
@@ -216,8 +218,8 @@ describe("Show component", () => {
         note: { content: "" },
       });
 
-      // Confirm only one editor field shown
-      expect(screen.getAllByRole("textbox").length).toBe(1);
+      // Confirm only one editor field shown - other is search field
+      expect(screen.getAllByRole("textbox").length).toBe(2);
       expect(screen.getByText("Recently Added")).not.toBeVisible();
     });
   });

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import NotebookDataService from "services/notebook.service";
+import NotableSearch from "./notable-search.component";
 import Button from "react-bootstrap/Button";
 import NoteDataService from "services/note.service";
 import Person from "components/icons/person.component";
@@ -93,7 +94,9 @@ function Show(props) {
       <div className="col-md-6">
         <h2>Notables</h2>
 
-        <section className="d-inline-flex justify-content-between w-100">
+        <NotableSearch notebookId={id} />
+
+        <section className="d-inline-flex justify-content-between w-100 mt-3">
           <Button
             variant="link"
             onClick={() => {
