@@ -41,7 +41,7 @@ function App() {
             />
           ))}
 
-          <SecureRoute path="/notebooks/:id" children={<Notebook />} />
+          <SecureRoute path="/notebooks/:id" component={Notebook} />
         </Switch>
       </div>
     </div>
