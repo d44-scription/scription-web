@@ -16,6 +16,8 @@ function Show(props) {
   // Define callbacks for GETting and SETting the component state
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
+  const [previewId, setPreviewId] = useState(0);
+  const [preview, setPreview] = useState("");
 
   const history = useHistory();
 
@@ -45,6 +47,11 @@ function Show(props) {
     history.push(`/notebooks/${id}/${type}`);
   };
 
+  const onSubmitAction = (response) => {
+    setPreviewId(response.data.id)
+    setPreview(response.data.content)
+  }
+
   return (
     <div className="list row">
       <div className="col-md-6">
@@ -55,10 +62,22 @@ function Show(props) {
           setValue={setContent}
           notebookId={id}
           action={submitNote}
+          onSubmitAction={onSubmitAction}
           placeholder="Click here to add a note"
           clearOnCancel
           clearOnSubmit
         />
+
+        <section className={`mt-5 ${preview ? "" : "d-none"}`}>
+          <h2>Recently Added</h2>
+
+          <Mentionable
+            value={preview}
+            setValue={setPreview}
+            notebookId={id}
+            placeholder="No content to show"
+          />
+        </section>
       </div>
 
       <div className="col-md-6">
