@@ -12,6 +12,8 @@ function Edit(props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
+  const retrieveNotables = props.retrieveNotables;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Function to retrieve target notable
@@ -36,12 +38,12 @@ function Edit(props) {
     NotableDataService.delete(props.notebookId, props.id)
       .then(() => {
         setIsModalVisible(false);
-        props.retrieveNotables();
+        retrieveNotables();
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [props, setIsModalVisible]);
+  }, [props.notebookId, props.id, retrieveNotables, setIsModalVisible]);
 
   // Update notable when the given id prop changes
   useEffect(() => {
@@ -51,6 +53,11 @@ function Edit(props) {
   // Functions to submit data to API when inline editor dictates
   const saveName = () => {
     return NotableDataService.update(props.notebookId, props.id, "name", name);
+  };
+
+  // Sync list of notes after edit
+  const syncList = () => {
+    props.retrieveNotables(props.id);
   };
 
   const saveDescription = () => {
@@ -68,6 +75,7 @@ function Edit(props) {
         value={name}
         setValue={setName}
         action={saveName}
+        onSubmitAction={syncList}
         placeholder="No name saved"
         fontSize="2rem"
       />

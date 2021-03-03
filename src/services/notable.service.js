@@ -1,8 +1,8 @@
 import http from "http-common";
 
 class NotableDataService {
-  index(notebookId, notableType, query) {
-    let url = `/notebooks/${notebookId}/${notableType}`;
+  index(notebookId, type, query) {
+    let url = `/notebooks/${notebookId}/${type}`;
 
     if (query !== undefined) {
       url = `${url}?q=${query}`;

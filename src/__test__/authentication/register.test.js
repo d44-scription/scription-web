@@ -138,7 +138,9 @@ describe("Register component", () => {
         },
       });
 
-      expect(screen.getByText("Error message 1. Error message 2")).toBeVisible();
+      expect(
+        screen.getByText("Error message 1. Error message 2")
+      ).toBeVisible();
     });
   });
 });

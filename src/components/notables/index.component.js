@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Search from "components/search.component";
 import List from "components/list.component";
 import NotableDataService from "services/notable.service";
@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Helper from "helpers/notable_helper";
 
 function Index(props) {
+  const history = useHistory();
   const { notebookId } = useParams();
 
   const [notables, setNotables] = useState([]);
@@ -78,7 +79,9 @@ function Index(props) {
           currentId={currentId}
           setCurrentId={showItem}
           items={queriedNotables}
-          label="name"
+          doubleClickAction={(id) => {
+            history.push(`/notebooks/${notebookId}/${props.type}/${id}`);
+          }}
         />
       </div>
 

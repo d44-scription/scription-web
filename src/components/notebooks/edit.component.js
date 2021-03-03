@@ -10,6 +10,8 @@ function Edit(props) {
   const [name, setName] = useState("");
   const [summary, setSummary] = useState("");
 
+  const retrieveNotebooks = props.retrieveNotebooks;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Callback to update the displayed notebook
@@ -34,12 +36,17 @@ function Edit(props) {
     NotebookDataService.delete(props.id)
       .then(() => {
         setIsModalVisible(false);
-        props.retrieveNotebooks();
+        retrieveNotebooks();
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [props, setIsModalVisible]);
+  }, [props.id, retrieveNotebooks, setIsModalVisible]);
+
+  // Sync list of notes after edit
+  const syncList = () => {
+    retrieveNotebooks(props.id);
+  };
 
   // Update notebook when the given id prop changes
   useEffect(() => {
@@ -60,6 +67,7 @@ function Edit(props) {
         value={name}
         setValue={setName}
         action={saveName}
+        onSubmitAction={syncList}
         placeholder="No name saved"
         fontSize="2rem"
       />

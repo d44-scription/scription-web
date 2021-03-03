@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import NotebookDataService from "services/notebook.service";
 import Details from "./details.component";
 import List from "components/list.component";
@@ -6,6 +7,8 @@ import Search from "components/search.component";
 import Button from "react-bootstrap/Button";
 
 function Index(props) {
+  const history = useHistory();
+
   // Define callbacks for GETting and SETting the component state
   const [notebooks, setNotebooks] = useState([]);
   const [currentId, setCurrentId] = useState(null);
@@ -76,6 +79,9 @@ function Index(props) {
           currentId={currentId}
           setCurrentId={showItem}
           items={queriedNotebooks}
+          doubleClickAction={(id) => {
+            history.push(`/notebooks/${id}`);
+          }}
         />
       </div>
 

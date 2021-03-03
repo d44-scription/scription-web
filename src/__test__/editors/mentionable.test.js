@@ -246,14 +246,14 @@ describe("Mentionable component", () => {
     expect(value).toBe("");
   });
 
-  test("Running postSubmitAction correctly", async () => {
+  test("Running onSubmitAction correctly", async () => {
     let testVal = false;
 
     const action = () => {
       return Promise.resolve();
     };
 
-    const postSubmitAction = () => {
+    const onSubmitAction = () => {
       testVal = true;
     };
 
@@ -262,7 +262,7 @@ describe("Mentionable component", () => {
         action={action}
         value={value}
         setValue={setValue}
-        postSubmitAction={postSubmitAction}
+        onSubmitAction={onSubmitAction}
       />
     );
 
