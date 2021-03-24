@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import New from "components/notables/notes/new.component";
+import New from "components/notes/new.component";
 import { act } from "react-dom/test-utils";
 import http from "http-common";
 import userEvent from "@testing-library/user-event";
