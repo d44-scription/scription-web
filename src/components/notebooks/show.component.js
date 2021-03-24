@@ -25,13 +25,9 @@ function Show(props) {
 
   // Callback to update the displayed notebook
   const retrieveNotebook = useCallback(() => {
-    NotebookDataService.get(id)
-      .then((response) => {
-        setName(response.data.name);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    NotebookDataService.get(id).then((response) => {
+      setName(response.data.name);
+    });
   }, [setName, id]);
 
   // Fetch target notebook on load
@@ -128,7 +124,7 @@ function Show(props) {
           <Button
             variant="link"
             onClick={() => {
-              viewNotables("items");
+              viewNotables("unlinked");
             }}
           >
             <Journal title={`View unlinked notes for ${name}`} />

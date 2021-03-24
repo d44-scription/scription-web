@@ -10,13 +10,11 @@ function New(props) {
 
   // Onload retrieve notable from API to allow use of text code
   useEffect(() => {
-    NotableDataService.get(props.notebookId, props.notableId)
-      .then((response) => {
+    NotableDataService.get(props.notebookId, props.notableId).then(
+      (response) => {
         setContent(`${response.data.text_code} `);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      }
+    );
   }, [props.notebookId, props.notableId]);
 
   const submitNote = () => {

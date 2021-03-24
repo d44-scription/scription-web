@@ -18,14 +18,10 @@ function Show(props) {
 
   const retrieveNotes = useCallback(
     (noteId) => {
-      NotableDataService.notes(notebookId, id)
-        .then((response) => {
-          setNotes(response.data);
-          setCurrentId(noteId || null);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      NotableDataService.notes(notebookId, id).then((response) => {
+        setNotes(response.data);
+        setCurrentId(noteId || null);
+      });
     },
     [setNotes, notebookId, id]
   );

@@ -12,13 +12,9 @@ function Edit(props) {
 
   // Callback to update the displayed note
   const retrieveNote = useCallback(() => {
-    NoteDataService.get(props.notebookId, props.id)
-      .then((response) => {
-        setContent(response.data.content);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    NoteDataService.get(props.notebookId, props.id).then((response) => {
+      setContent(response.data.content);
+    });
   }, [setContent, props.id, props.notebookId]);
 
   // Update note when the given id prop changes
@@ -38,14 +34,10 @@ function Edit(props) {
 
   // Send DELETE request
   const deleteNote = useCallback(() => {
-    NoteDataService.delete(props.notebookId, props.id)
-      .then(() => {
-        setIsModalVisible(false);
-        retrieveNotes();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    NoteDataService.delete(props.notebookId, props.id).then(() => {
+      setIsModalVisible(false);
+      retrieveNotes();
+    });
   }, [props.notebookId, props.id, retrieveNotes, setIsModalVisible]);
 
   // Sync list of notes after edit

@@ -17,30 +17,22 @@ function Edit(props) {
   // Callback to update the displayed notebook
   const retrieveNotebook = useCallback(
     (id) => {
-      NotebookDataService.get(id)
-        .then((response) => {
-          const notebook = response.data;
+      NotebookDataService.get(id).then((response) => {
+        const notebook = response.data;
 
-          setName(notebook.name);
-          setSummary(notebook.summary);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        setName(notebook.name);
+        setSummary(notebook.summary);
+      });
     },
     [setName, setSummary]
   );
 
   // Callback used when the delete icon is clicked
   const deleteNotebook = useCallback(() => {
-    NotebookDataService.delete(props.id)
-      .then(() => {
-        setIsModalVisible(false);
-        retrieveNotebooks();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    NotebookDataService.delete(props.id).then(() => {
+      setIsModalVisible(false);
+      retrieveNotebooks();
+    });
   }, [props.id, retrieveNotebooks, setIsModalVisible]);
 
   // Sync list of notes after edit

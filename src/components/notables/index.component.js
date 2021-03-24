@@ -22,14 +22,10 @@ function Index(props) {
 
   const retrieveNotables = useCallback(
     (id) => {
-      NotableDataService.index(notebookId, props.type)
-        .then((response) => {
-          setNotables(response.data);
-          setCurrentId(id || null);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      NotableDataService.index(notebookId, props.type).then((response) => {
+        setNotables(response.data);
+        setCurrentId(id || null);
+      });
     },
     [setNotables, notebookId, props.type]
   );
