@@ -54,6 +54,7 @@ describe("New component", () => {
       render(
         <New
           notebookId="1"
+          notableId="2"
           setNewRecord={() => {
             setNewRecordTestValue = true;
           }}

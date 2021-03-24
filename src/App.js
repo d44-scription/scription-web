@@ -24,6 +24,7 @@ function App() {
           <PublicRoute exact path="/register" component={Register} />
           <SecureRoute exact path="/account" component={Account} />
           <SecureRoute exact path="/notebooks" component={Notebooks} />
+          <SecureRoute exact path="/notebooks/:notebookId/unlinked" component={Notes} />
 
           {notableTypes.map((type, index) => (
             <SecureRoute
