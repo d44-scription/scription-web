@@ -7,6 +7,7 @@ import NoteDataService from "services/note.service";
 import Person from "components/icons/person.component";
 import House from "components/icons/house.component";
 import Gem from "components/icons/gem.component";
+import Journal from "components/icons/journal.component";
 import "scss/show.scss";
 import Mentionable from "components/editors/mentionable.component";
 
@@ -123,9 +124,16 @@ function Show(props) {
           >
             <Gem title={`View items for ${name}`} />
           </Button>
-        </section>
 
-        <h2>Unlinked Notes</h2>
+          <Button
+            variant="link"
+            onClick={() => {
+              viewNotables("items");
+            }}
+          >
+            <Journal title={`View unlinked notes for ${name}`} />
+          </Button>
+        </section>
       </div>
     </div>
   );
