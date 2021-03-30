@@ -6,7 +6,7 @@ import Account from "./components/account.component";
 import Notebooks from "./components/notebooks/index.component";
 import Notebook from "./components/notebooks/show.component";
 import Notables from "./components/notables/index.component";
-import Notes from "./components/notables/notes/index.component";
+import Notes from "./components/notes/index.component";
 import Navigation from "./components/navigation.component";
 import SecureRoute from "./components/authentication/secure-route.component";
 import PublicRoute from "./components/authentication/public-route.component";
@@ -24,6 +24,7 @@ function App() {
           <PublicRoute exact path="/register" component={Register} />
           <SecureRoute exact path="/account" component={Account} />
           <SecureRoute exact path="/notebooks" component={Notebooks} />
+          <SecureRoute exact path="/notebooks/:notebookId/unlinked" component={Notes} />
 
           {notableTypes.map((type, index) => (
             <SecureRoute

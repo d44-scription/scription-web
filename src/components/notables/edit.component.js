@@ -19,30 +19,22 @@ function Edit(props) {
   // Function to retrieve target notable
   const retrieveNotable = useCallback(
     (id) => {
-      NotableDataService.get(props.notebookId, id)
-        .then((response) => {
-          const notable = response.data;
+      NotableDataService.get(props.notebookId, id).then((response) => {
+        const notable = response.data;
 
-          setName(notable.name);
-          setDescription(notable.description || "");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        setName(notable.name);
+        setDescription(notable.description || "");
+      });
     },
     [setName, setDescription, props.notebookId]
   );
 
   // Callback used when the delete is confirmed
   const deleteNotable = useCallback(() => {
-    NotableDataService.delete(props.notebookId, props.id)
-      .then(() => {
-        setIsModalVisible(false);
-        retrieveNotables();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    NotableDataService.delete(props.notebookId, props.id).then(() => {
+      setIsModalVisible(false);
+      retrieveNotables();
+    });
   }, [props.notebookId, props.id, retrieveNotables, setIsModalVisible]);
 
   // Update notable when the given id prop changes

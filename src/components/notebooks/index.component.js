@@ -22,14 +22,10 @@ function Index(props) {
   // Callback to update the displayed notebooks
   const retrieveNotebooks = useCallback(
     (id) => {
-      NotebookDataService.index()
-        .then((response) => {
-          setNotebooks(response.data);
-          setCurrentId(id || null);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      NotebookDataService.index().then((response) => {
+        setNotebooks(response.data);
+        setCurrentId(id || null);
+      });
     },
     [setNotebooks, setCurrentId]
   );

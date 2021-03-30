@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import http from "http-common";
 import { MemoryRouter, Route } from "react-router-dom";
-import Index from "components/notables/notes/index.component";
+import Index from "components/notes/index.component";
 import userEvent from "@testing-library/user-event";
 
 describe("Index component", () => {

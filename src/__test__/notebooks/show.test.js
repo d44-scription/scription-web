@@ -67,6 +67,8 @@ describe("Show component", () => {
     ).toBeInTheDocument();
 
     expect(screen.getByTitle("View items for Notebook 1")).toBeInTheDocument();
+
+    expect(screen.getByTitle("View unlinked notes for Notebook 1")).toBeInTheDocument();
   };
 
   test("notable links respond to tab correctly", () => {
@@ -85,6 +87,10 @@ describe("Show component", () => {
       .getByTitle("View items for Notebook 1")
       .closest("button");
 
+    const unlinkedButton = screen
+      .getByTitle("View unlinked notes for Notebook 1")
+      .closest("button");
+
     // Skip note editors, this is tested at src/__test__/editors/inline_editor.test.js
     for (let i = 0; i < 5; i++) {
       userEvent.tab();
@@ -101,6 +107,10 @@ describe("Show component", () => {
     userEvent.tab();
     expect(itemButton).toHaveFocus();
     userEvent.type(itemButton, "{enter}", { skipClick: true });
+
+    userEvent.tab();
+    expect(unlinkedButton).toHaveFocus();
+    userEvent.type(unlinkedButton, "{enter}", { skipClick: true });
   });
 
   describe("when successfully adding note", () => {
