@@ -82,7 +82,6 @@ describe("Details component", () => {
       name: "Notebook 1",
       id: 1,
       summary: "Mock summary",
-      order_index: 0,
     };
 
     beforeEach(() => {

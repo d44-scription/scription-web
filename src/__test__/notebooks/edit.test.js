@@ -13,7 +13,6 @@ describe("Edit component", () => {
     name: "Notebook 1",
     id: id,
     summary: "Mock summary",
-    order_index: 0,
   };
 
   const successfulResponse = {

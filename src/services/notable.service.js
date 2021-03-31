@@ -19,6 +19,10 @@ class NotableDataService {
     return http.get(`/notebooks/${notebookId}/notes/unlinked`);
   }
 
+  recents(notebookId) {
+    return http.get(`/notebooks/${notebookId}/notables/recents`);
+  }
+
   get(notebookId, id) {
     return http.get(`/notebooks/${notebookId}/notables/${id}`);
   }

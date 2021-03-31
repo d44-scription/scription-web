@@ -8,6 +8,7 @@ import Person from "components/icons/person.component";
 import House from "components/icons/house.component";
 import Gem from "components/icons/gem.component";
 import Journal from "components/icons/journal.component";
+import Recents from "components/notables/recents.component";
 import "scss/show.scss";
 import Mentionable from "components/editors/mentionable.component";
 
@@ -130,6 +131,8 @@ function Show(props) {
             <Journal title={`View unlinked notes for ${name}`} />
           </Button>
         </section>
+
+        <Recents notebookId={id} />
       </div>
     </div>
   );

@@ -132,7 +132,7 @@ describe("List component", () => {
 
       // Press space
       userEvent.type(listItem1, " ", { skipClick: true });
-      expect(currentId).toBe("1");
+      expect(currentId).toBe(1);
 
       // Press tab
       userEvent.tab();
@@ -140,7 +140,7 @@ describe("List component", () => {
 
       // Press space
       userEvent.type(listItem2, " ", { skipClick: true });
-      expect(currentId).toBe("2");
+      expect(currentId).toBe(2);
 
       // Press tab
       userEvent.tab();
@@ -148,7 +148,7 @@ describe("List component", () => {
 
       // Press space
       userEvent.type(listItem3, " ", { skipClick: true });
-      expect(currentId).toBe("3");
+      expect(currentId).toBe(3);
     });
 
     test("responding to tab with enter", async () => {
@@ -164,7 +164,7 @@ describe("List component", () => {
 
       // Press enter
       userEvent.type(listItem1, "{enter}", { skipClick: true });
-      expect(currentId).toBe("1");
+      expect(currentId).toBe(1);
 
       // Press tab
       userEvent.tab();
@@ -172,7 +172,7 @@ describe("List component", () => {
 
       // Press enter
       userEvent.type(listItem2, "{enter}", { skipClick: true });
-      expect(currentId).toBe("2");
+      expect(currentId).toBe(2);
 
       // Press tab
       userEvent.tab();
@@ -180,7 +180,7 @@ describe("List component", () => {
 
       // Press enter
       userEvent.type(listItem3, "{enter}", { skipClick: true });
-      expect(currentId).toBe("3");
+      expect(currentId).toBe(3);
     });
   });
 

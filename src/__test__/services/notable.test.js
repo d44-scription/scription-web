@@ -99,6 +99,19 @@ describe("Notable service", () => {
     });
   });
 
+  test("recents", () => {
+    NotableDataService.recents(notebookId);
+
+    expect(http.get).toBeCalledWith(
+      `/notebooks/${notebookId}/notables/recents`
+    );
+
+    expect(http.get).toBeCalledTimes(1);
+    expect(http.post).toBeCalledTimes(0);
+    expect(http.put).toBeCalledTimes(0);
+    expect(http.delete).toBeCalledTimes(0);
+  });
+
   test("get", () => {
     NotableDataService.get(notebookId, notableId);
 
