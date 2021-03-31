@@ -26,11 +26,16 @@ describe("Show component", () => {
   };
 
   beforeEach(async () => {
-    jest.spyOn(http, "get").mockImplementation(() =>
-      Promise.resolve({
-        data: fakeNotebook,
-      })
-    );
+    jest.spyOn(http, "get").mockImplementation((url) => {
+      switch (url) {
+        case `/notebooks/${id}/notables/recents`:
+          return Promise.resolve({ data: [] });
+        default:
+          return Promise.resolve({
+            data: fakeNotebook,
+          });
+      }
+    });
 
     await act(async () => {
       render(
@@ -68,7 +73,11 @@ describe("Show component", () => {
 
     expect(screen.getByTitle("View items for Notebook 1")).toBeInTheDocument();
 
-    expect(screen.getByTitle("View unlinked notes for Notebook 1")).toBeInTheDocument();
+    expect(
+      screen.getByTitle("View unlinked notes for Notebook 1")
+    ).toBeInTheDocument();
+
+    expect(screen.getByText("Recently Accessed")).toBeVisible();
   };
 
   test("notable links respond to tab correctly", () => {
