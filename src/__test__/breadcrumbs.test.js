@@ -13,7 +13,7 @@ describe("Breadcrumbs component", () => {
       </MemoryRouter>
     );
 
-    const brandLink = screen.getByText("Scription");
+    const brandLink = screen.getByText("Home");
 
     // Confirm brand is rendered in isolation and is not made a link
     expect(brandLink).toBeVisible();
@@ -37,7 +37,7 @@ describe("Breadcrumbs component", () => {
 
     test("displaying each breadcrumb correctly", () => {
       // First crumb ("/notebooks") replaced with brand
-      const brandLink = screen.getByText("Scription");
+      const brandLink = screen.getByText("Home");
       const notebooksCrumb = screen.queryByText("notebooks");
       const pathCrumb = screen.getByText("path");
       const toCrumb = screen.getByText("to");
@@ -64,7 +64,7 @@ describe("Breadcrumbs component", () => {
     });
 
     test("responding to tab+enter correctly", () => {
-      const brandLink = screen.getByText("Scription");
+      const brandLink = screen.getByText("Home");
 
       userEvent.tab();
 
@@ -76,7 +76,7 @@ describe("Breadcrumbs component", () => {
     });
 
     test("responding to tab+space correctly", () => {
-      const brandLink = screen.getByText("Scription");
+      const brandLink = screen.getByText("Home");
 
       userEvent.tab();
 

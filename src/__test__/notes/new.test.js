@@ -40,7 +40,7 @@ describe("New component", () => {
   const confirmRestState = () => {
     // Confirm default button is not shown
     expect(
-      screen.getByPlaceholderText("Click here to add a note")
+      screen.getByPlaceholderText("Note contents")
     ).toBeVisible();
 
     expect(
@@ -78,7 +78,7 @@ describe("New component", () => {
     expect(retrieveNotesTestValue).toBe(false);
 
     // "Create" a new note
-    userEvent.click(screen.getByPlaceholderText("Click here to add a note"));
+    userEvent.click(screen.getByPlaceholderText("Note contents"));
     userEvent.type(screen.getByRole("textbox"), "Note");
 
     await act(async () => {
@@ -120,7 +120,7 @@ describe("New component", () => {
     expect(retrieveNotesTestValue).toBe(false);
 
     // "Create" a new note
-    userEvent.click(screen.getByPlaceholderText("Click here to add a note"));
+    userEvent.click(screen.getByPlaceholderText("Note contents"));
     userEvent.type(screen.getByRole("textbox"), "Note");
 
     await act(async () => {

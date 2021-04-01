@@ -94,7 +94,7 @@ describe("Index component", () => {
       const addButton = screen.getByText("Add Character");
 
       // Confirm new fields are not shown
-      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Name Character")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is hidden
@@ -104,7 +104,7 @@ describe("Index component", () => {
       userEvent.click(addButton);
 
       // Confirm new fields are shown
-      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Name Character")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
       // Confirm Edit page is hidden
@@ -117,7 +117,7 @@ describe("Index component", () => {
       userEvent.click(screen.getByText("Cancel"));
 
       // Confirm new fields are hidden
-      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Name Character")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is hidden
@@ -130,7 +130,7 @@ describe("Index component", () => {
       });
 
       // Confirm new fields are hidden
-      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Name Character")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is shown
@@ -144,7 +144,7 @@ describe("Index component", () => {
       userEvent.click(addButton);
 
       // Confirm new fields are shown
-      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Name Character")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
       // Confirm Edit page is hidden
