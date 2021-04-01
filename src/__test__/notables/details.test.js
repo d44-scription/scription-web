@@ -13,7 +13,7 @@ describe("Details component", () => {
 
   const confirmRestState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByText("Enter Name")).toBeNull();
+    expect(screen.queryByText("Name Character")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are not shown
@@ -25,7 +25,7 @@ describe("Details component", () => {
 
   const confirmNewNotableState = () => {
     // Confirm new fields are shown
-    expect(screen.getByText("Enter Name")).toBeInTheDocument();
+    expect(screen.getByText("Name Character")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
 
     // Confirm edit fields are not shown
@@ -37,7 +37,7 @@ describe("Details component", () => {
 
   const confirmViewNotableState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByText("Enter Name")).toBeNull();
+    expect(screen.queryByText("Name Character")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are shown

@@ -14,7 +14,7 @@ describe("Details component", () => {
   const confirmRestState = () => {
     // Confirm new fields are not shown
     expect(
-      screen.queryByPlaceholderText("Click here to add a note")
+      screen.queryByPlaceholderText("Note contents")
     ).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
@@ -33,7 +33,7 @@ describe("Details component", () => {
   const confirmNewNoteState = () => {
     // Confirm new fields are shown
     expect(
-      screen.getByPlaceholderText("Click here to add a note")
+      screen.getByPlaceholderText("Note contents")
     ).toBeVisible();
     expect(screen.getByText("Cancel")).toBeVisible();
 
@@ -52,7 +52,7 @@ describe("Details component", () => {
   const confirmViewNoteState = () => {
     // Confirm new fields are not shown
     expect(
-      screen.queryByPlaceholderText("Click here to add a note")
+      screen.queryByPlaceholderText("Note contents")
     ).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 

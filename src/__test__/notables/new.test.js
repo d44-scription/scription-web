@@ -26,7 +26,7 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(screen.getByText("Enter Name")).toBeInTheDocument();
+    expect(screen.getByText("Name Character")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
   };
 
@@ -54,7 +54,7 @@ describe("New component", () => {
     expect(retrieveNotablesTestValue).toBe(false);
 
     // "Create" a new notable
-    userEvent.click(screen.getByText("Enter Name"));
+    userEvent.click(screen.getByText("Name Character"));
     userEvent.type(screen.getByRole("textbox"), "Notable");
 
     await act(async () => {

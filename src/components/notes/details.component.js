@@ -10,7 +10,7 @@ function Details(props) {
   if (props.id) {
     return (
       // If a notable has been selected, show the notable
-      <div className="col-md-6">
+      <div className="col-md-6 my-lg-0 my-4">
         <Edit
           id={props.id}
           notebookId={props.notebookId}
@@ -21,7 +21,7 @@ function Details(props) {
   } else if (props.newRecord) {
     return (
       // Otherwise, if the user has clicked the "Add notable" button, render the new notable form
-      <div className="col-md-6">
+      <div className="col-md-6 my-lg-0 my-4">
         <New
           setNewRecord={setNewRecord}
           retrieveNotes={props.retrieveNotes}

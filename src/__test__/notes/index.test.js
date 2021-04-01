@@ -11,7 +11,7 @@ describe("Index component", () => {
 
   describe("With notes", () => {
     const editPlaceholderText = "No content";
-    const newPlaceholderText = "Click here to add a note";
+    const newPlaceholderText = "Note contents";
     const helpText =
       "Use @ to reference a character, : to reference an item, and # to reference a location";
     const deleteText = "Delete Note";

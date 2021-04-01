@@ -28,7 +28,7 @@ function Recents(props) {
   }, [setNotables, props.notebookId]);
 
   return (
-    <div className="list row mt-5">
+    <div className="list mt-4">
       <h2>Recently Accessed</h2>
 
       <ListGroup as="ul">
