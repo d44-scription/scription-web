@@ -43,12 +43,13 @@ link {
 
 .breadcrumb {
   margin: auto auto 0 0.5rem;
+  background-color: transparent;
 
   .breadcrumb-item {
     color: $light;
     a {
       transition: color 0.1s ease-in;
-      color: $light;
+      color: $primary;
       &:hover {
         color: $light;
       }
