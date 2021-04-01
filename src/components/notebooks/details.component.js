@@ -10,7 +10,7 @@ function Details(props) {
   if (props.id) {
     return (
       // If a notebook has been selected, show the notebook
-      <div className="col-md-6">
+      <div className="col-md-6 my-lg-0 my-4">
         <h2>Edit Notebook</h2>
         <Edit id={props.id} retrieveNotebooks={props.retrieveNotebooks} />
       </div>
@@ -18,7 +18,7 @@ function Details(props) {
   } else if (props.newRecord) {
     return (
       // Otherwise, if the user has clicked the "Add Notebook" button, render the new notebook form
-      <div className="col-md-6">
+      <div className="col-md-6  my-lg-0 my-4">
         <h2>Name notebook</h2>
         <New
           setNewRecord={setNewRecord}
