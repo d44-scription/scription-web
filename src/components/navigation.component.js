@@ -18,7 +18,9 @@ function Navigation(props) {
     <header>
       <Navbar className="bg-primary w-100 d-inline-flex justify-content-between p-0 mb-lg-2">
         <Navbar.Brand>
-          <Button className="fs-3" onClick={() => history.push("/")}>Scription</Button>
+          <Button className="fs-3" onClick={() => history.push("/")}>
+            Scription
+          </Button>
         </Navbar.Brand>
 
         {AuthenticationDataService.loggedIn() ? (

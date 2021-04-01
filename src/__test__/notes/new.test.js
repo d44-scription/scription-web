@@ -39,9 +39,7 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(
-      screen.getByPlaceholderText("Note contents")
-    ).toBeVisible();
+    expect(screen.getByPlaceholderText("Note contents")).toBeVisible();
 
     expect(
       screen.getByText(
