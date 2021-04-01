@@ -21,7 +21,7 @@ function Breadcrumbs(props) {
   const crumbs = paths.map((path, index) => {
     // Replace first path ('') with root link & branding
     var url = index === 0 ? "/" : `${paths.slice(0, index + 1).join("/")}`;
-    var label = index === 0 ? "Scription" : path;
+    var label = index === 0 ? "Home" : path;
 
     return (
       <Breadcrumb.Item
