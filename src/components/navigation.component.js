@@ -11,7 +11,7 @@ function Navigation(props) {
 
   const logout = () => {
     AuthenticationDataService.logout();
-    history.push("/");
+    window.location.replace("/");
   };
 
   return (
