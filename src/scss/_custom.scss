@@ -33,8 +33,10 @@ link {
   margin-right: auto;
 }
 
-.fs-0 {
-  font-size: 6rem;
+@include media-breakpoint-up(lg) {
+  .fs-0 {
+    font-size: 6rem;
+  }
 }
 
 .breadcrumb {
