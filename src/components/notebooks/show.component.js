@@ -74,7 +74,7 @@ function Show(props) {
         />
 
         <section
-          className="mt-5"
+          className="mt-4"
           style={{ display: previewId ? "inherit" : "none" }}
         >
           <h3>Recently Added</h3>
@@ -89,12 +89,15 @@ function Show(props) {
         </section>
       </div>
 
-      <div className="col-md-6">
+      <div className="col-md-6 my-lg-0 my-4">
         <h2>Notables</h2>
 
         <NotableSearch notebookId={id} />
 
-        <section className="d-inline-flex justify-content-between w-100 mt-3">
+        <section
+          className="d-lg-inline-flex flex-lg-nowrap flex-wrap d-flex
+                    justify-content-lg-between justify-content-around w-100 mt-3"
+        >
           <Button
             variant="link"
             onClick={() => {
