@@ -31,15 +31,13 @@ function New(props) {
 
   return (
     <div>
-      <h2>Note contents</h2>
-
       <Mentionable
         value={content}
         setValue={setContent}
         notebookId={props.notebookId}
         action={submitNote}
         onSubmitAction={updatePage}
-        placeholder="Click here to add a note"
+        placeholder="Note contents"
         clearOnCancel
       />
 

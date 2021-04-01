@@ -24,14 +24,12 @@ function New(props) {
 
   return (
     <div>
-      <h2>Name {Helper.singular(props.type)}</h2>
-
       <InlineEditor
         value={name}
         setValue={setName}
         action={saveNotable}
         onSubmitAction={updatePage}
-        placeholder="Enter Name"
+        placeholder={`Name ${Helper.singular(props.type)}`}
         fontSize="2rem"
       />
 
