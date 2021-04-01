@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import AuthenticationDataService from "services/authentication.service";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -10,21 +10,19 @@ function Login(props) {
 
   const [error, setError] = useState("");
 
-  const history = useHistory();
-
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
       AuthenticationDataService.login(email, password)
         .then(() => {
-          history.push("/notebooks");
+          window.location.replace("/notebooks");
         })
         .catch((e) => {
           setError(e.response.data.errors);
         });
     },
-    [email, password, history]
+    [email, password]
   );
 
   const emailChanged = (e) => {
