@@ -26,11 +26,16 @@ describe("Show component", () => {
   };
 
   beforeEach(async () => {
-    jest.spyOn(http, "get").mockImplementation(() =>
-      Promise.resolve({
-        data: fakeNotebook,
-      })
-    );
+    jest.spyOn(http, "get").mockImplementation((url) => {
+      switch (url) {
+        case `/notebooks/${id}/notables/recents`:
+          return Promise.resolve({ data: [] });
+        default:
+          return Promise.resolve({
+            data: fakeNotebook,
+          });
+      }
+    });
 
     await act(async () => {
       render(
@@ -67,6 +72,12 @@ describe("Show component", () => {
     ).toBeInTheDocument();
 
     expect(screen.getByTitle("View items for Notebook 1")).toBeInTheDocument();
+
+    expect(
+      screen.getByTitle("View unlinked notes for Notebook 1")
+    ).toBeInTheDocument();
+
+    expect(screen.getByText("Recently Accessed")).toBeVisible();
   };
 
   test("notable links respond to tab correctly", () => {
@@ -85,8 +96,12 @@ describe("Show component", () => {
       .getByTitle("View items for Notebook 1")
       .closest("button");
 
+    const unlinkedButton = screen
+      .getByTitle("View unlinked notes for Notebook 1")
+      .closest("button");
+
     // Skip note editors, this is tested at src/__test__/editors/inline_editor.test.js
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 5; i++) {
       userEvent.tab();
     }
 
@@ -101,6 +116,10 @@ describe("Show component", () => {
     userEvent.tab();
     expect(itemButton).toHaveFocus();
     userEvent.type(itemButton, "{enter}", { skipClick: true });
+
+    userEvent.tab();
+    expect(unlinkedButton).toHaveFocus();
+    userEvent.type(unlinkedButton, "{enter}", { skipClick: true });
   });
 
   describe("when successfully adding note", () => {

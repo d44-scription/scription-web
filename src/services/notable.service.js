@@ -12,7 +12,15 @@ class NotableDataService {
   }
 
   notes(notebookId, id) {
-    return http.get(`/notebooks/${notebookId}/notables/${id}/notes`);
+    if (id) {
+      return http.get(`/notebooks/${notebookId}/notables/${id}/notes`);
+    }
+
+    return http.get(`/notebooks/${notebookId}/notes/unlinked`);
+  }
+
+  recents(notebookId) {
+    return http.get(`/notebooks/${notebookId}/notables/recents`);
   }
 
   get(notebookId, id) {

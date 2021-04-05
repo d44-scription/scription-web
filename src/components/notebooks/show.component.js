@@ -7,6 +7,8 @@ import NoteDataService from "services/note.service";
 import Person from "components/icons/person.component";
 import House from "components/icons/house.component";
 import Gem from "components/icons/gem.component";
+import Journal from "components/icons/journal.component";
+import Recents from "components/notables/recents.component";
 import "scss/show.scss";
 import Mentionable from "components/editors/mentionable.component";
 
@@ -24,13 +26,9 @@ function Show(props) {
 
   // Callback to update the displayed notebook
   const retrieveNotebook = useCallback(() => {
-    NotebookDataService.get(id)
-      .then((response) => {
-        setName(response.data.name);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    NotebookDataService.get(id).then((response) => {
+      setName(response.data.name);
+    });
   }, [setName, id]);
 
   // Fetch target notebook on load
@@ -76,7 +74,7 @@ function Show(props) {
         />
 
         <section
-          className="mt-5"
+          className="mt-4"
           style={{ display: previewId ? "inherit" : "none" }}
         >
           <h3>Recently Added</h3>
@@ -91,12 +89,15 @@ function Show(props) {
         </section>
       </div>
 
-      <div className="col-md-6">
+      <div className="col-md-6 my-lg-0 my-4">
         <h2>Notables</h2>
 
         <NotableSearch notebookId={id} />
 
-        <section className="d-inline-flex justify-content-between w-100 mt-3">
+        <section
+          className="d-lg-inline-flex flex-lg-nowrap flex-wrap d-flex
+                    justify-content-lg-between justify-content-around w-100 mt-3"
+        >
           <Button
             variant="link"
             onClick={() => {
@@ -123,9 +124,18 @@ function Show(props) {
           >
             <Gem title={`View items for ${name}`} />
           </Button>
+
+          <Button
+            variant="link"
+            onClick={() => {
+              viewNotables("unlinked");
+            }}
+          >
+            <Journal title={`View unlinked notes for ${name}`} />
+          </Button>
         </section>
 
-        <h2>Unlinked Notes</h2>
+        <Recents notebookId={id} />
       </div>
     </div>
   );

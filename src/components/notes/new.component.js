@@ -10,13 +10,13 @@ function New(props) {
 
   // Onload retrieve notable from API to allow use of text code
   useEffect(() => {
-    NotableDataService.get(props.notebookId, props.notableId)
-      .then((response) => {
-        setContent(`${response.data.text_code} `);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (props.notableId) {
+      NotableDataService.get(props.notebookId, props.notableId).then(
+        (response) => {
+          setContent(`${response.data.text_code} `);
+        }
+      );
+    }
   }, [props.notebookId, props.notableId]);
 
   const submitNote = () => {
@@ -31,15 +31,13 @@ function New(props) {
 
   return (
     <div>
-      <h2>Note contents</h2>
-
       <Mentionable
         value={content}
         setValue={setContent}
         notebookId={props.notebookId}
         action={submitNote}
         onSubmitAction={updatePage}
-        placeholder="Click here to add a note"
+        placeholder="Note contents"
         clearOnCancel
       />
 

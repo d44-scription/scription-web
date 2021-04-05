@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import http from "http-common";
 import { MemoryRouter, Route } from "react-router-dom";
-import Index from "components/notables/notes/index.component";
+import Index from "components/notes/index.component";
 import userEvent from "@testing-library/user-event";
 
 describe("Index component", () => {
@@ -11,7 +11,7 @@ describe("Index component", () => {
 
   describe("With notes", () => {
     const editPlaceholderText = "No content";
-    const newPlaceholderText = "Click here to add a note";
+    const newPlaceholderText = "Note contents";
     const helpText =
       "Use @ to reference a character, : to reference an item, and # to reference a location";
     const deleteText = "Delete Note";

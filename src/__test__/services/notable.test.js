@@ -71,11 +71,39 @@ describe("Notable service", () => {
     });
   });
 
-  test("notes", () => {
-    NotableDataService.notes(notebookId, notableId);
+  describe("notes", () => {
+    test("when given a notable id", () => {
+      NotableDataService.notes(notebookId, notableId);
+
+      expect(http.get).toBeCalledWith(
+        `/notebooks/${notebookId}/notables/${notableId}/notes`
+      );
+
+      expect(http.get).toBeCalledTimes(1);
+      expect(http.post).toBeCalledTimes(0);
+      expect(http.put).toBeCalledTimes(0);
+      expect(http.delete).toBeCalledTimes(0);
+    });
+
+    test("when not given a notable id", () => {
+      NotableDataService.notes(notebookId);
+
+      expect(http.get).toBeCalledWith(
+        `/notebooks/${notebookId}/notes/unlinked`
+      );
+
+      expect(http.get).toBeCalledTimes(1);
+      expect(http.post).toBeCalledTimes(0);
+      expect(http.put).toBeCalledTimes(0);
+      expect(http.delete).toBeCalledTimes(0);
+    });
+  });
+
+  test("recents", () => {
+    NotableDataService.recents(notebookId);
 
     expect(http.get).toBeCalledWith(
-      `/notebooks/${notebookId}/notables/${notableId}/notes`
+      `/notebooks/${notebookId}/notables/recents`
     );
 
     expect(http.get).toBeCalledTimes(1);

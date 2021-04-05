@@ -29,9 +29,9 @@ function List(props) {
   );
 
   // Sets active id from focussed item
-  const onKeyDown = (e) => {
+  const onKeyDown = (e, id) => {
     if (e.key === " " || e.key === "Enter") {
-      setActiveItem(e.target.getAttribute("listid"));
+      setActiveItem(id);
     }
   };
 
@@ -56,9 +56,8 @@ function List(props) {
               active={item.id === props.currentId}
               onClick={() => setActiveItem(item.id)}
               onDoubleClick={() => navigateToItem(item.id)}
-              onKeyDown={onKeyDown}
+              onKeyDown={(e) => onKeyDown(e, item.id)}
               tabIndex="0"
-              listid={item.id}
             >
               {props.mentionable ? (
                 <MentionableReadonly
