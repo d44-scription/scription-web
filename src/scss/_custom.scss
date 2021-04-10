@@ -20,6 +20,10 @@ $breadcrumb-divider: quote(">");
   color: $input-color;
 }
 
+.list-group-item {
+  color: $dark;
+}
+
 .list-group-item,
 link {
   cursor: pointer;

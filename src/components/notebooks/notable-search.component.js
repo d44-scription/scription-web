@@ -7,8 +7,9 @@ function NotableSearch(props) {
   const history = useHistory();
 
   const customStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "#fef4e3" }),
-    menu: (styles) => ({ ...styles, backgroundColor: "#fef4e3" }),
+    control: (styles) => ({ ...styles, backgroundColor: "#fdf0d9" }),
+    menu: (styles) => ({ ...styles, backgroundColor: "#fdf0d9" }),
+    placeholder: (styles) => ({ ...styles, color: "#525252" }),
     option: (provided, { data, isFocused }) => ({
       ...provided,
       color: "#424242",
@@ -60,6 +61,7 @@ function NotableSearch(props) {
       onChange={onChange}
       placeholder="Search notables"
       styles={customStyles}
+      aria-label="Search notables"
     />
   );
 }

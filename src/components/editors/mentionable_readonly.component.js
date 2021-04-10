@@ -5,7 +5,12 @@ import "scss/mentionable.scss";
 function MentionableReadonly(props) {
   return (
     <div>
-      <MentionsInput value={props.value} className="mentions-readonly" readOnly>
+      <MentionsInput
+        value={props.value}
+        className="mentions-readonly"
+        readOnly
+        aria-label="Note contents"
+      >
         <Mention
           trigger="@"
           markup="@[__display__](@__id__)"
