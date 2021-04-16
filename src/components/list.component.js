@@ -50,7 +50,8 @@ function List(props) {
         {props.items &&
           props.items.map((item) => (
             <ListGroup.Item
-              as="li"
+              as="section"
+              style={{padding: "1rem"}}
               variant="primary"
               key={item.id}
               active={item.id === props.currentId}
@@ -64,9 +65,7 @@ function List(props) {
                   value={truncate(item[props.label || "name"])}
                 />
               ) : (
-                <p style={{ margin: "0.75rem" }}>
-                  {truncate(item[props.label || "name"])}
-                </p>
+                truncate(item[props.label || "name"])
               )}
             </ListGroup.Item>
           ))}
