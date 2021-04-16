@@ -61,7 +61,7 @@ describe("Show component", () => {
       )[0]
     ).toBeVisible();
 
-    expect(screen.getByText("Search notables")).toBeVisible();
+    expect(screen.getByText("Type here to search...")).toBeVisible();
 
     expect(
       screen.getByTitle("View characters for Notebook 1")

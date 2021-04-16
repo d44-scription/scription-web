@@ -29,16 +29,18 @@ function Search(props) {
   };
 
   return (
-    <span className="w-100">
+    <Form.Group controlId="Search" className="w-100">
+      <Form.Label className="mb-0">Search List</Form.Label>
+
       <Form.Control
-        placeholder="Search list..."
+        placeholder="Type here to search..."
         className="search-field"
         value={query}
         onChange={onChange}
       />
 
       <p hidden={hideMessage}>No search results found</p>
-    </span>
+    </Form.Group>
   );
 }
 

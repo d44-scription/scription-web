@@ -39,7 +39,7 @@ describe("Notable search component", () => {
   test("rendering elements & making query requests correctly", async () => {
     render(<NotableSearch notebookId={notebookId} />);
 
-    const textField = screen.getByText("Search notables");
+    const textField = screen.getByText("Type here to search...");
 
     expect(screen.queryByText("Notable 1")).toBeNull();
     expect(screen.queryByText("Notable 2")).toBeNull();

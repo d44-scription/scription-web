@@ -73,11 +73,14 @@ function Edit(props) {
         helpText="Use shift+enter to add a new line"
       />
 
-      <Link to={`/notebooks/${props.id}`} tabIndex="-1">
-        <Button variant="primary" className="mt-5 w-100">
-          Open Notebook
-        </Button>
-      </Link>
+      <Button
+        variant="primary"
+        className="mt-5 w-100"
+        to={`/notebooks/${props.id}`}
+        as={Link}
+      >
+        Open Notebook
+      </Button>
 
       <Button
         variant="danger"

@@ -1,11 +1,17 @@
 @import "./_variables.scss";
 
-li:focus,
-li:focus-within {
+aside:focus,
+aside:focus-within {
   @include tabbable;
 
   section {
     text-decoration: underline;
+  }
+}
+
+ul {
+  .active {
+    color: $dark !important;
   }
 }
 

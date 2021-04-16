@@ -80,14 +80,14 @@ function Edit(props) {
         placeholder="No description saved"
       />
 
-      <Link
+      <Button
         to={`/notebooks/${props.notebookId}/${props.type}/${props.id}`}
-        tabIndex="-1"
+        as={Link}
+        variant="primary"
+        className="mt-5 w-100"
       >
-        <Button variant="primary" className="mt-5 w-100">
-          View {Helper.singular(props.type)}
-        </Button>
-      </Link>
+        View {Helper.singular(props.type)}
+      </Button>
 
       <Button
         variant="danger"
