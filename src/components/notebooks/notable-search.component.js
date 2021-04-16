@@ -2,12 +2,17 @@ import React from "react";
 import Select from "react-select/async";
 import NotableDataService from "services/notable.service";
 import { useHistory } from "react-router-dom";
+import { Form } from "react-bootstrap";
 
 function NotableSearch(props) {
   const history = useHistory();
 
   const customStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "#fdf0d9" }),
+    control: (styles, state) => ({
+      ...styles,
+      backgroundColor: "#fdf0d9",
+      boxShadow: state.isFocused ? "0 0 0 0.25rem #f5b34240" : "",
+    }),
     menu: (styles) => ({ ...styles, backgroundColor: "#fdf0d9" }),
     placeholder: (styles) => ({ ...styles, color: "#525252" }),
     option: (provided, { data, isFocused }) => ({
@@ -56,13 +61,17 @@ function NotableSearch(props) {
   };
 
   return (
-    <Select
-      loadOptions={fetchNotables}
-      onChange={onChange}
-      placeholder="Search notables"
-      styles={customStyles}
-      aria-label="Search notables"
-    />
+    <Form.Group>
+      <Form.Label className="mb-0">Search all notables:</Form.Label>
+
+      <Select
+        loadOptions={fetchNotables}
+        onChange={onChange}
+        placeholder="Type here to search..."
+        styles={customStyles}
+        aria-label="Search notables"
+      />
+    </Form.Group>
   );
 }
 
