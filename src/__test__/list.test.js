@@ -120,9 +120,9 @@ describe("List component", () => {
     });
 
     test("responding to tab with space", async () => {
-      const listItem1 = screen.getByText("Item 1").closest("li");
-      const listItem2 = screen.getByText("Item 2").closest("li");
-      const listItem3 = screen.getByText("Item 3").closest("li");
+      const listItem1 = screen.getByText("Item 1");
+      const listItem2 = screen.getByText("Item 2");
+      const listItem3 = screen.getByText("Item 3");
 
       expect(currentId).toBe(-1);
 
@@ -152,9 +152,9 @@ describe("List component", () => {
     });
 
     test("responding to tab with enter", async () => {
-      const listItem1 = screen.getByText("Item 1").closest("li");
-      const listItem2 = screen.getByText("Item 2").closest("li");
-      const listItem3 = screen.getByText("Item 3").closest("li");
+      const listItem1 = screen.getByText("Item 1");
+      const listItem2 = screen.getByText("Item 2");
+      const listItem3 = screen.getByText("Item 3");
 
       expect(currentId).toBe(-1);
 

@@ -60,9 +60,9 @@ describe("Recents component", () => {
       expect(screen.queryByText("Item Page")).toBeNull();
       expect(screen.getByText("Recently Accessed")).toBeVisible();
 
-      const listItem1 = screen.getByText("Notable 1").closest("li");
-      const listItem2 = screen.getByText("Notable 2").closest("li");
-      const listItem3 = screen.getByText("Notable 3").closest("li");
+      const listItem1 = screen.getByText("Notable 1");
+      const listItem2 = screen.getByText("Notable 2");
+      const listItem3 = screen.getByText("Notable 3");
 
       // Confirm all list elements are rendered
       expect(listItem1).toBeInTheDocument();
@@ -83,7 +83,7 @@ describe("Recents component", () => {
       expect(screen.queryByText("Item Page")).toBeNull();
       expect(screen.getByText("Recently Accessed")).toBeVisible();
 
-      const listItem1 = screen.getByText("Notable 1").closest("li");
+      const listItem1 = screen.getByText("Notable 1");
 
       // Confirm all list elements are rendered
       expect(listItem1).toBeInTheDocument();
@@ -103,7 +103,7 @@ describe("Recents component", () => {
       expect(screen.queryByText("Item Page")).toBeNull();
       expect(screen.getByText("Recently Accessed")).toBeVisible();
 
-      const listItem1 = screen.getByText("Notable 1").closest("li");
+      const listItem1 = screen.getByText("Notable 1");
 
       // Confirm all list elements are rendered
       expect(listItem1).toBeInTheDocument();

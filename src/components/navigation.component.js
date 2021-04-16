@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import AuthenticationDataService from "services/authentication.service";
 import Person from "./icons/person.component";
+import Exit from "./icons/exit.component";
 
 function Navigation(props) {
   const history = useHistory();
@@ -36,9 +37,13 @@ function Navigation(props) {
                 class="text-dark"
                 hideTitle
               />
+              My Account
             </Button>
 
-            <Button onClick={logout}>Log out</Button>
+            <Button onClick={logout}>
+              <Exit title="Logout" size={36} class="text-dark" />
+              Log out
+            </Button>
           </span>
         ) : (
           <Button onClick={() => history.push("/")}>Log in</Button>

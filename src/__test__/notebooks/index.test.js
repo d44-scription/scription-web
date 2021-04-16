@@ -39,9 +39,9 @@ describe("Index component", () => {
     });
 
     test("rendering a list of notebooks", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list...");
-      const listItem1 = screen.getByText("Notebook 1").closest("li");
-      const listItem2 = screen.getByText("Notebook 2").closest("li");
+      const searchBar = screen.getByPlaceholderText("Type here to search...");
+      const listItem1 = screen.getByText("Notebook 1");
+      const listItem2 = screen.getByText("Notebook 2");
 
       // Confirm all list elements are rendered
       expect(searchBar).toBeInTheDocument();
@@ -115,7 +115,7 @@ describe("Index component", () => {
 
       // Click first list item
       await act(async () => {
-        userEvent.click(screen.getByText("Notebook 1").closest("li"));
+        userEvent.click(screen.getByText("Notebook 1"));
       });
 
       // Confirm new fields are hidden
@@ -167,7 +167,7 @@ describe("Index component", () => {
     });
 
     test("does not render search bar", async () => {
-      const searchBar = screen.queryByPlaceholderText("Search list...");
+      const searchBar = screen.queryByPlaceholderText("Type here to search...");
       expect(searchBar).toBeNull();
     });
   });
