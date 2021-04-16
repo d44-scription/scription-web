@@ -60,11 +60,14 @@ function Login(props) {
         Log in
       </Button>
 
-      <Link to="/register" tabIndex="-1">
-        <Button variant="secondary" className="mt-1 w-75 ml-auto mr-auto">
-          Register
-        </Button>
-      </Link>
+      <Button
+        to="/register"
+        as={Link}
+        variant="secondary"
+        className="mt-1 w-75 ml-auto mr-auto"
+      >
+        Register
+      </Button>
 
       <p className="error-text mb-2 fs-5">{error}</p>
     </Form>

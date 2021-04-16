@@ -90,11 +90,14 @@ function Register(props) {
         Register
       </Button>
 
-      <Link to="/" tabIndex="-1">
-        <Button variant="secondary" className="mt-1 w-75 ml-auto mr-auto">
-          Cancel
-        </Button>
-      </Link>
+      <Button
+        to="/"
+        as={Link}
+        variant="secondary"
+        className="mt-1 w-75 ml-auto mr-auto"
+      >
+        Cancel
+      </Button>
 
       <p className="error-text mb-2 fs-5">{error}</p>
     </Form>

@@ -43,11 +43,14 @@ function Account(props) {
         fontSize="2rem"
       />
 
-      <Link to="/notebooks" tabIndex="-1">
-        <Button variant="secondary" className="mt-1 w-100">
-          Return
-        </Button>
-      </Link>
+      <Button
+        to="/notebooks"
+        as={Link}
+        variant="secondary"
+        className="mt-1 w-100"
+      >
+        Return
+      </Button>
     </div>
   );
 }

@@ -9,6 +9,12 @@ aside:focus-within {
   }
 }
 
+ul {
+  .active {
+    color: $dark !important;
+  }
+}
+
 .search-field {
   margin-bottom: 1rem;
   border-bottom: 2px solid $primary;
