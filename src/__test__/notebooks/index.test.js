@@ -39,7 +39,7 @@ describe("Index component", () => {
     });
 
     test("rendering a list of notebooks", async () => {
-      const searchBar = screen.getByPlaceholderText("Search list...");
+      const searchBar = screen.getByPlaceholderText("Type here to search...");
       const listItem1 = screen.getByText("Notebook 1").closest("li");
       const listItem2 = screen.getByText("Notebook 2").closest("li");
 
@@ -167,7 +167,7 @@ describe("Index component", () => {
     });
 
     test("does not render search bar", async () => {
-      const searchBar = screen.queryByPlaceholderText("Search list...");
+      const searchBar = screen.queryByPlaceholderText("Type here to search...");
       expect(searchBar).toBeNull();
     });
   });

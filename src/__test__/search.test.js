@@ -37,7 +37,7 @@ describe("Search component", () => {
   });
 
   test("searching items", async () => {
-    const searchBar = screen.getByPlaceholderText("Search list...");
+    const searchBar = screen.getByPlaceholderText("Type here to search...");
 
     // Confirm that, by default, all items are included
     expect(queriedItems).toEqual(items);

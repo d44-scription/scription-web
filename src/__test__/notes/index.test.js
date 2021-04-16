@@ -223,7 +223,7 @@ describe("Index component", () => {
     });
 
     test("does not render search bar", async () => {
-      const searchBar = screen.queryByPlaceholderText("Search list...");
+      const searchBar = screen.queryByPlaceholderText("Type here to search...");
       expect(searchBar).toBeNull();
     });
   });
