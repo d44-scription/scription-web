@@ -50,7 +50,7 @@ function List(props) {
         {props.items &&
           props.items.map((item) => (
             <ListGroup.Item
-              as="section"
+              as="aside"
               style={{padding: "1rem"}}
               variant="primary"
               key={item.id}
