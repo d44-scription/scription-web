@@ -55,9 +55,9 @@ describe("Index component", () => {
       // Confirm "add new" button is available, and prop has been correctly trimmed & capitalised
       expect(screen.getByText("Add Character")).toBeVisible();
 
-      const listItem1 = screen.getByText("Notable 1").closest("li");
-      const listItem2 = screen.getByText("Notable 2").closest("li");
-      const listItem3 = screen.getByText("Notable 3").closest("li");
+      const listItem1 = screen.getByText("Notable 1");
+      const listItem2 = screen.getByText("Notable 2");
+      const listItem3 = screen.getByText("Notable 3");
 
       // Confirm all list elements are rendered
       expect(listItem1).toBeInTheDocument();
@@ -126,7 +126,7 @@ describe("Index component", () => {
 
       // Click first list item
       await act(async () => {
-        userEvent.click(screen.getByText("Notable 1").closest("li"));
+        userEvent.click(screen.getByText("Notable 1"));
       });
 
       // Confirm new fields are hidden

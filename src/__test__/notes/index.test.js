@@ -68,13 +68,13 @@ describe("Index component", () => {
       // Confirm elements with mentions are rendered in a user-friendly format
       const listItem1 = screen
         .getByText("Note 1 mentions Wheaty")
-        .closest("li");
+        .closest("aside");
       const listItem2 = screen
         .getByText("Note 2 mentions Wheaty and Diskworld")
-        .closest("li");
+        .closest("aside");
       const listItem3 = screen
         .getByText("Note 3 mentions Wheaty, Diskworld, and Luggage")
-        .closest("li");
+        .closest("aside");
 
       // Confirm all list elements are rendered
       expect(listItem1).toBeInTheDocument();
