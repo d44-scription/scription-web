@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import NotebookDataService from "services/notebook.service";
 import InlineEditor from "components/editors/inline_editor.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "components/modal.component";
+import ConfirmModal from "components/confirm-modal.component";
 import { Link } from "react-router-dom";
 
 function Edit(props) {
@@ -60,17 +60,18 @@ function Edit(props) {
         setValue={setName}
         action={saveName}
         onSubmitAction={syncList}
-        placeholder="No name saved"
         fontSize="2rem"
+        formLabel="Notebook Name"
       />
 
       <InlineEditor
         value={summary}
-        type="textarea"
+        multiline
         setValue={setSummary}
         action={saveSummary}
         placeholder="No summary saved"
         helpText="Use shift+enter to add a new line"
+        formLabel="Notebook Summary"
       />
 
       <Button

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import NoteDataService from "services/note.service";
 import Mentionable from "components/editors/mentionable.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "components/modal.component";
+import ConfirmModal from "components/confirm-modal.component";
 
 function Edit(props) {
   const [content, setContent] = useState("");
@@ -53,6 +53,7 @@ function Edit(props) {
         notebookId={props.notebookId}
         action={submitNote}
         onSubmitAction={syncList}
+        formLabel="Note Contents"
       />
 
       <Button

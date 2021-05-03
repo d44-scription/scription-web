@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import "scss/messages.scss";
+import PropTypes from "prop-types";
 
 function Messages(props) {
   return (
@@ -23,5 +24,18 @@ function Messages(props) {
     </div>
   );
 }
+
+Messages.propTypes = {
+  // Visibility status and actions of help text
+  hideHelpText: PropTypes.bool,
+  saveAction: PropTypes.func.isRequired,
+  cancelAction: PropTypes.func.isRequired,
+
+  // The messages to show - can be null
+  error: PropTypes.string,
+  success: PropTypes.string,
+  help: PropTypes.string,
+};
+
 
 export default Messages;

@@ -65,9 +65,9 @@ describe("Recents component", () => {
       const listItem3 = screen.getByText("Notable 3");
 
       // Confirm all list elements are rendered
-      expect(listItem1).toBeInTheDocument();
-      expect(listItem2).toBeInTheDocument();
-      expect(listItem3).toBeInTheDocument();
+      expect(listItem1).toBeVisible();
+      expect(listItem2).toBeVisible();
+      expect(listItem3).toBeVisible();
 
       userEvent.click(listItem1);
 
@@ -86,7 +86,7 @@ describe("Recents component", () => {
       const listItem1 = screen.getByText("Notable 1");
 
       // Confirm all list elements are rendered
-      expect(listItem1).toBeInTheDocument();
+      expect(listItem1).toBeVisible();
 
       userEvent.tab();
       userEvent.type(listItem1, "{enter}", { skipClick: true });
@@ -106,7 +106,7 @@ describe("Recents component", () => {
       const listItem1 = screen.getByText("Notable 1");
 
       // Confirm all list elements are rendered
-      expect(listItem1).toBeInTheDocument();
+      expect(listItem1).toBeVisible();
 
       userEvent.tab();
       userEvent.type(listItem1, " ", { skipClick: true });

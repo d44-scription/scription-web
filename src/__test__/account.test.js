@@ -29,6 +29,7 @@ describe("Account component", () => {
   });
 
   const confirmRestState = () => {
+    expect(screen.getByText("Account Information")).toBeVisible();
     expect(screen.getByText("User")).toBeVisible();
     expect(screen.getByText("test@example.com")).toBeVisible();
     expect(screen.getByText("Return")).toBeVisible();
@@ -75,7 +76,7 @@ describe("Account component", () => {
       });
 
       expect(
-        screen.getByText("Changes have been saved successfully")
+        screen.getByText("Successfully saved.")
       ).toBeVisible();
       userEvent.type(emailField, "test");
 

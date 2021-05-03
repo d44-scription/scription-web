@@ -7,6 +7,7 @@ describe("Mentionable component", () => {
   const successMessage = "Success Message";
   const errorMessage = "Error Message";
   const notebookId = 1;
+  const formLabel = "Form Label"
   let value = "";
   const setValue = (v) => {
     value = v;
@@ -46,7 +47,17 @@ describe("Mentionable component", () => {
       });
     };
 
-    render(<Mentionable action={action} value={value} setValue={setValue} />);
+    render(
+      <Mentionable
+        action={action}
+        value={value}
+        setValue={setValue}
+        formLabel={formLabel}
+        notebookId={0}
+      />
+    );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(
@@ -54,7 +65,7 @@ describe("Mentionable component", () => {
     ).toBeNull();
 
     // Type into text box and hit enter
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "Note contents{enter}");
@@ -72,20 +83,36 @@ describe("Mentionable component", () => {
         value={value}
         setValue={setValue}
         placeholder="Test placeholder"
+        action={() => {}}
+        formLabel={formLabel}
+        notebookId={0}
       />
     );
 
+    expect(screen.getByText(formLabel)).toBeVisible();
+
     // Confirm field has desired placeholder
-    expect(screen.queryByPlaceholderText("No content")).toBeNull();
+    expect(screen.queryByPlaceholderText("Click here to edit")).toBeNull();
     expect(screen.getByPlaceholderText("Test placeholder")).toBeVisible();
   });
 
   describe("Cancelling submission", () => {
     test("Clearing input when clearOnCancel prop is given", () => {
-      render(<Mentionable value={value} setValue={setValue} clearOnCancel />);
+      render(
+        <Mentionable
+          value={value}
+          setValue={setValue}
+          clearOnCancel
+          action={() => {}}
+          formLabel={formLabel}
+          notebookId={0}
+        />
+      );
+
+      expect(screen.getByText(formLabel)).toBeVisible();
 
       // Add content to text field
-      const textField = screen.getByPlaceholderText("No content");
+      const textField = screen.getByPlaceholderText("Click here to edit");
 
       userEvent.type(textField, "X");
       expect(value).toBe("X");
@@ -96,10 +123,20 @@ describe("Mentionable component", () => {
     });
 
     test("Persisting input when clearOnCancel prop is false", () => {
-      render(<Mentionable value={value} setValue={setValue} />);
+      render(
+        <Mentionable
+          value={value}
+          setValue={setValue}
+          action={() => {}}
+          formLabel={formLabel}
+          notebookId={0}
+        />
+      );
+
+      expect(screen.getByText(formLabel)).toBeVisible();
 
       // Add content to text field
-      const textField = screen.getByPlaceholderText("No content");
+      const textField = screen.getByPlaceholderText("Click here to edit");
 
       userEvent.type(textField, "X");
       expect(value).toBe("X");
@@ -119,7 +156,16 @@ describe("Mentionable component", () => {
       });
     };
 
-    render(<Mentionable action={action} setValue={setValue} />);
+    render(
+      <Mentionable
+        action={action}
+        setValue={setValue}
+        formLabel={formLabel}
+        notebookId={0}
+      />
+    );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(
@@ -127,7 +173,7 @@ describe("Mentionable component", () => {
     ).toBeNull();
 
     // Type into text box and hit enter
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "Note contents{enter}");
@@ -144,13 +190,22 @@ describe("Mentionable component", () => {
       return Promise.resolve();
     };
 
-    render(<Mentionable action={action} setValue={setValue} />);
+    render(
+      <Mentionable
+        action={action}
+        setValue={setValue}
+        formLabel={formLabel}
+        notebookId={0}
+      />
+    );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(screen.queryByText("Successfully saved.")).toBeNull();
 
     // Type into text box and hit enter
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "Note contents{enter}");
@@ -169,13 +224,22 @@ describe("Mentionable component", () => {
       });
     };
 
-    render(<Mentionable action={action} setValue={setValue} />);
+    render(
+      <Mentionable
+        action={action}
+        setValue={setValue}
+        formLabel={formLabel}
+        notebookId={0}
+      />
+    );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(screen.queryByText(errorMessage)).toBeNull();
 
     // Type into text box and hit enter
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "Note contents{enter}");
@@ -196,14 +260,18 @@ describe("Mentionable component", () => {
         value={value}
         setValue={setValue}
         clearOnSubmit
+        formLabel={formLabel}
+        notebookId={0}
       />
     );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(value).toBe("");
 
     // Type into text box
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "Note contents");
@@ -222,13 +290,24 @@ describe("Mentionable component", () => {
   });
 
   test("Responding to clearOnCancel correctly", async () => {
-    render(<Mentionable value={value} setValue={setValue} clearOnCancel />);
+    render(
+      <Mentionable
+        value={value}
+        setValue={setValue}
+        clearOnCancel
+        action={() => {}}
+        formLabel={formLabel}
+        notebookId={0}
+      />
+    );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(value).toBe("");
 
     // Type into text box
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "Note contents");
@@ -263,14 +342,18 @@ describe("Mentionable component", () => {
         value={value}
         setValue={setValue}
         onSubmitAction={onSubmitAction}
+        formLabel={formLabel}
+        notebookId={0}
       />
     );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Sanity check
     expect(testVal).toBe(false);
 
     // Type into text box
-    const textField = screen.getByPlaceholderText("No content");
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     // Cancel data
     await act(async () => {
@@ -294,8 +377,13 @@ describe("Mentionable component", () => {
       <Mentionable
         value="This note mentions @[Wheaty](@1), #[Diskworld](#1), and :[Luggage](:1)"
         setValue={setValue}
+        action={() => {}}
+        formLabel={formLabel}
+        notebookId={0}
       />
     );
+
+    expect(screen.getByText(formLabel)).toBeVisible();
 
     // Confirm mentions are formatted nicely
     expect(
@@ -307,10 +395,18 @@ describe("Mentionable component", () => {
     // FIXME: Add tests for the list rendering correctly.
 
     render(
-      <Mentionable value={value} setValue={setValue} notebookId={notebookId} />
+      <Mentionable
+        value={value}
+        setValue={setValue}
+        notebookId={notebookId}
+        action={() => {}}
+        formLabel={formLabel}
+      />
     );
 
-    const textField = screen.getByPlaceholderText("No content");
+    expect(screen.getByText(formLabel)).toBeVisible();
+
+    const textField = screen.getByPlaceholderText("Click here to edit");
 
     await act(async () => {
       userEvent.type(textField, "@");

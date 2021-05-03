@@ -85,7 +85,7 @@ function Index(props) {
         id={currentId}
         retrieveNotables={retrieveNotables}
         type={props.type}
-        notebookId={notebookId}
+        notebookId={parseInt(notebookId)}
         newRecord={newRecord}
         setNewRecord={setNewRecord}
       />

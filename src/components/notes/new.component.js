@@ -37,7 +37,7 @@ function New(props) {
         notebookId={props.notebookId}
         action={submitNote}
         onSubmitAction={updatePage}
-        placeholder="Note contents"
+        formLabel="Note Contents"
         clearOnCancel
       />
 

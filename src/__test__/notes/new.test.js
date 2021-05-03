@@ -39,7 +39,7 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(screen.getByPlaceholderText("Note contents")).toBeVisible();
+    expect(screen.getByText("Note Contents")).toBeVisible();
 
     expect(
       screen.getByText(
@@ -53,7 +53,7 @@ describe("New component", () => {
     await act(async () => {
       render(
         <New
-          notebookId="1"
+          notebookId={1}
           notableId="2"
           setNewRecord={() => {
             setNewRecordTestValue = true;
@@ -76,7 +76,7 @@ describe("New component", () => {
     expect(retrieveNotesTestValue).toBe(false);
 
     // "Create" a new note
-    userEvent.click(screen.getByPlaceholderText("Note contents"));
+    userEvent.click(screen.getByPlaceholderText("Click here to edit"));
     userEvent.type(screen.getByRole("textbox"), "Note");
 
     await act(async () => {
@@ -96,7 +96,7 @@ describe("New component", () => {
     await act(async () => {
       render(
         <New
-          notebookId="1"
+          notebookId={1}
           setNewRecord={() => {
             setNewRecordTestValue = true;
           }}
@@ -118,7 +118,7 @@ describe("New component", () => {
     expect(retrieveNotesTestValue).toBe(false);
 
     // "Create" a new note
-    userEvent.click(screen.getByPlaceholderText("Note contents"));
+    userEvent.click(screen.getByPlaceholderText("Click here to edit"));
     userEvent.type(screen.getByRole("textbox"), "Note");
 
     await act(async () => {

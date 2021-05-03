@@ -10,8 +10,8 @@ describe("Index component", () => {
   const notableId = 2;
 
   describe("With notes", () => {
-    const editPlaceholderText = "No content";
-    const newPlaceholderText = "Note contents";
+    const placeholderText = "Click here to edit";
+    const formLabel = "Note Contents";
     const helpText =
       "Use @ to reference a character, : to reference an item, and # to reference a location";
     const deleteText = "Delete Note";
@@ -77,9 +77,9 @@ describe("Index component", () => {
         .closest("aside");
 
       // Confirm all list elements are rendered
-      expect(listItem1).toBeInTheDocument();
-      expect(listItem2).toBeInTheDocument();
-      expect(listItem3).toBeInTheDocument();
+      expect(listItem1).toBeVisible();
+      expect(listItem2).toBeVisible();
+      expect(listItem3).toBeVisible();
 
       // Confirm that, by default, no list items are selected
       expect(listItem1).not.toHaveClass("active");
@@ -87,11 +87,10 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
 
       // Edit page not shown when no items selected
-      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
 
       // New page not shown before "Add" button is clicked
-      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
       expect(screen.queryByText(cancelText)).toBeNull();
 
       // Confirm help text is only visible when on new or edit pages
@@ -106,11 +105,10 @@ describe("Index component", () => {
       });
 
       // Edit page not shown when no items selected
-      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
 
       // New page shown
-      expect(screen.getByPlaceholderText(newPlaceholderText)).toBeVisible();
+      expect(screen.getByPlaceholderText(placeholderText)).toBeVisible();
       expect(screen.getByText(cancelText)).toBeVisible();
 
       // Confirm help text is only visible when on new or edit pages
@@ -125,11 +123,10 @@ describe("Index component", () => {
       });
 
       // Edit page not shown when no items selected
-      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
 
       // New page not shown
-      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
       expect(screen.queryByText(cancelText)).toBeNull();
 
       // Confirm help text is only visible when on new or edit pages
@@ -154,11 +151,10 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
 
       // Edit page shows
-      expect(screen.getByPlaceholderText(editPlaceholderText)).toBeVisible();
+      expect(screen.getByPlaceholderText(placeholderText)).toBeVisible();
       expect(screen.getByText(deleteText)).toBeVisible();
 
       // New page not shown before "Add" button is clicked
-      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
       expect(screen.queryByText(cancelText)).toBeNull();
 
       // Confirm help text is visible on new or edit pages
@@ -178,11 +174,10 @@ describe("Index component", () => {
       expect(listItem3).not.toHaveClass("active");
 
       // Edit page not shown when no items selected
-      expect(screen.queryByPlaceholderText(editPlaceholderText)).toBeNull();
       expect(screen.queryByText(deleteText)).toBeNull();
 
       // New page not shown
-      expect(screen.queryByPlaceholderText(newPlaceholderText)).toBeNull();
+      expect(screen.queryByPlaceholderText(placeholderText)).toBeNull();
       expect(screen.queryByText(cancelText)).toBeNull();
 
       // Confirm help text is only visible when on new or edit pages

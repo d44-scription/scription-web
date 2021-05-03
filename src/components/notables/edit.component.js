@@ -3,7 +3,7 @@ import NotableDataService from "services/notable.service";
 import InlineEditor from "components/editors/inline_editor.component";
 import Mentionable from "components/editors/mentionable.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "components/modal.component";
+import ConfirmModal from "components/confirm-modal.component";
 import Helper from "helpers/notable_helper";
 import { Link } from "react-router-dom";
 
@@ -68,7 +68,7 @@ function Edit(props) {
         setValue={setName}
         action={saveName}
         onSubmitAction={syncList}
-        placeholder="No name saved"
+        formLabel={`${Helper.singular(props.type)} Name`}
         fontSize="2rem"
       />
 
@@ -78,6 +78,7 @@ function Edit(props) {
         notebookId={props.notebookId}
         action={saveDescription}
         placeholder="No description saved"
+        formLabel={`${Helper.singular(props.type)} Description`}
       />
 
       <Button

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import PropTypes from "prop-types";
 
 function Search(props) {
   const [query, setQuery] = useState("");
@@ -13,7 +14,7 @@ function Search(props) {
 
     if (query !== "") {
       searchedItems = searchedItems.filter((item) => {
-        return item[props.label || "name"]
+        return item[props.label]
           .toLowerCase()
           .includes(query.toLowerCase());
       });
@@ -43,5 +44,18 @@ function Search(props) {
     </Form.Group>
   );
 }
+
+Search.defaultProps = {
+  label: "name",
+};
+
+Search.propTypes = {
+  // Items to be searched
+  setQueriedItems: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+
+  // Text to show
+  label: PropTypes.string.isRequired,
+};
 
 export default Search;

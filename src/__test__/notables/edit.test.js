@@ -61,13 +61,13 @@ describe("Edit component", () => {
 
   test("rendering information for a given notable", async () => {
     // Confirm data is retrieved and displayed correctly
-    expect(screen.getByText("Character 1")).toBeInTheDocument();
+    expect(screen.getByText("Character 1")).toBeVisible();
     expect(
       screen.getByText("Mock description referencing Wheaty")
-    ).toBeInTheDocument();
+    ).toBeVisible();
 
-    expect(screen.getByText("View Character")).toBeInTheDocument();
-    expect(screen.getByText("Delete Character")).toBeInTheDocument();
+    expect(screen.getByText("View Character")).toBeVisible();
+    expect(screen.getByText("Delete Character")).toBeVisible();
 
     // Click delete button
     await act(async () => {
@@ -145,13 +145,13 @@ describe("Edit component", () => {
     userEvent.type(deleteButton, "{space}");
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete Character?")).toBeInTheDocument();
+    expect(screen.getByText("Delete Character?")).toBeVisible();
 
     expect(
       screen.getByText(
         "This will delete Character 1 and all associated notes. Are you sure you wish to continue?"
       )
-    ).toBeInTheDocument();
+    ).toBeVisible();
   });
 
   describe("Rendering success messages correctly", () => {
@@ -173,7 +173,7 @@ describe("Edit component", () => {
 
       // Confirm success message shows
       expect(
-        screen.getByText("Changes have been saved successfully")
+        screen.getByText("Successfully saved.")
       ).toBeVisible();
     });
 

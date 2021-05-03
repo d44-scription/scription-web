@@ -2,7 +2,6 @@
 
 .inline-label {
   border-bottom: 2px dashed $subtle;
-  margin: 1rem 0 0 0;
   font-weight: 500;
   cursor: pointer;
 
@@ -14,6 +13,11 @@
 .inline-text-label {
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.inline-form-label {
+  margin: 1.5rem 0 0 0;
+  color: $subtle;
 }
 
 .placeholder {

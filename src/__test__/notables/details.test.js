@@ -13,7 +13,8 @@ describe("Details component", () => {
 
   const confirmRestState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByText("Name Character")).toBeNull();
+    expect(screen.queryByText("Character Name")).toBeNull();
+    expect(screen.queryByText("Click here to edit")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are not shown
@@ -25,8 +26,9 @@ describe("Details component", () => {
 
   const confirmNewNotableState = () => {
     // Confirm new fields are shown
-    expect(screen.getByText("Name Character")).toBeInTheDocument();
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    expect(screen.getByText("Character Name")).toBeVisible();
+    expect(screen.getByText("Click here to edit")).toBeVisible();
+    expect(screen.getByText("Cancel")).toBeVisible();
 
     // Confirm edit fields are not shown
     expect(screen.queryByText("Character 1")).toBeNull();
@@ -37,14 +39,15 @@ describe("Details component", () => {
 
   const confirmViewNotableState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByText("Name Character")).toBeNull();
+    expect(screen.queryByText("Click here to edit")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are shown
-    expect(screen.getByText("Character 1")).toBeInTheDocument();
-    expect(screen.getAllByText("Mock Description")[0]).toBeInTheDocument();
-    expect(screen.getByText("View Character")).toBeInTheDocument();
-    expect(screen.getByText("Delete Character")).toBeInTheDocument();
+    expect(screen.getByText("Character Name")).toBeVisible();
+    expect(screen.getByText("Character 1")).toBeVisible();
+    expect(screen.getAllByText("Mock Description")[1]).toBeVisible();
+    expect(screen.getByText("View Character")).toBeVisible();
+    expect(screen.getByText("Delete Character")).toBeVisible();
   };
 
   test("rendering details pane when no ID given", async () => {
@@ -54,6 +57,7 @@ describe("Details component", () => {
           type="characters"
           newRecord={newRecord}
           setNewRecord={setNewRecord}
+          notebookId={0}
         />
       </BrowserRouter>
     );
@@ -71,6 +75,7 @@ describe("Details component", () => {
           type="characters"
           newRecord={newRecord}
           setNewRecord={setNewRecord}
+          notebookId={0}
         />
       </BrowserRouter>
     );
@@ -104,7 +109,7 @@ describe("Details component", () => {
       await act(async () => {
         render(
           <BrowserRouter>
-            <Details id={1} type="characters" />
+            <Details id={1} type="characters" notebookId={0} />
           </BrowserRouter>
         );
       });
