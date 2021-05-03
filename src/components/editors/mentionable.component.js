@@ -106,11 +106,13 @@ function Mentionable(props) {
 
   return (
     <div>
+      <label className={`inline-form-label ${props.compact ? "mt-0" : ""}`}>{props.formLabel}</label>
+
       <MentionsInput
         value={props.value}
         onChange={onChange}
         a11ySuggestionsListLabel={"Suggested notables to mention"}
-        placeholder={props.placeholder || "No content"}
+        placeholder={props.placeholder || "Click here to edit"}
         className="mentions"
         onKeyDown={onKeyDown}
         inputRef={inputRef}
@@ -176,7 +178,11 @@ Mentionable.propTypes = {
 
   // Elements visible to users; a label shown above the
   // field and the placeholder shown when no data added
+  formLabel: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+
+  // Remove spacing above input
+  compact: PropTypes.bool,
 
   fontSize: PropTypes.string,
 };

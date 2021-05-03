@@ -68,7 +68,7 @@ function Edit(props) {
         setValue={setName}
         action={saveName}
         onSubmitAction={syncList}
-        formLabel={`Name ${Helper.singular(props.type)}`}
+        formLabel={`${Helper.singular(props.type)} Name`}
         fontSize="2rem"
       />
 
@@ -78,6 +78,7 @@ function Edit(props) {
         notebookId={props.notebookId}
         action={saveDescription}
         placeholder="No description saved"
+        formLabel={`${Helper.singular(props.type)} Description`}
       />
 
       <Button

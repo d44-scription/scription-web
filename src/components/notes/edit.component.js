@@ -53,6 +53,7 @@ function Edit(props) {
         notebookId={props.notebookId}
         action={submitNote}
         onSubmitAction={syncList}
+        formLabel="Note Contents"
       />
 
       <Button

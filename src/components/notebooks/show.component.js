@@ -68,7 +68,8 @@ function Show(props) {
           notebookId={parseInt(id)}
           action={submitNote}
           onSubmitAction={onSubmitAction}
-          placeholder="Click here to add a note"
+          formLabel="Note Contents"
+          compact
           clearOnCancel
           clearOnSubmit
         />
@@ -77,14 +78,15 @@ function Show(props) {
           className="mt-4"
           style={{ display: previewId ? "inherit" : "none" }}
         >
-          <h3>Recently Added</h3>
+          <h3 className="mb-0">Recently Added</h3>
 
           <Mentionable
             value={preview}
             setValue={setPreview}
             notebookId={parseInt(id)}
             action={updatePreview}
-            placeholder="No content to show"
+            compact
+            formLabel="Note Contents"
           />
         </section>
       </div>
