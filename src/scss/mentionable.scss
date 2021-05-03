@@ -29,6 +29,32 @@
       color: transparent;
     }
   }
+
+  ::-webkit-input-placeholder {
+    color: $subtle;
+    font-style: italic;
+  }
+
+  ::-moz-placeholder {
+    color: $subtle;
+    font-style: italic;
+  }
+
+  :-ms-input-placeholder {
+    /** notice that ie has only a single colon) */
+    color: $subtle;
+    font-style: italic;
+  }
+
+  ::-webkit-input-placeholder {
+    color: $subtle;
+    font-style: italic;
+  }
+
+  ::placeholder {
+    color: $subtle;
+    font-style: italic;
+  }
 }
 
 .mentions-readonly {

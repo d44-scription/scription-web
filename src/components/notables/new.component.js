@@ -29,7 +29,7 @@ function New(props) {
         setValue={setName}
         action={saveNotable}
         onSubmitAction={updatePage}
-        formLabel={`Name ${Helper.singular(props.type)}`}
+        formLabel={`${Helper.singular(props.type)} Name`}
         fontSize="2rem"
       />
 

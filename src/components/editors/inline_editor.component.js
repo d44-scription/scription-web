@@ -37,7 +37,7 @@ function InlineEditor(props) {
         // If response is successful return to rest state
         setIsBusy(false);
         setError("");
-        setSuccess("Changes have been saved successfully");
+        setSuccess("Successfully saved.");
         setCacheValue(props.value);
 
         // If any additional actions need to be carried out, carry them out

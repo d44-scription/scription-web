@@ -3,6 +3,7 @@ import { MentionsInput, Mention } from "react-mentions";
 import NotableDataService from "services/notable.service";
 import "scss/mentionable.scss";
 import Messages from "./messages.component";
+import PropTypes from "prop-types";
 
 function Mentionable(props) {
   // Store reference to the input field
@@ -105,14 +106,17 @@ function Mentionable(props) {
 
   return (
     <div>
+      <label className={`inline-form-label ${props.compact ? "mt-0" : ""}`}>{props.formLabel}</label>
+
       <MentionsInput
         value={props.value}
         onChange={onChange}
         a11ySuggestionsListLabel={"Suggested notables to mention"}
-        placeholder={props.placeholder || "No content"}
+        placeholder={props.placeholder || "Click here to edit"}
         className="mentions"
         onKeyDown={onKeyDown}
         inputRef={inputRef}
+        style={{ fontSize: props.fontSize || "1.5rem" }}
       >
         <Mention
           trigger="@"
@@ -153,5 +157,34 @@ function Mentionable(props) {
     </div>
   );
 }
+
+Mentionable.propTypes = {
+  // The action to complete when data changed
+  action: PropTypes.func.isRequired,
+
+  // Optional callback to carry out after changes submitted
+  onSubmitAction: PropTypes.func,
+
+  // Manage the displayed value
+  setValue: PropTypes.func.isRequired,
+  value: PropTypes.string,
+
+  // The notebook to retrieve notables from
+  notebookId: PropTypes.number.isRequired,
+
+  // Empty text box when submit is confirmed or cancelled, respectively
+  clearOnSubmit: PropTypes.bool,
+  clearOnCancel: PropTypes.bool,
+
+  // Elements visible to users; a label shown above the
+  // field and the placeholder shown when no data added
+  formLabel: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+
+  // Remove spacing above input
+  compact: PropTypes.bool,
+
+  fontSize: PropTypes.string,
+};
 
 export default Mentionable;

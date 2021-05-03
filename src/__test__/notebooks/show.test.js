@@ -7,8 +7,9 @@ import userEvent from "@testing-library/user-event";
 
 describe("Show component", () => {
   const id = 1;
-  const placeholder = "Click here to add a note";
+  const placeholder = "Click here to edit";
   const successMessage = "Test success message";
+  const formLabel = "Note Contents";
 
   const fakeNotebook = {
     name: "Notebook 1",
@@ -54,7 +55,8 @@ describe("Show component", () => {
 
   const confirmRestState = () => {
     expect(screen.getByText("Notebook 1")).toBeVisible();
-    expect(screen.getByPlaceholderText(placeholder)).toBeVisible();
+    expect(screen.getAllByPlaceholderText(placeholder)[0]).toBeVisible();
+    expect(screen.getAllByText(formLabel)[0]).toBeVisible();
     expect(
       screen.getAllByText(
         "Use @ to reference a character, : to reference an item, and # to reference a location"
