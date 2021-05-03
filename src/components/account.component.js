@@ -31,7 +31,8 @@ function Account(props) {
         value={displayName}
         setValue={setDisplayName}
         action={saveDisplayName}
-        placeholder="No Display Name"
+        formLabel="Display Name"
+        placeholder="No display name"
         fontSize="2rem"
       />
 
@@ -39,7 +40,7 @@ function Account(props) {
         value={email}
         setValue={setEmail}
         action={saveEmail}
-        placeholder="Please enter an email"
+        formLabel="Email Address"
         fontSize="2rem"
       />
 

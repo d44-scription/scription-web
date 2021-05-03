@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("Inline editor component", () => {
   let value = "Test Text";
+  let formLabel = "Form Label";
 
   const setValue = (v) => {
     value = v;
@@ -18,6 +19,7 @@ describe("Inline editor component", () => {
     const confirmRestState = () => {
       // Confirm text span shows
       expect(screen.getByText(value)).toBeVisible();
+      expect(screen.getByText(formLabel)).toBeVisible();
 
       // Confirm help text does not show
       expect(screen.queryByRole("button", { name: "enter" })).toBeNull();
@@ -31,6 +33,7 @@ describe("Inline editor component", () => {
     const confirmActiveState = () => {
       // Confirm text span does not show
       expect(screen.queryByText(value)).not.toBeVisible();
+      expect(screen.queryByText(formLabel)).toBeVisible();
 
       // Confirm help text shows
       expect(screen.getByRole("button", { name: "enter" })).toBeVisible();
@@ -51,6 +54,7 @@ describe("Inline editor component", () => {
             value={value}
             setValue={setValue}
             action={onSubmitAction}
+            formLabel={formLabel}
           />
         );
       });
@@ -258,6 +262,7 @@ describe("Inline editor component", () => {
             value={value}
             setValue={setValue}
             action={onSubmitAction}
+            formLabel={formLabel}
           />
         );
       });
@@ -299,6 +304,7 @@ describe("Inline editor component", () => {
             setValue={setValue}
             action={action}
             onSubmitAction={onSubmitAction}
+            formLabel={formLabel}
           />
         );
       });
@@ -332,6 +338,7 @@ describe("Inline editor component", () => {
               setValue={setValue}
               action={() => {}}
               fontSize={fontSize}
+              formLabel={formLabel}
             />
           );
         });
@@ -354,7 +361,12 @@ describe("Inline editor component", () => {
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
           render(
-            <InlineEditor value={value} setValue={setValue} action={() => {}} />
+            <InlineEditor
+              value={value}
+              setValue={setValue}
+              action={() => {}}
+              formLabel={formLabel}
+            />
           );
         });
         // Confirm span has correct font size
@@ -385,6 +397,7 @@ describe("Inline editor component", () => {
               setValue={setValue}
               action={() => {}}
               fontSize={fontSize}
+              formLabel={formLabel}
             />
           );
         });
@@ -414,6 +427,7 @@ describe("Inline editor component", () => {
               setValue={setValue}
               action={() => {}}
               multiline
+              formLabel={formLabel}
             />
           );
         });
