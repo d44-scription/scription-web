@@ -3,7 +3,7 @@ import Exit from "components/icons/exit.component";
 
 describe("Exit icon", () => {
   test("default rendering", () => {
-    render(<Exit />);
+    render(<Exit class="text-dark" />);
 
     const icon = screen.getByTitle("Exit").closest("svg");
 
@@ -17,7 +17,7 @@ describe("Exit icon", () => {
   });
 
   test("with custom title", () => {
-    render(<Exit title="Test title" />);
+    render(<Exit title="Test title" class="text-dark" />);
 
     expect(screen.queryByTitle("Exit")).toBeNull();
 
