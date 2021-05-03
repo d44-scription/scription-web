@@ -66,7 +66,7 @@ function Edit(props) {
 
       <InlineEditor
         value={summary}
-        type="textarea"
+        multiline
         setValue={setSummary}
         action={saveSummary}
         placeholder="No summary saved"

@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import "scss/inline-editor.scss";
 import Messages from "./messages.component";
+import PropTypes from "prop-types";
 
 function InlineEditor(props) {
   // Define callbacks for GETting and SETting the rest & busy states of the component
@@ -136,7 +137,7 @@ function InlineEditor(props) {
   const renderInput = () => {
     return (
       <Form.Control
-        as={props.type === "textarea" ? "textarea" : "input"}
+        as={props.multiline ? "textarea" : "input"}
         rows={4}
         style={{ fontSize: props.fontSize || "1rem" }}
         ref={inputRef}
@@ -177,5 +178,24 @@ function InlineEditor(props) {
     </span>
   );
 }
+
+InlineEditor.propTypes = {
+  // The action to complete when data changed
+  action: PropTypes.func.isRequired,
+
+  // Optional callback to carry out after changes submitted
+  onSubmitAction: PropTypes.func,
+
+  // Manage the displayed value
+  setValue: PropTypes.func.isRequired,
+  value: PropTypes.string,
+
+  // Text or textarea
+  multiline: PropTypes.bool,
+
+  fontSize: PropTypes.string,
+  placeholder: PropTypes.string,
+  helpText: PropTypes.string,
+};
 
 export default InlineEditor;

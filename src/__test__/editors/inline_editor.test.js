@@ -326,7 +326,14 @@ describe("Inline editor component", () => {
 
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
-          render(<InlineEditor value={value} fontSize={fontSize} />);
+          render(
+            <InlineEditor
+              value={value}
+              setValue={setValue}
+              action={() => {}}
+              fontSize={fontSize}
+            />
+          );
         });
 
         // Confirm span has correct font size
@@ -346,7 +353,9 @@ describe("Inline editor component", () => {
       test("with a default font size", async () => {
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
-          render(<InlineEditor value={value} />);
+          render(
+            <InlineEditor value={value} setValue={setValue} action={() => {}} />
+          );
         });
         // Confirm span has correct font size
         expect(
@@ -370,7 +379,13 @@ describe("Inline editor component", () => {
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
           render(
-            <InlineEditor value={value} type="textarea" fontSize={fontSize} />
+            <InlineEditor
+              value={value}
+              multiline
+              setValue={setValue}
+              action={() => {}}
+              fontSize={fontSize}
+            />
           );
         });
 
@@ -393,7 +408,14 @@ describe("Inline editor component", () => {
       test("with a default font size", async () => {
         // Use the asynchronous version of act to apply resolved promises
         await act(async () => {
-          render(<InlineEditor value={value} type="textarea" />);
+          render(
+            <InlineEditor
+              value={value}
+              setValue={setValue}
+              action={() => {}}
+              multiline
+            />
+          );
         });
 
         // Confirm span has correct font size
