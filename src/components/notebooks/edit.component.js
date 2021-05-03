@@ -60,8 +60,8 @@ function Edit(props) {
         setValue={setName}
         action={saveName}
         onSubmitAction={syncList}
-        placeholder="No name saved"
         fontSize="2rem"
+        formLabel="Notebook Name"
       />
 
       <InlineEditor
@@ -71,6 +71,7 @@ function Edit(props) {
         action={saveSummary}
         placeholder="No summary saved"
         helpText="Use shift+enter to add a new line"
+        formLabel="Notebook Summary"
       />
 
       <Button
