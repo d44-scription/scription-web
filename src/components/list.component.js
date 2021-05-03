@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import MentionableReadonly from "./editors/mentionable_readonly.component";
 import "scss/list.scss";
+import PropTypes from "prop-types";
 
 function List(props) {
   const setCurrentId = props.setCurrentId;
@@ -62,10 +63,10 @@ function List(props) {
             >
               {props.mentionable ? (
                 <MentionableReadonly
-                  value={truncate(item[props.label || "name"])}
+                  value={truncate(item[props.label])}
                 />
               ) : (
-                truncate(item[props.label || "name"])
+                truncate(item[props.label])
               )}
             </ListGroup.Item>
           ))}
@@ -73,5 +74,27 @@ function List(props) {
     </div>
   );
 }
+
+List.defaultProps = {
+  label: "name"
+}
+
+List.propTypes = {
+  // Required for base functionality
+  setCurrentId: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+
+  // Currently selected - can be null
+  currentId: PropTypes.number,
+
+  // Optional action when an item is doubleClicked
+  doubleClickAction: PropTypes.func,
+
+  // Are mentions expected?
+  mentionable: PropTypes.bool,
+
+  // Which attribute of list items to render
+  label: PropTypes.string,
+};
 
 export default List;
