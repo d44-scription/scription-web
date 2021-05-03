@@ -128,7 +128,7 @@ function InlineEditor(props) {
           className="inline-text-label"
           style={{ fontSize: props.fontSize || "1rem" }}
         >
-          {props.value || props.placeholder || "No data saved."}
+          {props.value || props.placeholder || "Click here to edit"}
         </span>
       </section>
     );
@@ -154,8 +154,11 @@ function InlineEditor(props) {
   return (
     <span>
       <div className="d-inline-flex justify-content-start align-items-center w-100">
-        {renderSpan()}
-        {renderInput()}
+        <Form.Group className="w-100">
+          <label className="inline-form-label">{props.formLabel}</label>
+          {renderSpan()}
+          {renderInput()}
+        </Form.Group>
 
         <Spinner
           animation="border"
@@ -193,8 +196,12 @@ InlineEditor.propTypes = {
   // Text or textarea
   multiline: PropTypes.bool,
 
-  fontSize: PropTypes.string,
+  // Elements visible to users; a label shown above the
+  // field and the placeholder shown when no data added
+  formLabel: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+
+  fontSize: PropTypes.string,
   helpText: PropTypes.string,
 };
 
