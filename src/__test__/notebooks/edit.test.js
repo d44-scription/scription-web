@@ -54,8 +54,8 @@ describe("Edit component", () => {
 
   test("rendering information for a given notable", async () => {
     // Confirm data is retrieved and displayed correctly
-    expect(screen.getByText("Notebook 1")).toBeInTheDocument();
-    expect(screen.getAllByText("Mock summary")[0]).toBeInTheDocument();
+    expect(screen.getByText("Notebook 1")).toBeVisible();
+    expect(screen.getAllByText("Mock summary")[0]).toBeVisible();
 
     // Click delete button
     await act(async () => {
@@ -131,13 +131,13 @@ describe("Edit component", () => {
     userEvent.type(deleteButton, "{space}");
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete Notebook?")).toBeInTheDocument();
+    expect(screen.getByText("Delete Notebook?")).toBeVisible();
 
     expect(
       screen.getByText(
         "This will delete Notebook 1 and all associated notes. Are you sure you wish to continue?"
       )
-    ).toBeInTheDocument();
+    ).toBeVisible();
   });
 
   describe("Rendering success messages correctly", () => {

@@ -3,7 +3,7 @@ import NotableDataService from "services/notable.service";
 import InlineEditor from "components/editors/inline_editor.component";
 import Mentionable from "components/editors/mentionable.component";
 import Button from "react-bootstrap/Button";
-import ConfirmModal from "components/modal.component";
+import ConfirmModal from "components/confirm-modal.component";
 import Helper from "helpers/notable_helper";
 import { Link } from "react-router-dom";
 

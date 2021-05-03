@@ -43,9 +43,9 @@ describe("List component", () => {
     });
 
     test("rendering all items", () => {
-      expect(screen.getByText("Label 1")).toBeInTheDocument();
-      expect(screen.getByText("Label 2")).toBeInTheDocument();
-      expect(screen.getByText("Label 3")).toBeInTheDocument();
+      expect(screen.getByText("Label 1")).toBeVisible();
+      expect(screen.getByText("Label 2")).toBeVisible();
+      expect(screen.getByText("Label 3")).toBeVisible();
     });
   });
 
@@ -63,14 +63,14 @@ describe("List component", () => {
 
     test("truncating items longer than 200 chars", () => {
       // Items shorter than 200 chars are not truncated
-      expect(screen.getByText("1".repeat(199))).toBeInTheDocument();
+      expect(screen.getByText("1".repeat(199))).toBeVisible();
 
       // Items longer than 200 chars are truncated and given a "..."
       expect(screen.queryByText("2".repeat(201))).toBeNull();
-      expect(screen.getByText(`${"2".repeat(200)}...`)).toBeInTheDocument();
+      expect(screen.getByText(`${"2".repeat(200)}...`)).toBeVisible();
 
       expect(screen.queryByText("3".repeat(250))).toBeNull();
-      expect(screen.getByText(`${"3".repeat(200)}...`)).toBeInTheDocument();
+      expect(screen.getByText(`${"3".repeat(200)}...`)).toBeVisible();
     });
   });
 
@@ -86,9 +86,9 @@ describe("List component", () => {
     });
 
     test("rendering all items", () => {
-      expect(screen.getByText("Item 1")).toBeInTheDocument();
-      expect(screen.getByText("Item 2")).toBeInTheDocument();
-      expect(screen.getByText("Item 3")).toBeInTheDocument();
+      expect(screen.getByText("Item 1")).toBeVisible();
+      expect(screen.getByText("Item 2")).toBeVisible();
+      expect(screen.getByText("Item 3")).toBeVisible();
     });
 
     test("responding to mouse click", async () => {

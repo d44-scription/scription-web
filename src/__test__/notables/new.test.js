@@ -26,8 +26,8 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(screen.getByText("Character Name")).toBeInTheDocument();
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    expect(screen.getByText("Character Name")).toBeVisible();
+    expect(screen.getByText("Cancel")).toBeVisible();
   };
 
   test("rendering correct fields", async () => {
