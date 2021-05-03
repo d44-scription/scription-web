@@ -95,6 +95,7 @@ describe("Index component", () => {
 
       // Confirm new fields are not shown
       expect(screen.queryByText("Name Character")).toBeNull();
+      expect(screen.queryByText("Click here to edit")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is hidden
@@ -105,6 +106,7 @@ describe("Index component", () => {
 
       // Confirm new fields are shown
       expect(screen.getByText("Name Character")).toBeVisible();
+      expect(screen.getByText("Click here to edit")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
       // Confirm Edit page is hidden
@@ -118,6 +120,7 @@ describe("Index component", () => {
 
       // Confirm new fields are hidden
       expect(screen.queryByText("Name Character")).toBeNull();
+      expect(screen.queryByText("Click here to edit")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is hidden
@@ -130,10 +133,11 @@ describe("Index component", () => {
       });
 
       // Confirm new fields are hidden
-      expect(screen.queryByText("Name Character")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is shown
+      expect(screen.getByText("Click here to edit")).toBeVisible();
+      expect(screen.getByText("Name Character")).toBeVisible();
       expect(screen.getByText("View Character")).toBeVisible();
       expect(screen.getByText("Delete Character")).toBeVisible();
 
@@ -145,6 +149,7 @@ describe("Index component", () => {
 
       // Confirm new fields are shown
       expect(screen.getByText("Name Character")).toBeVisible();
+      expect(screen.getByText("Click here to edit")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
       // Confirm Edit page is hidden

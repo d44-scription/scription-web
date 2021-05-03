@@ -26,8 +26,9 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(screen.getByText("Enter Name")).toBeInTheDocument();
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    expect(screen.getByText("Notebook Name")).toBeVisible();
+    expect(screen.getByText("Click here to edit")).toBeVisible();
+    expect(screen.getByText("Cancel")).toBeVisible();
   };
 
   test("rendering correct fields", async () => {
@@ -52,7 +53,7 @@ describe("New component", () => {
     expect(retrieveNotebooksTestValue).toBe(false);
 
     // "Create" a new notebook
-    userEvent.click(screen.getByText("Enter Name"));
+    userEvent.click(screen.getByText("Click here to edit"));
     userEvent.type(screen.getByRole("textbox"), "Notebook");
 
     await act(async () => {
