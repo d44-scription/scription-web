@@ -77,9 +77,9 @@ describe("Index component", () => {
         .closest("aside");
 
       // Confirm all list elements are rendered
-      expect(listItem1).toBeInTheDocument();
-      expect(listItem2).toBeInTheDocument();
-      expect(listItem3).toBeInTheDocument();
+      expect(listItem1).toBeVisible();
+      expect(listItem2).toBeVisible();
+      expect(listItem3).toBeVisible();
 
       // Confirm that, by default, no list items are selected
       expect(listItem1).not.toHaveClass("active");

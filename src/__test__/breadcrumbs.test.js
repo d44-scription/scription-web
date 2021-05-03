@@ -72,7 +72,7 @@ describe("Breadcrumbs component", () => {
 
       userEvent.type(brandLink, "{enter}", { skipClick: true });
 
-      expect(brandLink).not.toBeInTheDocument();
+      expect(brandLink).not.toBeVisible();
     });
 
     test("responding to tab+space correctly", () => {
@@ -84,7 +84,7 @@ describe("Breadcrumbs component", () => {
 
       userEvent.type(brandLink, " ", { skipClick: true });
 
-      expect(brandLink).not.toBeInTheDocument();
+      expect(brandLink).not.toBeVisible();
     });
   });
 });

@@ -137,13 +137,13 @@ describe("Edit component", () => {
     userEvent.type(deleteButton, "{space}");
 
     // Confirm modal is shown
-    expect(screen.getByText("Delete note?")).toBeInTheDocument();
+    expect(screen.getByText("Delete note?")).toBeVisible();
 
     expect(
       screen.getByText(
         "This note will be deleted. Are you sure you wish to continue?"
       )
-    ).toBeInTheDocument();
+    ).toBeVisible();
   });
 
   test("Rendering success messages correctly", async () => {
