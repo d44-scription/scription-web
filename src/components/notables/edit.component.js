@@ -68,7 +68,7 @@ function Edit(props) {
         setValue={setName}
         action={saveName}
         onSubmitAction={syncList}
-        placeholder="No name saved"
+        formLabel={`Name ${Helper.singular(props.type)}`}
         fontSize="2rem"
       />
 
