@@ -27,6 +27,8 @@ function Account(props) {
 
   return (
     <div className="col-md-6">
+      <h1>Account Information</h1>
+
       <InlineEditor
         value={displayName}
         setValue={setDisplayName}
