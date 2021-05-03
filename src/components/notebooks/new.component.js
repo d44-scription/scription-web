@@ -23,8 +23,8 @@ function New(props) {
         setValue={setName}
         action={saveNotebook}
         onSubmitAction={updatePage}
-        placeholder="Enter Name"
         fontSize="2rem"
+        formLabel="Notebook Name"
       />
 
       <Button

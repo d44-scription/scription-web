@@ -27,11 +27,14 @@ function Account(props) {
 
   return (
     <div className="col-md-6">
+      <h1>Account Information</h1>
+
       <InlineEditor
         value={displayName}
         setValue={setDisplayName}
         action={saveDisplayName}
-        placeholder="No Display Name"
+        formLabel="Display Name"
+        placeholder="No display name"
         fontSize="2rem"
       />
 
@@ -39,7 +42,7 @@ function Account(props) {
         value={email}
         setValue={setEmail}
         action={saveEmail}
-        placeholder="Please enter an email"
+        formLabel="Email Address"
         fontSize="2rem"
       />
 

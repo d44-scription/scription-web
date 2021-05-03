@@ -62,7 +62,8 @@ describe("Index component", () => {
       expect(listItem2).not.toHaveClass("active");
 
       // Confirm notebook component is shown
-      expect(screen.getByText("No name saved")).toBeInTheDocument();
+      expect(screen.getByText("Notebook Name")).toBeInTheDocument();
+      expect(screen.getByText("Click here to edit")).toBeInTheDocument();
       expect(screen.getByText("No summary saved")).toBeInTheDocument();
 
       // Click first list item again
@@ -74,8 +75,9 @@ describe("Index component", () => {
       expect(listItem1).not.toHaveClass("active");
       expect(listItem2).not.toHaveClass("active");
 
-      // Confirm notebook component is shown
-      expect(screen.queryByText("No name saved")).toBeNull();
+      // Confirm notebook component is hidden
+      expect(screen.queryByText("Notebook Name")).toBeNull();
+      expect(screen.queryByText("Click here to edit")).toBeNull();
       expect(screen.queryByText("No summary saved")).toBeNull();
     });
 
@@ -83,7 +85,8 @@ describe("Index component", () => {
       const addButton = screen.getByText("Add Notebook");
 
       // Confirm new fields are not shown
-      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Notebook Name")).toBeNull();
+      expect(screen.queryByText("Click here to edit")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is hidden
@@ -93,7 +96,8 @@ describe("Index component", () => {
       userEvent.click(addButton);
 
       // Confirm new fields are shown
-      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Notebook Name")).toBeVisible();
+      expect(screen.getByText("Click here to edit")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
       // Confirm Edit page is hidden
@@ -106,7 +110,8 @@ describe("Index component", () => {
       userEvent.click(screen.getByText("Cancel"));
 
       // Confirm new fields are hidden
-      expect(screen.queryByText("Enter Name")).toBeNull();
+      expect(screen.queryByText("Notebook Name")).toBeNull();
+      expect(screen.queryByText("Click here to edit")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is hidden
@@ -119,10 +124,11 @@ describe("Index component", () => {
       });
 
       // Confirm new fields are hidden
-      expect(screen.queryByText("Enter Name")).toBeNull();
       expect(screen.queryByText("Cancel")).toBeNull();
 
       // Confirm Edit page is shown
+      expect(screen.getByText("Click here to edit")).toBeVisible();
+      expect(screen.getByText("Notebook Name")).toBeVisible();
       expect(screen.getByText("Open Notebook")).toBeVisible();
       expect(screen.getByText("Delete Notebook")).toBeVisible();
 
@@ -133,7 +139,8 @@ describe("Index component", () => {
       userEvent.click(addButton);
 
       // Confirm new fields are shown
-      expect(screen.getByText("Enter Name")).toBeVisible();
+      expect(screen.getByText("Notebook Name")).toBeVisible();
+      expect(screen.getByText("Click here to edit")).toBeVisible();
       expect(screen.getByText("Cancel")).toBeVisible();
 
       // Confirm Edit page is hidden

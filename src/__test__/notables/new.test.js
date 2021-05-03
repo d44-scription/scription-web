@@ -54,7 +54,7 @@ describe("New component", () => {
     expect(retrieveNotablesTestValue).toBe(false);
 
     // "Create" a new notable
-    userEvent.click(screen.getByText("Name Character"));
+    userEvent.click(screen.getByText("Click here to edit"));
     userEvent.type(screen.getByRole("textbox"), "Notable");
 
     await act(async () => {
