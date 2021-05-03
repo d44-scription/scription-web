@@ -13,7 +13,7 @@ describe("Details component", () => {
 
   const confirmRestState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByText("Name Character")).toBeNull();
+    expect(screen.queryByText("Character Name")).toBeNull();
     expect(screen.queryByText("Click here to edit")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
@@ -26,7 +26,7 @@ describe("Details component", () => {
 
   const confirmNewNotableState = () => {
     // Confirm new fields are shown
-    expect(screen.getByText("Name Character")).toBeVisible();
+    expect(screen.getByText("Character Name")).toBeVisible();
     expect(screen.getByText("Click here to edit")).toBeVisible();
     expect(screen.getByText("Cancel")).toBeVisible();
 
@@ -43,7 +43,7 @@ describe("Details component", () => {
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are shown
-    expect(screen.getByText("Name Character")).toBeVisible();
+    expect(screen.getByText("Character Name")).toBeVisible();
     expect(screen.getByText("Character 1")).toBeVisible();
     expect(screen.getAllByText("Mock Description")[1]).toBeVisible();
     expect(screen.getByText("View Character")).toBeVisible();
@@ -57,6 +57,7 @@ describe("Details component", () => {
           type="characters"
           newRecord={newRecord}
           setNewRecord={setNewRecord}
+          notebookId={0}
         />
       </BrowserRouter>
     );
@@ -74,6 +75,7 @@ describe("Details component", () => {
           type="characters"
           newRecord={newRecord}
           setNewRecord={setNewRecord}
+          notebookId={0}
         />
       </BrowserRouter>
     );
@@ -107,7 +109,7 @@ describe("Details component", () => {
       await act(async () => {
         render(
           <BrowserRouter>
-            <Details id={1} type="characters" />
+            <Details id={1} type="characters" notebookId={0} />
           </BrowserRouter>
         );
       });

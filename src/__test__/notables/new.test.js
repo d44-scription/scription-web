@@ -26,7 +26,7 @@ describe("New component", () => {
 
   const confirmRestState = () => {
     // Confirm default button is not shown
-    expect(screen.getByText("Name Character")).toBeInTheDocument();
+    expect(screen.getByText("Character Name")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
   };
 

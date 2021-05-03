@@ -13,7 +13,8 @@ describe("Details component", () => {
 
   const confirmRestState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByPlaceholderText("Note contents")).toBeNull();
+    expect(screen.queryByText("Note Contents")).toBeNull();
+    expect(screen.queryByPlaceholderText("Click here to edit")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are not shown
@@ -30,7 +31,8 @@ describe("Details component", () => {
 
   const confirmNewNoteState = () => {
     // Confirm new fields are shown
-    expect(screen.getByPlaceholderText("Note contents")).toBeVisible();
+    expect(screen.getByText("Note Contents")).toBeVisible();
+    expect(screen.getByPlaceholderText("Click here to edit")).toBeVisible();
     expect(screen.getByText("Cancel")).toBeVisible();
 
     // Confirm edit fields are not shown
@@ -47,10 +49,10 @@ describe("Details component", () => {
 
   const confirmViewNoteState = () => {
     // Confirm new fields are not shown
-    expect(screen.queryByPlaceholderText("Note contents")).toBeNull();
     expect(screen.queryByText("Cancel")).toBeNull();
 
     // Confirm edit fields are shown
+    expect(screen.getByText("Note Contents")).toBeVisible();
     expect(screen.getByText("Note for Wheaty")).toBeVisible();
     expect(screen.getByText("Delete Note")).toBeVisible();
 
@@ -65,7 +67,11 @@ describe("Details component", () => {
   test("rendering details pane when no ID given", async () => {
     const { rerender } = render(
       <BrowserRouter>
-        <Details newRecord={newRecord} setNewRecord={setNewRecord} />
+        <Details
+          newRecord={newRecord}
+          setNewRecord={setNewRecord}
+          notebookId={0}
+        />
       </BrowserRouter>
     );
 
@@ -78,7 +84,11 @@ describe("Details component", () => {
     // Simulate clicking "add new"
     rerender(
       <BrowserRouter>
-        <Details newRecord={newRecord} setNewRecord={setNewRecord} />
+        <Details
+          newRecord={newRecord}
+          setNewRecord={setNewRecord}
+          notebookId={0}
+        />
       </BrowserRouter>
     );
 
@@ -110,7 +120,7 @@ describe("Details component", () => {
       await act(async () => {
         render(
           <BrowserRouter>
-            <Details id={1} />
+            <Details id={1} notebookId={0} />
           </BrowserRouter>
         );
       });

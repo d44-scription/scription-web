@@ -156,7 +156,7 @@ describe("Edit component", () => {
 
       // Confirm success message shows
       expect(
-        screen.getByText("Changes have been saved successfully")
+        screen.getByText("Successfully saved.")
       ).toBeVisible();
     });
 
@@ -175,7 +175,7 @@ describe("Edit component", () => {
 
       // Confirm success message shows
       expect(
-        screen.getByText("Changes have been saved successfully")
+        screen.getByText("Successfully saved.")
       ).toBeVisible();
     });
   });

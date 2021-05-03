@@ -72,7 +72,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Press `enter`
@@ -85,7 +85,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text shows
       expect(
-        screen.getByText("Changes have been saved successfully")
+        screen.getByText("Successfully saved.")
       ).toBeVisible();
 
       // Click span, press escape
@@ -100,7 +100,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
     });
 
@@ -116,7 +116,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Press enter on focused element
@@ -127,7 +127,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Return to rest state
@@ -146,7 +146,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Press space on focused element
@@ -169,7 +169,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Return to rest state
@@ -182,7 +182,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Click span
@@ -193,7 +193,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Press `enter`
@@ -206,7 +206,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text shows
       expect(
-        screen.getByText("Changes have been saved successfully")
+        screen.getByText("Successfully saved.")
       ).toBeVisible();
     });
 
@@ -216,7 +216,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Click span
@@ -227,7 +227,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
 
       // Press `enter`
@@ -240,7 +240,7 @@ describe("Inline editor component", () => {
 
       // Confirm success text is hidden
       expect(
-        screen.queryByText("Changes have been saved successfully")
+        screen.queryByText("Successfully saved.")
       ).toBeNull();
     });
   });
