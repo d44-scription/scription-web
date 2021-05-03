@@ -65,7 +65,7 @@ function Show(props) {
         <Mentionable
           value={content}
           setValue={setContent}
-          notebookId={id}
+          notebookId={parseInt(id)}
           action={submitNote}
           onSubmitAction={onSubmitAction}
           placeholder="Click here to add a note"
@@ -82,7 +82,7 @@ function Show(props) {
           <Mentionable
             value={preview}
             setValue={setPreview}
-            notebookId={id}
+            notebookId={parseInt(id)}
             action={updatePreview}
             placeholder="No content to show"
           />

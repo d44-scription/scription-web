@@ -76,7 +76,7 @@ function Show(props) {
 
       <Details
         id={currentId}
-        notebookId={notebookId}
+        notebookId={parseInt(notebookId)}
         notableId={id}
         retrieveNotes={retrieveNotes}
         newRecord={newRecord}
