@@ -24,14 +24,15 @@ function ConfirmModal(props) {
   );
 }
 
-ConfirmModal.defaultProps = {
-  label: "name",
-};
-
 ConfirmModal.propTypes = {
+  // Visibility of modal
   visible: PropTypes.bool.isRequired,
+
+  // Actions to be completed
   closeAction: PropTypes.func.isRequired,
   confirmAction: PropTypes.func.isRequired,
+
+  // Text to show
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };
