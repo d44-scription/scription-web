@@ -1,6 +1,7 @@
 import React from "react";
 import { MentionsInput, Mention } from "react-mentions";
 import "scss/mentionable.scss";
+import PropTypes from "prop-types";
 
 function MentionableReadonly(props) {
   return (
@@ -32,5 +33,10 @@ function MentionableReadonly(props) {
     </div>
   );
 }
+
+MentionableReadonly.propTypes = {
+  // The value to show
+  value: PropTypes.string.isRequired,
+};
 
 export default MentionableReadonly;
