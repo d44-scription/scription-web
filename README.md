@@ -1,4 +1,4 @@
-# Scription Web
+# Scription Web Application
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -8,7 +8,7 @@ This application uses a simplified version of Git-Flow to prevent environment va
 
 All tests are run on PR to develop or main branches using GitHub actions. Any failures will be flagged & should not be merged.
 
-## Running locally
+## Running Locally
 
 This app is dockerised, so setup should be standard. Running:
 
@@ -33,9 +33,13 @@ to run the server, and navigate to [localhost:3001](localhost:3001) in your brow
 
 The API url is set using environment variables at `src/http-common.js:4`, and the environment variable for local environment is injected into the build at `docker-compose.yml:14`.
 
-By default the app connects to the staging API for development purposes to avoid needing a local server running as well. If you need to change this for whatever reason, then run the API locally on port 3000 and update the `docker-compose` file to point to this URL instead.
+The app connects by default to a local API running on port 3000, as set by the `scription-api` Docker config.
 
-## Testing
+## Linting Code
+
+The `Prettier` VSCode extension has been used to apply a standardised, opinionated format to all JS code in the application.
+
+## Running Tests
 
 Tests are stored under the `src/__test__` directory, aiming to mirror the `src/components` structure to ensure each component is tested.
 
