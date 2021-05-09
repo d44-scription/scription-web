@@ -7,7 +7,7 @@ describe("Mentionable component", () => {
   const successMessage = "Success Message";
   const errorMessage = "Error Message";
   const notebookId = 1;
-  const formLabel = "Form Label"
+  const formLabel = "Form Label";
   let value = "";
   const setValue = (v) => {
     value = v;

@@ -14,9 +14,7 @@ function Search(props) {
 
     if (query !== "") {
       searchedItems = searchedItems.filter((item) => {
-        return item[props.label]
-          .toLowerCase()
-          .includes(query.toLowerCase());
+        return item[props.label].toLowerCase().includes(query.toLowerCase());
       });
     }
 
