@@ -56,7 +56,7 @@ jest.spyOn(http, "get").mockImplementation(() =>
 Once more to standardise environments, the tests can be run in Docker:
 
 ```bash
-  $ docker-compose run web npm test
+  $ docker-compose run web yarn test
     > ...
     > Test Suites: x passed, x total
     > Tests:       y passed, y total
@@ -65,4 +65,4 @@ Once more to standardise environments, the tests can be run in Docker:
     > ...
 ```
 
-_This doesn't have the live reloading that running `npm test` outside of Docker has, but pressing `Enter` will manually rerun any tests that could have changed_
+_This doesn't have the live reloading that running `yarn test` outside of Docker has, but pressing `Enter` will manually rerun any tests that could have changed_
