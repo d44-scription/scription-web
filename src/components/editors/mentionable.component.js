@@ -106,7 +106,9 @@ function Mentionable(props) {
 
   return (
     <div>
-      <label className={`inline-form-label ${props.compact ? "mt-0" : ""}`}>{props.formLabel}</label>
+      <label className={`inline-form-label ${props.compact ? "mt-0" : ""}`}>
+        {props.formLabel}
+      </label>
 
       <MentionsInput
         value={props.value}

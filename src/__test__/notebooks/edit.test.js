@@ -155,9 +155,7 @@ describe("Edit component", () => {
       });
 
       // Confirm success message shows
-      expect(
-        screen.getByText("Successfully saved.")
-      ).toBeVisible();
+      expect(screen.getByText("Successfully saved.")).toBeVisible();
     });
 
     test("when editing summary", async () => {
@@ -174,9 +172,7 @@ describe("Edit component", () => {
       });
 
       // Confirm success message shows
-      expect(
-        screen.getByText("Successfully saved.")
-      ).toBeVisible();
+      expect(screen.getByText("Successfully saved.")).toBeVisible();
     });
   });
 });

@@ -71,9 +71,7 @@ describe("Inline editor component", () => {
       confirmActiveState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Press `enter`
       await act(async () => {
@@ -84,9 +82,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text shows
-      expect(
-        screen.getByText("Successfully saved.")
-      ).toBeVisible();
+      expect(screen.getByText("Successfully saved.")).toBeVisible();
 
       // Click span, press escape
       userEvent.click(screen.getByText(value));
@@ -99,9 +95,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
     });
 
     test("responding to tab using enter", async () => {
@@ -115,9 +109,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Press enter on focused element
       userEvent.type(span, "{enter}", { skipClick: true });
@@ -126,9 +118,7 @@ describe("Inline editor component", () => {
       confirmActiveState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Return to rest state
       userEvent.type(span, "{esc}", { skipClick: true });
@@ -145,9 +135,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Press space on focused element
       userEvent.type(span, "{space}", { skipClick: true });
@@ -168,9 +156,7 @@ describe("Inline editor component", () => {
       expect(screen.queryByTitle("Saving changes")).not.toBeVisible();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Return to rest state
       userEvent.type(span, "{esc}", { skipClick: true });
@@ -181,9 +167,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Click span
       userEvent.click(screen.getByText(value));
@@ -192,9 +176,7 @@ describe("Inline editor component", () => {
       confirmActiveState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Press `enter`
       await act(async () => {
@@ -205,9 +187,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text shows
-      expect(
-        screen.getByText("Successfully saved.")
-      ).toBeVisible();
+      expect(screen.getByText("Successfully saved.")).toBeVisible();
     });
 
     test("cancelling via help text", async () => {
@@ -215,9 +195,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Click span
       userEvent.click(screen.getByText(value));
@@ -226,9 +204,7 @@ describe("Inline editor component", () => {
       confirmActiveState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
 
       // Press `enter`
       await act(async () => {
@@ -239,9 +215,7 @@ describe("Inline editor component", () => {
       confirmRestState();
 
       // Confirm success text is hidden
-      expect(
-        screen.queryByText("Successfully saved.")
-      ).toBeNull();
+      expect(screen.queryByText("Successfully saved.")).toBeNull();
     });
   });
 

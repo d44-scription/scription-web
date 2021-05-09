@@ -37,5 +37,4 @@ Messages.propTypes = {
   help: PropTypes.string,
 };
 
-
 export default Messages;

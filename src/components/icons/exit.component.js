@@ -29,7 +29,7 @@ function Exit(props) {
 Exit.defaultProps = {
   size: 96,
   title: "Exit",
-}
+};
 
 Exit.propTypes = {
   size: PropTypes.number.isRequired,

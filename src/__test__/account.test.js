@@ -75,9 +75,7 @@ describe("Account component", () => {
         user: { display_name: "Usertest" },
       });
 
-      expect(
-        screen.getByText("Successfully saved.")
-      ).toBeVisible();
+      expect(screen.getByText("Successfully saved.")).toBeVisible();
       userEvent.type(emailField, "test");
 
       await act(async () => {
