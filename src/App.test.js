@@ -11,8 +11,13 @@ describe("App component", () => {
     );
 
     expect(screen.getAllByText("Scription")[1]).toBeVisible();
-    expect(screen.getByPlaceholderText("Email")).toBeVisible();
-    expect(screen.getByPlaceholderText("Password")).toBeVisible();
+
+    expect(screen.getByText("Email Address")).toBeVisible();
+    expect(
+      screen.getByRole("textbox", { name: "Email Address" })
+    ).toBeVisible();
+    expect(screen.getByLabelText("Password")).toBeVisible();
+
     expect(screen.getAllByText("Log in")[1]).toBeVisible();
     expect(screen.getByText("Register")).toBeVisible();
   });

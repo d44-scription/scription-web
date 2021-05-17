@@ -18,8 +18,8 @@ describe("Login component", () => {
 
   const confirmRestState = () => {
     expect(screen.getByText("Scription")).toBeVisible();
-    expect(screen.getByPlaceholderText("Email")).toBeVisible();
-    expect(screen.getByPlaceholderText("Password")).toBeVisible();
+    expect(screen.getByLabelText("Email Address")).toBeVisible();
+    expect(screen.getByLabelText("Password")).toBeVisible();
     expect(screen.getByText("Log in")).toBeVisible();
     expect(screen.getByText("Register")).toBeVisible();
   };
@@ -48,8 +48,8 @@ describe("Login component", () => {
       confirmRestState();
 
       // Login
-      const emailField = screen.getByPlaceholderText("Email");
-      const passwordField = screen.getByPlaceholderText("Password");
+      const emailField = screen.getByLabelText("Email Address");
+      const passwordField = screen.getByLabelText("Password");
 
       userEvent.type(emailField, "test@example.com");
       userEvent.type(passwordField, "superSecret123!{enter}");
@@ -70,8 +70,8 @@ describe("Login component", () => {
       confirmRestState();
 
       // Login
-      const emailField = screen.getByPlaceholderText("Email");
-      const passwordField = screen.getByPlaceholderText("Password");
+      const emailField = screen.getByLabelText("Email Address");
+      const passwordField = screen.getByLabelText("Password");
       const loginButton = screen.getByText("Log in");
       const registerButton = screen.getByText("Register");
 
@@ -109,8 +109,8 @@ describe("Login component", () => {
       confirmRestState();
 
       // Login
-      const emailField = screen.getByPlaceholderText("Email");
-      const passwordField = screen.getByPlaceholderText("Password");
+      const emailField = screen.getByLabelText("Email Address");
+      const passwordField = screen.getByLabelText("Password");
 
       userEvent.type(emailField, "test@example.com");
       userEvent.type(passwordField, "superSecret123!");

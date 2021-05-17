@@ -15,10 +15,10 @@ describe("Register component", () => {
   };
 
   const confirmRestState = () => {
-    expect(screen.getByPlaceholderText("Display Name")).toBeVisible();
-    expect(screen.getByPlaceholderText("Email")).toBeVisible();
-    expect(screen.getByPlaceholderText("Password")).toBeVisible();
-    expect(screen.getByPlaceholderText("Confirm Password")).toBeVisible();
+    expect(screen.getByLabelText("Display Name")).toBeVisible();
+    expect(screen.getByLabelText("Email Address")).toBeVisible();
+    expect(screen.getByLabelText("Password")).toBeVisible();
+    expect(screen.getByLabelText("Confirm Password")).toBeVisible();
     expect(screen.getByText("Register")).toBeVisible();
     expect(screen.getByText("Cancel")).toBeVisible();
   };
@@ -47,10 +47,10 @@ describe("Register component", () => {
       confirmRestState();
 
       // Register
-      const displayField = screen.getByPlaceholderText("Display Name");
-      const emailField = screen.getByPlaceholderText("Email");
-      const passwordField = screen.getByPlaceholderText("Password");
-      const confirmField = screen.getByPlaceholderText("Confirm Password");
+      const displayField = screen.getByLabelText("Display Name");
+      const emailField = screen.getByLabelText("Email Address");
+      const passwordField = screen.getByLabelText("Password");
+      const confirmField = screen.getByLabelText("Confirm Password");
 
       userEvent.type(displayField, "Test Name");
       userEvent.type(emailField, "test@example.com");
@@ -78,10 +78,10 @@ describe("Register component", () => {
       confirmRestState();
 
       // Login
-      const displayField = screen.getByPlaceholderText("Display Name");
-      const emailField = screen.getByPlaceholderText("Email");
-      const passwordField = screen.getByPlaceholderText("Password");
-      const confirmField = screen.getByPlaceholderText("Confirm Password");
+      const displayField = screen.getByLabelText("Display Name");
+      const emailField = screen.getByLabelText("Email Address");
+      const passwordField = screen.getByLabelText("Password");
+      const confirmField = screen.getByLabelText("Confirm Password");
 
       const registerButton = screen.getByText("Register");
       const cancelButton = screen.getByText("Cancel");
