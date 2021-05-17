@@ -103,7 +103,7 @@ describe("Show component", () => {
       .closest("button");
 
     // Skip note editors, this is tested at src/__test__/editors/inline_editor.test.js
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 5; i++) {
       userEvent.tab();
     }
 
