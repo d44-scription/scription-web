@@ -55,36 +55,70 @@ function Register(props) {
       onSubmit={onSubmit}
       className="col-md-6 ml-auto mr-auto mt-lg-5 text-center"
     >
-      <Form.Control
-        placeholder="Display Name"
-        className="mb-3 text-center"
-        value={displayName}
-        onChange={displayNameChanged}
-      />
+      <h1>Create New Account</h1>
 
-      <Form.Control
-        type="email"
-        placeholder="Email"
-        className="mb-3 text-center"
-        value={email}
-        onChange={emailChanged}
-      />
+      <Form.Group>
+        <Form.Label htmlFor="display-name" className="mb-0">
+          Display Name
+        </Form.Label>
 
-      <Form.Control
-        type="password"
-        placeholder="Password"
-        className="mb-3 text-center"
-        value={password}
-        onChange={passwordChanged}
-      />
+        <Form.Control
+          name="display-name"
+          id="display-name"
+          placeholder="Enter here"
+          className="mb-3 text-center"
+          value={displayName}
+          onChange={displayNameChanged}
+        />
+      </Form.Group>
 
-      <Form.Control
-        type="password"
-        placeholder="Confirm Password"
-        className="mb-3 text-center"
-        value={passwordConfirmation}
-        onChange={passwordConfirmationChanged}
-      />
+      <Form.Group>
+        <Form.Label htmlFor="email" className="mb-0">
+          Email Address
+        </Form.Label>
+
+        <Form.Control
+          type="email"
+          name="email"
+          id="email"
+          placeholder="email@example.com"
+          className="mb-3 text-center"
+          value={email}
+          onChange={emailChanged}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label htmlFor="password" className="mb-0">
+          Password
+        </Form.Label>
+
+        <Form.Control
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter here"
+          className="mb-3 text-center"
+          value={password}
+          onChange={passwordChanged}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label htmlFor="password-confirmation" className="mb-0">
+          Confirm Password
+        </Form.Label>
+
+        <Form.Control
+          type="password"
+          name="password-confirmation"
+          id="password-confirmation"
+          placeholder="Enter here"
+          className="mb-3 text-center"
+          value={passwordConfirmation}
+          onChange={passwordConfirmationChanged}
+        />
+      </Form.Group>
 
       <Button variant="primary" className="w-75 ml-auto mr-auto" type="submit">
         Register
