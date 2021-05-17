@@ -52,7 +52,7 @@ function List(props) {
           props.items.map((item) => (
             <ListGroup.Item
               as="aside"
-              style={{padding: "1rem"}}
+              style={{ padding: "1rem" }}
               variant="primary"
               key={item.id}
               active={item.id === props.currentId}
@@ -62,9 +62,7 @@ function List(props) {
               tabIndex="0"
             >
               {props.mentionable ? (
-                <MentionableReadonly
-                  value={truncate(item[props.label])}
-                />
+                <MentionableReadonly value={truncate(item[props.label])} />
               ) : (
                 truncate(item[props.label])
               )}
@@ -76,8 +74,8 @@ function List(props) {
 }
 
 List.defaultProps = {
-  label: "name"
-}
+  label: "name",
+};
 
 List.propTypes = {
   // Required for base functionality

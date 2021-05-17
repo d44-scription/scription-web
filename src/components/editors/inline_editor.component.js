@@ -138,6 +138,8 @@ function InlineEditor(props) {
     return (
       <Form.Control
         as={props.multiline ? "textarea" : "input"}
+        name={props.formLabel}
+        id={props.formLabel}
         rows={4}
         style={{ fontSize: props.fontSize || "1rem" }}
         ref={inputRef}
@@ -155,7 +157,10 @@ function InlineEditor(props) {
     <span>
       <div className="d-inline-flex justify-content-start align-items-center w-100">
         <Form.Group className="w-100">
-          <label className="inline-form-label">{props.formLabel}</label>
+          <Form.Label htmlFor={props.formLabel} className="inline-form-label">
+            {props.formLabel}
+          </Form.Label>
+
           {renderSpan()}
           {renderInput()}
         </Form.Group>

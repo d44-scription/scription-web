@@ -4,6 +4,7 @@ import NotableDataService from "services/notable.service";
 import "scss/mentionable.scss";
 import Messages from "./messages.component";
 import PropTypes from "prop-types";
+import { Form } from "react-bootstrap";
 
 function Mentionable(props) {
   // Store reference to the input field
@@ -106,45 +107,54 @@ function Mentionable(props) {
 
   return (
     <div>
-      <label className={`inline-form-label ${props.compact ? "mt-0" : ""}`}>{props.formLabel}</label>
+      <Form.Group>
+        <Form.Label
+          htmlFor={props.formLabel}
+          className={`inline-form-label ${props.compact ? "mt-0" : ""}`}
+        >
+          {props.formLabel}
+        </Form.Label>
 
-      <MentionsInput
-        value={props.value}
-        onChange={onChange}
-        a11ySuggestionsListLabel={"Suggested notables to mention"}
-        placeholder={props.placeholder || "Click here to edit"}
-        className="mentions"
-        onKeyDown={onKeyDown}
-        inputRef={inputRef}
-        style={{ fontSize: props.fontSize || "1.5rem" }}
-      >
-        <Mention
-          trigger="@"
-          data={(query, callback) => {
-            fetchNotables(query, callback, "characters");
-          }}
-          markup="@[__display__](@__id__)"
-          className="characters"
-        />
+        <MentionsInput
+          value={props.value}
+          onChange={onChange}
+          a11ySuggestionsListLabel={"Suggested notables to mention"}
+          placeholder={props.placeholder || "Click here to edit"}
+          className="mentions"
+          name={props.formLabel}
+          id={props.formLabel}
+          onKeyDown={onKeyDown}
+          inputRef={inputRef}
+          style={{ fontSize: props.fontSize || "1.5rem" }}
+        >
+          <Mention
+            trigger="@"
+            data={(query, callback) => {
+              fetchNotables(query, callback, "characters");
+            }}
+            markup="@[__display__](@__id__)"
+            className="characters"
+          />
 
-        <Mention
-          trigger=":"
-          data={(query, callback) => {
-            fetchNotables(query, callback, "items");
-          }}
-          markup=":[__display__](:__id__)"
-          className="items"
-        />
+          <Mention
+            trigger=":"
+            data={(query, callback) => {
+              fetchNotables(query, callback, "items");
+            }}
+            markup=":[__display__](:__id__)"
+            className="items"
+          />
 
-        <Mention
-          trigger="#"
-          data={(query, callback) => {
-            fetchNotables(query, callback, "locations");
-          }}
-          markup="#[__display__](#__id__)"
-          className="locations"
-        />
-      </MentionsInput>
+          <Mention
+            trigger="#"
+            data={(query, callback) => {
+              fetchNotables(query, callback, "locations");
+            }}
+            markup="#[__display__](#__id__)"
+            className="locations"
+          />
+        </MentionsInput>
+      </Form.Group>
 
       {/* TODO: Make help text render when element has focus */}
       <Messages

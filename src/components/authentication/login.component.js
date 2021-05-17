@@ -40,21 +40,37 @@ function Login(props) {
     >
       <h1 className="fs-0-lg d-lg-block d-none">Scription</h1>
 
-      <Form.Control
-        type="email"
-        placeholder="Email"
-        className="mb-3 text-center"
-        value={email}
-        onChange={emailChanged}
-      />
+      <Form.Group>
+        <Form.Label htmlFor="email" className="mb-0">
+          Email Address
+        </Form.Label>
 
-      <Form.Control
-        type="password"
-        placeholder="Password"
-        className="mb-3 text-center"
-        value={password}
-        onChange={passwordChanged}
-      />
+        <Form.Control
+          type="email"
+          name="email"
+          id="email"
+          placeholder="email@example.com"
+          className="mb-3 text-center"
+          value={email}
+          onChange={emailChanged}
+        />
+      </Form.Group>
+
+      <Form.Group className="mt-3">
+        <Form.Label htmlFor="password" className="mb-0">
+          Password
+        </Form.Label>
+
+        <Form.Control
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter here"
+          className="mb-3 text-center"
+          value={password}
+          onChange={passwordChanged}
+        />
+      </Form.Group>
 
       <Button variant="primary" className="w-75 ml-auto mr-auto" type="submit">
         Log in
